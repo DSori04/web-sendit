@@ -13,16 +13,7 @@ export function Home() {
     return (
         <div>
             <Navbar/>
-        {/* <ul>
-        <li><Link to="/about-us">About Us</Link></li>
-        <li><Link to="/contact">Contact</Link></li>
-        <li><Link to="/login">LogIn</Link></li>
-        <li><Link to="/new">NewOrder</Link></li>
-        <li><Link to="/prices">Prices</Link></li>
-        <li><Link to="/tracking">Tracking</Link></li>
-      </ul> */}
-        <Footer/>
-        
+            <Footer/>
         </div>
     );
 }
