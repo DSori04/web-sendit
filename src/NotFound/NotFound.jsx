@@ -13,15 +13,16 @@ export function NotFound() {
             <Navbar />
 
             <div className="w-full bg-white flex justify-center items-center p-10 lg:pt-32">
-                <img src={imagen404} alt="404" className=" max-h-96"/>
+            <img src={imagen404} alt="404" className=" max-h-96" />
+                
             </div>
             <div className="flex justify-center items-center lg:pt-7">
                 <h1 className="text-3xl">
                     <span className=" font-bold">
-                        ¡Woops! 
+                        ¡Woops!
                     </span>
                     &nbsp; esta página no existe - &nbsp;
-                    <a href="/" className=" text-purple1 underline">Voler a inicio</a>
+                    <a href="/" className=" text-purple1 underline">Volver a inicio</a>
 
                 </h1>
             </div>
