@@ -21,6 +21,9 @@ export function NotFound() {
                         ¡Woops!
                     </span>
                     &nbsp; esta página no existe - &nbsp;
+                    <span className=" lg:hidden inline">
+                        <br />
+                    </span>
                     <a href="/" className=" text-purple1 underline">Volver a inicio</a>
 
                 </h1>
