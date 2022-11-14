@@ -6,10 +6,6 @@ import Prices from "./Prices.svg"
 import { Link } from "react-router-dom";
 
 export function Navbar() {
-    /*TODO: 
-        Add Icons 
-        Add Links  
-    */
     return (
         <div className="bg-gray1 w-full h-16 flex justify-between pl-24 select-none fixed">
             <div id="logo" className="flex-start h-14 w-48"><Link to="/"><img src={Logo} className="object-contain"></img></Link></div>
@@ -22,7 +18,7 @@ export function Navbar() {
                 </div>
                 <div id="links" className="flex flex-row justify-between -mt-2">
                     <Link to="/tracking" className="hover:underline text-center">Tracking</Link>
-                    <Link to="/new" className="hover:underline text-center pt-1">Nuevo</Link>
+                    <Link to="/new" className="hover:underline text-center">Nuevo</Link>
                     <Link to="/prices" className="hover:underline text-center">Precios</Link>
                 </div>
                 </div>
