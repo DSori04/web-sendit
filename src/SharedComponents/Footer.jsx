@@ -11,7 +11,7 @@ export function Footer() {
         Add Links
      */
     return (
-        <div className="bg-gray1 w-full h-14 flex justify-around absolute bottom-0 self-center flex-nowrap">
+        <div className="bg-gray1 w-full h-14 flex justify-around absolute bottom-0 self-center flex-wrap">
             {/* <div className="flex text-center leading-[3.5rem] align-middle">
                 <a href="/not-found" className=" hover:underline">Github</a> &nbsp; · &nbsp;
                 <a href="/not-found" className=" hover:underline">Twitter</a> &nbsp; · &nbsp;
@@ -20,12 +20,13 @@ export function Footer() {
             </div> */}
             <div className="flex text-center h-14 leading-[3.5rem] align-middle pt-3 w-40 justify-around">
                 {/* TODO Añadir iconitos para cuando el tamaño sea inferior a lg */}
-                <a href="https://twitter.com"><img src={Twitter} className="fill-black w-8 h-8"></img></a>
-                <a href="https://facebook.com"><img src={Facebook} className="fill-black w-8 h-8"></img></a>
-                <a href="https://instagram.com"><img src={Instagram} className="fill-black w-8 h-8"></img></a>
-                <a href="https://github.com"><img src={Github} className="fill-black w-8 h-8"></img></a>
+                <a href="https://twitter.com" target="_blank"><img src={Twitter} className="fill-black w-8 h-8"></img></a>
+                <a href="https://facebook.com" target="_blank"><img src={Facebook} className="fill-black w-8 h-8"></img></a>
+                <a href="https://instagram.com" target="_blank"><img src={Instagram} className="fill-black w-8 h-8"></img></a>
+                <a href="https://github.com" target="_blank"><img src={Github} className="fill-black w-8 h-8"></img></a>
             </div>
-            <div className=" lg:self-auto self-center lg:w-auto w-full text-center leading-[3.5rem] align-middle h-14">About Us · LOPD · Contacto</div>
+            <div className=" lg:self-auto lg:w-auto text-center leading-[3.5rem] align-middle h-14">
+                <Link to="/about-us">About Us</Link> · LOPD · <Link to="/contact">Contacto</Link></div>
         </div>
     );
 }
