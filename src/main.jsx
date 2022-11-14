@@ -13,6 +13,7 @@ import { LogIn } from './LogIn/LogIn'
 import { NewOrder } from './NewOrder/NewOrder'
 import { Prices } from './Prices/Prices'
 import { Tracking } from './Tracking/Tracking'
+import { NotFound } from "./NotFound/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
     path: "/tracking",
     element: <Tracking/>,
   },
+  {
+    path: "/not-found",
+    element: <NotFound/>,
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
