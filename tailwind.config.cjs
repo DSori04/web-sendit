@@ -15,7 +15,7 @@ module.exports = {
       'gray2' : '#4A4A4A'
     },
     fontFamily: {
-      'main' : 'Montserrat',
+      'main' : "'Montserrat', sans-serif",
       'numbers' : 'IBM Plex Mono'
     },
     extend: {},
