@@ -11,9 +11,9 @@ import { Footer } from '../SharedComponents/Footer'
 
 export function Home() {
     return (
-        <div>
-            <Navbar/>
-            <Footer/>
-        </div>
+        <>
+            <Navbar />
+            <Footer />
+        </>
     );
 }
