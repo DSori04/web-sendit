@@ -12,7 +12,7 @@ import { NotFound } from './NotFound/NotFound'
 function App() {
   return (
     <div className="App w-full h-full bg-white">
-      <h1>Main</h1>
+      {/* <h1>Main</h1>
       <ul>
         <li><Link href="/"></Link></li>
         <li><Link href="/about-us">About Us</Link></li>
@@ -32,7 +32,7 @@ function App() {
         <Route path="/prices" element={<Prices />} />
         <Route path="/tracking" element={<Tracking />} />
         <Route path="/not-found" element={<NotFound />} />
-      </Routes>
+      </Routes> */}
     </div>
   )
 }
