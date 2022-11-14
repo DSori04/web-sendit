@@ -25,7 +25,7 @@ export function Footer() {
                 <a href="https://instagram.com" target="_blank"><img src={Instagram} className="fill-black w-8 h-8"></img></a>
                 <a href="https://github.com" target="_blank"><img src={Github} className="fill-black w-8 h-8"></img></a>
             </div>
-            <div className=" lg:self-auto lg:w-auto text-center leading-[3.5rem] align-middle h-14">
+            <div className=" lg:self-auto sm:w-auto text-center leading-[3.5rem] align-middle h-14 w-full">
                 <Link to="/about-us">About Us</Link> · LOPD · <Link to="/contact">Contacto</Link></div>
         </div>
     );
