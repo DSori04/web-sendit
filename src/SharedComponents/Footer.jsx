@@ -11,7 +11,7 @@ export function Footer() {
         Add Links
      */
     return (
-        <div className="bg-gray1 w-full h-14 flex justify-around absolute bottom-0 self-center flex-wrap">
+        <div className="bg-gray1 w-full sm:h-14 h-28 flex justify-around absolute bottom-0 self-center flex-wrap">
             {/* <div className="flex text-center leading-[3.5rem] align-middle">
                 <a href="/not-found" className=" hover:underline">Github</a> &nbsp; · &nbsp;
                 <a href="/not-found" className=" hover:underline">Twitter</a> &nbsp; · &nbsp;
