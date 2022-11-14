@@ -19,6 +19,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Home/>,
+    errorElement: <NotFound/>,
   },
   {
     path: "/about-us",
@@ -44,10 +45,6 @@ const router = createBrowserRouter([
     path: "/tracking",
     element: <Tracking/>,
   },
-  {
-    path: "/not-found",
-    element: <NotFound/>,
-  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
