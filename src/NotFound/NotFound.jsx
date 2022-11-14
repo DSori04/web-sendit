@@ -13,11 +13,10 @@ export function NotFound() {
             <Navbar />
 
             <div className="w-full bg-white flex justify-center items-center p-10 lg:pt-32">
-            <img src={imagen404} alt="404" className=" max-h-96" />
-                
+                <img src={imagen404} alt="404" className=" max-h-96 lg:pt-0 pt-32 " />
             </div>
-            <div className="flex justify-center items-center lg:pt-7">
-                <h1 className="text-3xl">
+            <div className="flex justify-center items-center text-center lg:pt-7 pt-10 ml-8 mr-8">
+                <h1 className="lg:text-3xl text-4xl leading-[4rem]">
                     <span className=" font-bold">
                         ¡Woops!
                     </span>
