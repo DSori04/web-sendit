@@ -2,7 +2,10 @@ import React from "react";
 import Logo from "../SharedComponents/Logo.png"
 
 export function Navbar() {
-    /*Fix sign up button */
+    /*TODO: 
+        Add Icons 
+        Add Links  
+    */
     return (
         <div className="bg-gray1 w-full h-16 flex justify-between pl-24 select-none fixed">
         <div id="logo" className="flex-start h-14 w-48"><img src={Logo} className="object-contain"></img></div>
