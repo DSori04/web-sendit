@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 export function Navbar() {
     return (
-        <div className="bg-gray1 w-full h-16 flex justify-between pl-24 select-none fixed">
+        <div className="bg-gray1 w-full h-16 flex lg:justify-between justify-center lg:pl-24 select-none fixed">
             <div id="logo" className="flex-start h-14 w-48"><Link to="/"><img src={Logo} className="object-contain"></img></Link></div>
             <div id="menu" className="lg:flex hidden flex-row w-9/12 text-center align-middle justify-around pl-16 select-none font-main text-gray2">
                 <div className="flex flex-col justify-around w-1/2">
