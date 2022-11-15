@@ -28,19 +28,19 @@ export function Home() {
                         </div>
                     </div>
                     <div id="home-img" className="lg:-ml-44"><img src={HomeImg}></img></div>
-                    
-                </div> <br />  
-                <div id="counters" className="w-full h-48 flex justify-around text-center xl:mt-48 lg:mt-36 mt-12 lg:scale-100 scale-75">
-                    <div id="clientes" className="flex flex-col">
-                        <div className="text-7xl font-numbers font-semibold">{clients}k</div>
+
+                </div> <br />
+                <div id="counters" className="w-full h-48 flex justify-around text-center lg:mt-36 md:mt-12 mt-5 lg:scale-100 scale-75">
+                    <div id="clientes" className="flex flex-col sm:px-10 px-4">
+                        <div className="sm:text-6xl text-4xl font-numbers font-semibold">{clients}k</div>
                         <div className="font-main text-xl">Clientes satisfechos</div>
                     </div>
-                    <div id="comercios" className="flex flex-col">
-                        <div className="text-7xl font-numbers font-semibold">{commerce}</div>
+                    <div id="comercios" className="flex flex-col sm:px-10 px-4">
+                        <div className="sm:text-6xl text-4xl font-numbers font-semibold">{commerce}</div>
                         <div className="font-main text-xl">Pequeños comercios</div>
                     </div>
-                    <div id="pedidos" className="flex flex-col">
-                        <div className="text-7xl font-numbers font-semibold">{orders}k</div>
+                    <div id="pedidos" className="flex flex-col sm:px-10 px-4">
+                        <div className="sm:text-6xl text-4xl font-numbers font-semibold">{orders}k</div>
                         <div className="font-main text-xl">Pedidos completados</div>
                     </div>
                 </div>
