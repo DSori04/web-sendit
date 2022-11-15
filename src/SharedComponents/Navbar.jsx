@@ -12,7 +12,7 @@ export function Navbar() {
             <div id="menu" className="lg:flex hidden flex-row w-9/12 text-center align-middle justify-around pl-16 select-none font-main text-gray2">
                 <div className="flex flex-col justify-around w-1/2">
                 <div id="imgs" className="flex flex-row justify-between">
-                    <Link to="/tracking"><img src={Tracking} className="text-center w-16 h-10" alt="tracking-icon"></img></Link>
+                    <Link to="/tracking"><img src={Tracking} className="text-center w-16 h-12 pt-2 pl-2 pb-1" alt="tracking-icon"></img></Link>
                     <Link to="/new"><img src={Box} className="text-center h-10 pt-2 pl-2" alt="box-icon"></img></Link>
                     <Link to="/prices"><img src={Prices} className="text-center h-12 w-16" alt="prices-icon"></img></Link>
                 </div>
