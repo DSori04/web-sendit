@@ -1,8 +1,8 @@
 import React from "react";
-import Twitter from "./logo-twitter.svg";
-import Facebook from "./logo-facebook.svg";
-import Instagram from "./logo-instagram.svg";
-import Github from "./logo-github.svg";
+import Twitter from "./assets/logo-twitter.svg";
+import Facebook from "./assets/logo-facebook.svg";
+import Instagram from "./assets/logo-instagram.svg";
+import Github from "./assets/logo-github.svg";
 import { Link } from "react-router-dom";
 
 export function Footer() {
