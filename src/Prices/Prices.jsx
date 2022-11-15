@@ -70,12 +70,12 @@ export function Prices() {
                             </div>
                         </div>
                         <div className="py-8 lg:text-left text-center w-full font-extralight">
-                                ¿Eres una pequeña empresa?
-                                <Link to="/contact" className=" text-purple1 underline"> ¡Utiliza nuestros beneficios!</Link>
-                            </div>
+                            ¿Eres una pequeña empresa?
+                            <Link to="/contact" className=" text-purple1 underline"> ¡Utiliza nuestros beneficios!</Link>
+                        </div>
                     </div>
                     <div className="flex-col lg:flex hidden lg:w-1/2 h-full`">
-                        <img src={savings} alt="Imagen de ahorros" className=" max-h-72 mt-20" />
+                        <img src={savings} alt="Imagen de ahorros" className=" xl:max-h-96 lg:max-h-80 xl:mt-0 lg:mt-10 mt-20" />
                     </div>
                 </div>
 
