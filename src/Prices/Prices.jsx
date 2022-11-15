@@ -40,12 +40,12 @@ export function Prices() {
             <div className="absolute top-16 sm:bottom-14 bottom-28 bg-white w-full  flex flex-col md:px-20 px-6">
                 <h1 className=" font-bold text-purple1 text-5xl pt-10">Precios</h1>
                 <p className=" py-10 text-2xl">
-                Con nosotros, estar cerca vale <span className="font-bold ">menos que nunca</span>
+                    Con nosotros, estar cerca vale <span className="font-bold ">menos que nunca</span>
                 </p>
                 <div className="flex flex-row w-full">
                     <div className="flex flex-col lg:w-1/2 w-full">
                         <table className="text-xl">
-                            
+
                             <tr className=" border-b-2">
                                 <th className="py-5">Tier</th>
                                 <th>Distance</th>
@@ -65,6 +65,11 @@ export function Prices() {
                     <div className="flex-col lg:flex hidden lg:w-1/2 h-full`">
                         <img src={savings} alt="Imagen de ahorros" className=" max-h-72 mt-20" />
                     </div>
+                </div>
+                <div id="makeOrder" className="bg-purple1 cursor-pointer align-middle text-white rounded-full w-52 h-14 mt-14 text-center font-semibold drop-shadow-lg hover:scale-105 text-xl font-light">
+                    <span className=" leading-[3.5rem] align-middle">
+                            Nuevo pedido
+                    </span>
                 </div>
             </div>
             <Footer />
