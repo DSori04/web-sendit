@@ -1,8 +1,8 @@
 import React from "react";
-import Logo from "./logo.png";
-import Tracking from "./Tracking.svg"
-import Box from "./Box.svg"
-import Prices from "./Prices.svg"
+import Logo from "./assets/logo.png";
+import Tracking from "./assets/Tracking.svg"
+import Box from "./assets/Box.svg"
+import Prices from "./assets/Prices.svg"
 import { Link } from "react-router-dom";
 
 export function Navbar() {
