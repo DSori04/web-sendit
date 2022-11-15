@@ -73,7 +73,7 @@ export function Prices() {
                             <Link to="/contact" className=" text-purple1 underline"> ¡Utiliza nuestros beneficios!</Link>
                         </div>
                     </div>
-                    <div className="flex-col lg:flex hidden lg:w-1/2 h-full`">
+                    <div className="flex-row lg:flex hidden lg:w-1/2 h-full justify-center">
                         <img src={savings} alt="Imagen de ahorros" className=" xl:max-h-96 lg:max-h-80 xl:mt-0 lg:mt-10 mt-20" />
                     </div>
                 </div>
