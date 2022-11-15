@@ -13,6 +13,15 @@ export function Home() {
     return (
         <>
             <Navbar />
+            <div className="absolute top-16 sm:bottom-14 bottom-28 bg-white w-full h-full flex flex-col">
+                <div id="text-main" className="flex flex-row">
+                    <div id="text-button" className="flex flex-col">
+                        <div id="text"></div>
+                        <div id="conocenos"><button>¡Conócenos!</button></div>
+                    </div>
+                </div>
+                <div id="counters"></div>
+            </div>
             <Footer />
         </>
     );

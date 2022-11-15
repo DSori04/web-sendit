@@ -17,7 +17,7 @@ export function Navbar() {
                     <Link to="/prices"><img src={Prices} className="text-center h-12 w-16" alt="prices-icon"></img></Link>
                 </div>
                 <div id="links" className="flex flex-row justify-between -mt-2">
-                    <Link to="/tracking" className="hover:underline text-center">Tracking</Link>
+                    <Link to="/tracking" className="hover:underline text-center ">Tracking</Link>
                     <Link to="/new" className="hover:underline text-center">Nuevo</Link>
                     <Link to="/prices" className="hover:underline text-center">Precios</Link>
                 </div>
