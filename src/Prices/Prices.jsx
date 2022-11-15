@@ -46,7 +46,6 @@ export function Prices() {
                 <div className="flex flex-row w-full">
                     <div className="flex flex-col lg:w-1/2 w-full">
                         <table className="text-xl">
-
                             <tr className=" border-b-2">
                                 <th className="py-5">Tier</th>
                                 <th>Distance</th>

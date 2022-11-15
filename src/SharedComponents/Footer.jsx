@@ -10,7 +10,6 @@ export function Footer() {
         <div className="flex h-full">
             <div className="flex-end bg-gray1 w-full sm:h-14 h-28 flex justify-around fixed bottom-0 self-center flex-wrap">
                 <div className="flex text-center h-14 leading-[3.5rem] align-middle pt-3 w-40 justify-around">
-                    {/* TODO Añadir iconitos para cuando el tamaño sea inferior a lg */}
                     <a href="https://twitter.com" target="_blank"><img src={Twitter} className="fill-black w-8 h-8"></img></a>
                     <a href="https://facebook.com" target="_blank"><img src={Facebook} className="fill-black w-8 h-8"></img></a>
                     <a href="https://instagram.com" target="_blank"><img src={Instagram} className="fill-black w-8 h-8"></img></a>
