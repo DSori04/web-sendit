@@ -11,35 +11,36 @@ import LoginIcon from "./assets/undraw_world_re_768.svg"
 export function LogIn() {
     const [loggedIn, setLogin] = useState(true);
     const login_inputs = [
-        {"Name" : "Correo Electrónico", "type" : "email"},
-        {"Name" : "Contraseña", "type" : "password"}
+        { "Name": "Correo Electrónico", "type": "email" },
+        { "Name": "Contraseña", "type": "password" }
     ]
-    function changeLogin(){
+
+    function changeLogin() {
         setLogin(!loggedIn)
     }
 
     return (
         <>
             <Navbar />
-            <div className="flex flex-row absolute top-24 w-full justify-around select-none">
-                <div className="flex flex-col w-1/2">
-                    <div className="flex flex-row justify-start pt-3 font-main -ml-4">
-                        <div className={`ml-12 ${!loggedIn ? "font-bold text-purple1 text-lg" : "text-lg"} cursor-pointer`} onClick={() => setLogin(!loggedIn)}>Log In</div>
-                        <div className={`ml-12 ${loggedIn ? "font-bold text-purple1 text-lg" : "text-lg"} cursor-pointer`} onClick={() => setLogin(!loggedIn)}>Sign Up</div>
+            <div className="lg:absolute lg:pt-20 pt-16 top-16 sm:bottom-14 bottom-28 w-full flex flex-col md:px-20 px-6 font-main lg:min-h-0 min-h-screen">
+                <div className="flex lg:flex-row flex-col w-full">
+                    <div className="flex flex-col lg:w-1/2 w-full h-auto">
+                        <div className="flex flex-row justify-start pt-3 font-main -ml-4">
+                            <div className={`ml-12 ${!loggedIn ? "font-bold text-purple1 text-lg" : "text-lg"} cursor-pointer`} onClick={() => setLogin(!loggedIn)}>Log In</div>
+                            <div className={`ml-12 ${loggedIn ? "font-bold text-purple1 text-lg" : "text-lg"} cursor-pointer`} onClick={() => setLogin(!loggedIn)}>Sign Up</div>
+                        </div>
+                        <div className="w-1/3 h-1.5 bg-gray2 absolute top-[8rem]"></div>
+                        <div className={`${!loggedIn ? "left-24" : "left-52"} w-28 h-1.5 bg-purple2 absolute top-[8rem] transition-transform`}></div>
+                        <div className="absolute top-[11rem] w-7/12">
+                            {loggedIn && <SignUp />}
+                            {!loggedIn && <LoggingIn />}
+                        </div>
                     </div>
-                    <div className="w-1/3 h-1.5 bg-gray2 absolute top-12"></div>
-                    <div className={`${!loggedIn ? "left-24" : "left-52"} w-28 h-1.5 bg-purple2 absolute top-12 transition-transform`}></div>
-                    <div className="absolute top-24 w-7/12">
-                        {loggedIn && <SignUp/>}
-                        {!loggedIn && <LoggingIn/>}
+                    <div className="flex-col lg:flex hidden lg:w-1/2 h-auto lg:mt-10">
+                        <img src={LoginIcon} alt="Login page icon" className=" xl:max-h-96 lg:max-h-80 xl:mt-0 lg:mt-10 mt-20" />
                     </div>
-                    
-                </div>
-                <div>
-                    <img src={LoginIcon}></img>
                 </div>
             </div>
-            
             <Footer />
         </>
     );
