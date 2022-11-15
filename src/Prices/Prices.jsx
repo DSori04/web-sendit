@@ -66,7 +66,7 @@ export function Prices() {
                         <img src={savings} alt="Imagen de ahorros" className=" max-h-72 mt-20" />
                     </div>
                 </div>
-                <div id="makeOrder" className="bg-purple1 cursor-pointer align-middle text-white rounded-full w-52 h-14 mt-14 text-center font-semibold drop-shadow-lg hover:scale-105 text-xl font-light">
+                <div id="makeOrder" className="bg-purple1 cursor-pointer align-middle text-white rounded-full w-52 h-14 mt-14 text-center drop-shadow-lg hover:scale-105 text-xl font-light">
                     <span className=" leading-[3.5rem] align-middle">
                             Nuevo pedido
                     </span>
