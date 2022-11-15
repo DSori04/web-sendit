@@ -8,7 +8,7 @@ export function AboutUs() {
     return (
         <>
             <Navbar />
-            <div className="absolute top-16 sm:bottom-14 bottom-28 w-full flex flex-col md:px-20 px-6 font-main">
+            <div className="lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 w-full flex flex-col md:px-20 px-6 font-main">
                 <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8">¿Quiénes somos?</h1>
                 <div className="flex lg:flex-row flex-col w-full">
                     <div className="flex flex-col lg:w-1/2 w-full h-auto">
@@ -33,14 +33,7 @@ export function AboutUs() {
                     </div>
                 </div>
             </div>
-
-
-            {/* <div className="text-right text-main lg:-mt-28 flex flex-row justify-end">
-                        <div className="w-1/2 pr-4 pt-3 text-lg"><p>SendIT es una empresa comprometida con los <span className="text-purple1 font-bold ">Objetivos de Desarrollo Sostenible</span></p></div>
-                        <div><img src={ods}></img></div>
-                    </div> */}
-
-            {/* <Footer /> */}
+            <Footer />
         </>
     );
 }

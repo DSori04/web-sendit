@@ -12,7 +12,7 @@ export function Home() {
     return (
         <>
             <Navbar />
-            <div className=" pt-16 bg-white w-full h-max flex flex-col">
+            <div className="pt-16 bg-white w-full h-max flex flex-col">
                 <div id="text-main" className="flex flex-row justify-around mt-12 flex-wrap-reverse w-full">
                     <div id="text-content" className="flex flex-col lg:w-4/12 w-full lg:mt-32 mt-10">
                         <div id="text" className="flex flex-col w-full h-max lg:tracking-wider tracking-wide font-bold lg:text-right text-center xl:test-9xl lg:text-4xl sm:text-3xl text-2xl font-main">

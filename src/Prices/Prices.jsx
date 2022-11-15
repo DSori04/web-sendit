@@ -38,7 +38,7 @@ export function Prices() {
     return (
         <>
             <Navbar />
-            <div className="absolute top-16 sm:bottom-14 bottom-28 bg-white w-full  flex flex-col md:px-20 px-6 font-main">
+            <div className="lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 bg-white w-full  flex flex-col md:px-20 px-6 font-main">
                 <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8">Precios</h1>
                 <p className=" py-10 text-2xl">
                     Con nosotros, estar cerca vale <span className="font-bold text-purple1">menos que nunca</span>

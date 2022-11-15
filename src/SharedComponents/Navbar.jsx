@@ -5,6 +5,9 @@ import Box from "./assets/Box.svg"
 import Prices from "./assets/Prices.svg"
 import { Link } from "react-router-dom";
 
+
+
+
 export function Navbar() {
     return (
         <div className="bg-gray1 w-full h-16 flex lg:justify-between z-40 justify-center lg:pl-24 select-none fixed">
