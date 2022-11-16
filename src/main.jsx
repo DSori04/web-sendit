@@ -14,6 +14,7 @@ import { NewOrder } from './NewOrder/NewOrder'
 import { Prices } from './Prices/Prices'
 import { Tracking } from './Tracking/Tracking'
 import { NotFound } from "./NotFound/NotFound";
+import { SignUp } from "./LogIn/SignUp";
 
 const router = createBrowserRouter([
   {
@@ -31,11 +32,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <LogIn option={true}/>,
+    element: <LogIn/>,
   },
   {
     path: "/signup",
-    element: <LogIn option={false}/>
+    element: <SignUp/>
   },
   {
     path: "/new",

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react"
 import LoginIcon from "./assets/undraw_world_re_768.svg"
 import { Link } from 'react-router-dom'
 
-export function LogIn() {
+export function SignUp(){
     return (
         <>
             <Navbar />
@@ -13,11 +13,11 @@ export function LogIn() {
                 <div className="flex lg:flex-row flex-col w-full">
                     <div className="flex flex-col lg:w-1/2 w-full h-auto">
                         <div className="flex flex-row justify-start pt-3 font-main -ml-4">
-                            <div className={`ml-12 font-bold text-purple1 text-lg cursor-pointer`}>Log In</div>
-                            <Link to="/signup"><div className={`ml-12 text-lg cursor-pointer`}>Sign Up</div></Link>
+                            <Link to="/login"><div className={`ml-12 text-black text-lg cursor-pointer`}>Log In</div></Link>
+                            <div className={`ml-12 font-bold text-purple1 text-lg cursor-pointer`}>Sign Up</div>
                         </div>
                         <div className="w-1/3 h-1.5 bg-gray2 absolute top-[8rem]"></div>
-                        <div className={`left-24 w-28 h-1.5 bg-purple2 absolute top-[8rem] transition-transform`}></div>
+                        <div className={`left-52 w-28 h-1.5 bg-purple2 absolute top-[8rem] transition-transform`}></div>
                         <div className="absolute top-[11rem] w-7/12">
                         </div>
                     </div>
