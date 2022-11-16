@@ -22,7 +22,6 @@ export function AboutUs() {
                     <div className="flex-col flex lg:w-1/2 h-auto lg:mt-10">
                         <div className="text-right text-main flex flex-row justify-end">
                             <img src={aboutusimage} alt="Imagen de About Us" className=" xl:max-h-96 lg:max-h-80 sm:max-h-80 xl:mt-0 lg:mt-10 mt-10" />
-
                         </div>
                         <div className="text-right text-main lg:mt-10 mt-5 flex flex-row justify-end">
                             <div className="w-4/5 pr-4 pt-3 text-md max-h-fit">
