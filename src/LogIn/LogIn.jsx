@@ -1,23 +1,20 @@
 import React from "react";
 import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { LoggingIn } from "./components/LoggingIn"
 import { SignUp } from "./components/SignUp";
 import { Textinp } from "./components/textinp";
 import { FormGenerator } from "./components/FormGenerator";
 import LoginIcon from "./assets/undraw_world_re_768.svg"
 
-export function LogIn() {
-    const [loggedIn, setLogin] = useState(true);
-    const login_inputs = [
-        { "Name": "Correo Electrónico", "type": "email" },
-        { "Name": "Contraseña", "type": "password" }
-    ]
-
-    function changeLogin() {
-        setLogin(!loggedIn)
-    }
+export function LogIn(props) {
+    const [loggedIn, setLogin] = useState(props.option);
+    useEffect(() => {
+      return () => {
+        setLogin(props.option)
+      }
+    }, [props.option])  
 
     return (
         <>
@@ -26,8 +23,8 @@ export function LogIn() {
                 <div className="flex lg:flex-row flex-col w-full">
                     <div className="flex flex-col lg:w-1/2 w-full h-auto">
                         <div className="flex flex-row justify-start pt-3 font-main -ml-4">
-                            <div className={`ml-12 ${!loggedIn ? "font-bold text-purple1 text-lg" : "text-lg"} cursor-pointer`} onClick={() => setLogin(!loggedIn)}>Log In</div>
-                            <div className={`ml-12 ${loggedIn ? "font-bold text-purple1 text-lg" : "text-lg"} cursor-pointer`} onClick={() => setLogin(!loggedIn)}>Sign Up</div>
+                            <div className={`ml-12 ${!loggedIn ? "font-bold text-purple1 text-lg" : "text-lg"} cursor-pointer`} onClick={() => setLogin(false)}>Log In</div>
+                            <div className={`ml-12 ${loggedIn ? "font-bold text-purple1 text-lg" : "text-lg"} cursor-pointer`} onClick={() => setLogin(true)}>Sign Up</div>
                         </div>
                         <div className="w-1/3 h-1.5 bg-gray2 absolute top-[8rem]"></div>
                         <div className={`${!loggedIn ? "left-24" : "left-52"} w-28 h-1.5 bg-purple2 absolute top-[8rem] transition-transform`}></div>

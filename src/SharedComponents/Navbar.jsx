@@ -26,8 +26,8 @@ export function Navbar() {
                 </div>
                 </div>
                 <div className="flex justify-around w-96">
-                    <div id="login" className="ml-28 cursor-pointer align-middle leading-[3.5rem] h-16"><p className="text-purple1 font-main font-semibold pt-1 hover:hue-rotate-15">Log In</p></div>
-                    <div id="signup" className="bg-purple1 cursor-pointer align-middle leading-[2rem] text-white rounded-full mt-4 w-28 h-8 text-center -ml-8 font-semibold drop-shadow-lg hover:scale-105 hover:hue-rotate-15">Sign Up</div>
+                    <Link to="/login"><div id="login" className="ml-28 cursor-pointer align-middle leading-[3.5rem] h-16"><p className="text-purple1 font-main font-semibold pt-1 hover:hue-rotate-15">Log In</p></div></Link>
+                    <Link to="/signup"><div id="signup" className="bg-purple1 cursor-pointer align-middle leading-[2rem] text-white rounded-full mt-4 w-28 h-8 text-center -ml-8 font-semibold drop-shadow-lg hover:scale-105 hover:hue-rotate-15">Sign Up</div></Link>
                 </div>
                 
             </div>
