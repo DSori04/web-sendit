@@ -13,6 +13,7 @@ export function SignUp(){
     const [pw, setPw] = useState("");
     const [pwrepeat, setPwrepeat] = useState("");
     const [accepted, setAccepted] = useState(false);
+    const [valid, setValid] = useState(false);
 
     function checkPw(e){
         const val = e.target.value
@@ -20,20 +21,10 @@ export function SignUp(){
         if (val.length < e.target.minLength){
             e.target.setCustomValidity("La contraseña es demasiado corta")
         } else{
-            e.target.setCustomValidity("Este campo es obligatoriooo")
+            e.target.setCustomValidity("Este campo es obligatorio")
         }
     }
 
-    function repeatingPw(e){
-        console.log(e.target.value);
-        if (e.target.value == ""){
-            e.target.setCustomValidity("Este campo es obligatorio")
-        } else if (e.target.value != "" && e.target.value != pw){
-            e.target.setCustomValidity("Las contraseñas no coinciden")
-        } else{
-            setPwrepeat(e.target.value)
-        }
-    }
 
     return (
         <>
@@ -64,10 +55,12 @@ export function SignUp(){
                                 
                                 <label htmlFor="pwrepeat" className="text-main block mt-8">Repetir Contraseña <span className="text-main text-red1">*</span></label>
                                 <input type="password" name="pwrepeat" className="border-b-2" required minLength={6} onInvalid={(e) => checkPw(e)} onChange={(e) => setPwrepeat(e.target.value)} onInput={(e) => e.target.setCustomValidity('')}></input><br></br>
-                                
+                                {(pwrepeat != pw && pwrepeat != "") && <><span className="text-red1">Las contraseñas deben ser iguales</span><br></br></>}
+
                                 <input type="checkbox" name="checkTerms" className="inline-block mt-8" required onInvalid={(e) => e.target.setCustomValidity('Este campo es obligatorio')} onInput={(e) => e.target.setCustomValidity('')}></input>                                
                                 <label htmlFor="checkTerms"> Acepto los <span className="text-purple1 font-main underline cursor-pointer">términos de servicio</span> <span className="text-main text-red1">*</span></label>
 
+                                <input type="hidden" onSubmit={() => setValid(pw == pwrepeat)}></input>
                                 <input type="submit" value="Sign Up" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl hover:hue-rotate-15"/>
                             </form>
                         </div>
