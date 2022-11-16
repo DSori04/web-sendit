@@ -9,6 +9,53 @@ export function Home() {
     const [clients, setClients] = useState(700)
     const [commerce, setCommerce] = useState(47)
     const [orders, setOrders] = useState(900)
+
+    const clientTarget = 700
+    const commerceTarget = 75
+    const ordersTarget = 900
+
+    useEffect(() => {
+        let i = 0;
+        return () => {
+          let x = setInterval(() => {
+              if ( i === clientTarget){
+                  clearInterval(x)
+              } else {
+                  setClients(i + 5)
+                  i+=5
+              }
+          }, 1)
+        }
+      }, [])
+
+    useEffect(() => {
+        let i = 0;
+        return () => {
+          let x = setInterval(() => {
+              if ( i === commerceTarget){
+                  clearInterval(x)
+              } else {
+                  setCommerce(i + 1)
+                  i++
+              }
+          }, 1)
+        }
+      }, [])
+
+      useEffect(() => {
+        let i = 0;
+        return () => {
+          let x = setInterval(() => {
+              if ( i === ordersTarget){
+                  clearInterval(x)
+              } else {
+                  setOrders(i + 5)
+                  i+=5
+              }
+          }, 1)
+        }
+      }, [])
+    
     return (
         <>
             <Navbar />
