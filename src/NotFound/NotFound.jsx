@@ -24,7 +24,7 @@ export function NotFound() {
                     <span className=" lg:hidden inline">
                         <br />
                     </span>
-                    <a href="/" className=" text-purple1 underline">Volver a inicio</a>
+                    <a href="/" className=" text-purple1 underline hover:hue-rotate-15">Volver a inicio</a>
 
                 </h1>
             </div>

@@ -17,13 +17,15 @@ export function Footer() {
                 </div>
                 <div className=" lg:self-auto sm:w-auto text-center leading-[3.5rem] align-middle h-14 w-full">
                     <Link to="/about-us">
-                        <span className=" hover:underline">About Us</span> &nbsp;
+                        <span className=" hover:underline cursor-pointer">About Us</span> &nbsp;
                     </Link>
                     · &nbsp;
-                    <span className=" hover:underline">LOPD</span> &nbsp;
+                    <Link to="/LOPD">
+                        <span className=" hover:underline cursor-pointer">LOPD</span> &nbsp;
+                    </Link>
                     · &nbsp;
                     <Link to="/contact">
-                        <span className=" hover:underline">Contacto</span>
+                        <span className=" hover:underline cursor-pointer">Contacto</span>
                     </Link></div>
             </div>
         </div>

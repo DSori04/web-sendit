@@ -62,7 +62,7 @@ export function Prices() {
                             })}
                         </table>
                         <div className=" lg:self-start self-center">
-                            <div id="makeOrder" className="bg-purple1 cursor-pointer text-white rounded-full w-52 h-14 mt-14 text-center drop-shadow-lg hover:scale-105 text-xl font-main font-semibold">
+                            <div id="makeOrder" className="bg-purple1 cursor-pointer text-white rounded-full w-52 h-14 mt-14 text-center drop-shadow-lg hover:scale-105 text-xl font-main font-semibold hover:hue-rotate-15">
                                 <span className=" leading-[3.5rem] align-middle">
                                     <Link to="/new">Nuevo pedido</Link>
                                 </span>
@@ -70,7 +70,7 @@ export function Prices() {
                         </div>
                         <div className="py-8 lg:text-left text-center w-full font-light">
                             ¿Eres una pequeña empresa?
-                            <Link to="/contact" className=" text-purple1 underline"> ¡Utiliza nuestros beneficios!</Link>
+                            <Link to="/contact" className=" text-purple1 underline hover:hue-rotate-15"> ¡Utiliza nuestros beneficios!</Link>
                         </div>
                     </div>
                     <div className="flex-row lg:flex hidden lg:w-1/2 h-full justify-center">

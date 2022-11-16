@@ -15,11 +15,11 @@ export function Home() {
             <div className="pt-16 bg-white w-full h-max flex flex-col md:px-20 px-6">
                 <div id="text-main" className="flex flex-row justify-around mt-12 flex-wrap-reverse w-full">
                     <div id="text-content" className="flex flex-col lg:w-4/12 w-full lg:mt-32 mt-10">
-                        <div id="text" className="flex flex-col w-full h-max lg:tracking-wider tracking-wide font-bold lg:text-right text-center xl:test-9xl lg:text-4xl sm:text-3xl text-2xl font-main">
+                        <div id="text" className="flex flex-col w-full h-max lg:tracking-wider tracking-wide font-bold lg:text-right text-center xl:test-9xl lg:text-4xl sm:text-3xl text-2xl font-main lg">
                             Nunca hemos <br></br> estado tan <span className="text-purple1">cerca</span>
                             <div className="float w-full mt-4">
                                 <div className=" grid lg:place-content-end place-content-center">
-                                    <div className="max-w-max px-5 font-main drop-shadow-lg border-purple1 hover:scale-105 font-semibold text-xl py-2 border-2 text-white bg-purple1 rounded-full cursor-pointer">
+                                    <div className="max-w-max px-5 font-main drop-shadow-lg border-purple1 hover:scale-110 lg:hover:hue-rotate-15 font-semibold text-xl py-2 border-2 text-white bg-purple1 rounded-full cursor-pointer">
                                         <Link to="/about-us">¡Conócenos!</Link>
                                     </div>
                                 </div>
@@ -27,7 +27,7 @@ export function Home() {
 
                         </div>
                     </div>
-                    <div id="home-img" className="lg:-ml-44"><img src={HomeImg}></img></div>
+                    <div id="home-img" className="lg:-ml-44"><img src={HomeImg} ></img></div>
 
                 </div> <br />
                 <div id="counters" className="w-full h-48 flex justify-around text-center lg:mt-36 md:mt-12 mt-5 lg:scale-100 scale-75">
