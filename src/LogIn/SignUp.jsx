@@ -49,7 +49,7 @@ export function SignUp(){
                             <div className="relative h-full w-28 ml-28 bg-purple2 "></div>
                         </div>
                         <div className="flex flex-col relative mt-12 lg:ml-24">
-                            <form>
+                            <form autoComplete="off">
                                 <label htmlFor="name" className="text-main block mt-8">Nombre <span className="text-main text-red1">*</span></label>
                                 <input type="text" name="name" className="border-b-2 block" required onChange={(e) => setName(e.target.value)} onInvalid={(e) => e.target.setCustomValidity('Este campo es obligatorio')} onInput={(e) => e.target.setCustomValidity('')}></input>
                                 
