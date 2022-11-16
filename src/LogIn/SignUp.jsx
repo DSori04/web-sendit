@@ -60,7 +60,7 @@ export function SignUp(){
                                 <input type="email" name="email" className="border-b-2 block" required onChange={(e) => setMail(e.target.value)} onInvalid={(e) => e.target.setCustomValidity('Introduce un correo electrónico válido')} onInput={(e) => e.target.setCustomValidity('')}></input>
                                 
                                 <label htmlFor="pw" className="text-main block mt-8">Contraseña <span className="text-main text-red1">*</span></label>
-                                <input type="password" name="pw" className="border-b-2" required onChange={(e) => setPw(e.target.value)} minLength={6} onInvalid={(e) => setPwrepeat(e)} onInput={(e) => e.target.setCustomValidity('')}></input>
+                                <input type="password" name="pw" className="border-b-2" required onChange={(e) => setPw(e.target.value)} minLength={6} onInvalid={(e) => checkPw(e)} onInput={(e) => e.target.setCustomValidity('')}></input>
                                 
                                 <label htmlFor="pwrepeat" className="text-main block mt-8">Repetir Contraseña <span className="text-main text-red1">*</span></label>
                                 <input type="password" name="pwrepeat" className="border-b-2" required minLength={6} onInvalid={(e) => checkPw(e)} onChange={(e) => setPwrepeat(e.target.value)} onInput={(e) => e.target.setCustomValidity('')}></input><br></br>
