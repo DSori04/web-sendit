@@ -20,7 +20,7 @@ module.exports = {
     },
     extend: {
       screens: {
-        'tall': { 'raw': '(max-height: 900px)' }
+        'notTall': { 'raw': '(max-height: 900px)' }
       }
     },
   },

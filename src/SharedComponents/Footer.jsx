@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 export function Footer() {
     return (
-        <footer className="flex pt-5 w-full lg:absolute bottom-0 tall:relative">
+        <footer className="flex pt-5 w-full sm:notTall:relative lg:notTall:fixed lg:absolute bottom-0 relative">
             <div className="flex-end bg-gray1 w-full sm:h-14 h-28 flex justify-around bottom-0 self-center flex-wrap">
                 <div className="flex text-center h-14 leading-[3.5rem] align-middle pt-3 w-40 justify-around">
                     <a href="https://twitter.com" target="_blank"><img src={Twitter} className="fill-black w-8 h-8"></img></a>
