@@ -4,6 +4,7 @@ import { Footer } from "../SharedComponents/Footer";
 import { useState, useEffect } from "react"
 import LoginIcon from "./assets/undraw_world_re_768.svg"
 import { Link } from 'react-router-dom'
+import { Error } from '../SharedComponents/Error'
 
 export function LogIn() {
     return (
@@ -37,6 +38,7 @@ export function LogIn() {
                 </div>
             </div>
             <Footer />
+            <Error type="login" />
         </>
     );
 }
