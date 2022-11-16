@@ -18,7 +18,11 @@ module.exports = {
       'main' : "'Montserrat', sans-serif",
       'numbers' : 'IBM Plex Mono'
     },
-    extend: {},
+    extend: {
+      screens: {
+        'tall': { 'raw': '(max-height: 900px)' }
+      }
+    },
   },
   plugins: [],
 }
