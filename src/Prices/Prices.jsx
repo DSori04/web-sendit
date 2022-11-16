@@ -46,20 +46,25 @@ export function Prices() {
                 <div className="flex flex-row w-full">
                     <div className="flex flex-col lg:w-1/2 w-full">
                         <table className="text-xl">
-                            <tr className=" border-b-2">
-                                <th className="py-5">Tier</th>
-                                <th>Distance</th>
-                                <th>Price per Km</th>
-                            </tr>
+                            <thead>
+                                <tr className=" border-b-2">
+                                    <th className="py-5">Tier</th>
+                                    <th>Distance</th>
+                                    <th>Price per Km</th>
+                                </tr>
+                            </thead>
                             {prices.map((price) => {
                                 return (
-                                    <tr className=" border-b-2 border-b-gray2">
-                                        <td className="text-center py-5">{price.tier}</td>
-                                        <td className="text-center">{price.distance}</td>
-                                        <td className="text-center">{price.pricePerKm} € / km</td>
-                                    </tr>
+                                    <tbody key={price.tier}>
+                                        <tr className=" border-b-2 border-b-gray2">
+                                            <td className="text-center py-5">{price.tier}</td>
+                                            <td className="text-center">{price.distance}</td>
+                                            <td className="text-center">{price.pricePerKm} € / km</td>
+                                        </tr>
+                                    </tbody>
                                 )
                             })}
+
                         </table>
                         <div className=" lg:self-start self-center">
                             <div id="makeOrder" className="bg-purple1 cursor-pointer text-white rounded-full w-52 h-14 mt-14 text-center drop-shadow-lg hover:scale-105 text-xl font-main font-semibold hover:hue-rotate-15">
