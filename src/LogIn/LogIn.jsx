@@ -14,7 +14,7 @@ export function LogIn() {
                     <div className="flex flex-col lg:w-1/2 w-full h-auto ml-24">
                         <div className="flex flex-row justify-start pt-3 font-main -ml-4">
                             <div className={`ml-12 font-bold text-purple1 text-lg cursor-pointer`}>Log In</div>
-                            <Link to="/signup"><div className={`ml-12 text-lg cursor-pointer`}>Sign Up</div></Link>
+                            <Link to="/signup"><div className={`ml-12 text-lg cursor-pointer hover:text-purple1 hover:font-semibold`}>Sign Up</div></Link>
                         </div>
                         <div className="w-96 h-1.5 bg-gray2 absolute top-[8rem]">
                             <div className="relative h-full w-24 ml-3 bg-purple2 "></div>
