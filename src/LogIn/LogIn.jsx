@@ -16,8 +16,9 @@ export function LogIn() {
                             <div className={`ml-12 font-bold text-purple1 text-lg cursor-pointer`}>Log In</div>
                             <Link to="/signup"><div className={`ml-12 text-lg cursor-pointer`}>Sign Up</div></Link>
                         </div>
-                        <div className="w-1/3 h-1.5 bg-gray2 absolute top-[8rem]"></div>
-                        <div className={`left-24 w-28 h-1.5 bg-purple2 absolute top-[8rem] transition-transform`}></div>
+                        <div className="w-96 h-1.5 bg-gray2 absolute top-[8rem]">
+                            <div className="relative h-full w-24 ml-3 bg-purple2 "></div>
+                        </div>
                         <div className="absolute top-[11rem] w-7/12">
                         </div>
                     </div>

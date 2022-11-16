@@ -16,9 +16,8 @@ export function SignUp(){
                             <Link to="/login"><div className={`ml-12 text-black text-lg cursor-pointer`}>Log In</div></Link>
                             <div className={`ml-12 font-bold text-purple1 text-lg cursor-pointer`}>Sign Up</div>
                         </div>
-                        <div className="w-1/3 h-1.5 bg-gray2 absolute top-[8rem]"></div>
-                        <div className={`left-52 w-28 h-1.5 bg-purple2 absolute top-[8rem] transition-transform`}></div>
-                        <div className="absolute top-[11rem] w-7/12">
+                        <div className="w-96 h-1.5 bg-gray2 absolute top-[8rem]">
+                            <div className="relative h-full w-28 ml-28 bg-purple2 "></div>
                         </div>
                     </div>
                     <div className="flex-col lg:flex hidden lg:w-1/2 h-auto lg:mt-10">
