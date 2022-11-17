@@ -66,7 +66,7 @@ export function Home() {
                             Nunca hemos <br></br> estado tan <span className="text-purple1">cerca</span>
                             <div className="float w-full mt-4">
                                 <div className=" grid lg:place-content-end place-content-center">
-                                    <div className="max-w-max px-5 font-main drop-shadow-lg border-purple1 hover:scale-110 lg:hover:hue-rotate-15 font-semibold text-xl py-2 border-2 text-white bg-purple1 rounded-full cursor-pointer">
+                                    <div className="max-w-max px-5 font-main drop-shadow-lg border-purple1 hover:scale-110 lg:hover:hue-rotate-15 font-semibold text-xl py-2 border-2 text-white bg-purple1 rounded-full cursor-pointer hover:animate-bounce">
                                         <Link to="/about-us">¡Conócenos!</Link>
                                     </div>
                                 </div>
