@@ -22,7 +22,7 @@ export function Contact() {
                             <input type="email" name="email" id="email" className="border-b-2 block" required></input>
 
                             <label for="details" className="text-main block mt-8">Mensaje</label>
-                            <textarea name="details" id="" cols="30" rows="10" className="mt-2 rounded-xl border-2 p-2"></textarea>
+                            <textarea name="details" id="" cols="30" rows="5" className="mt-2 sm:w-fit w-full rounded-xl border-2 p-2"></textarea>
 
                             <input type="submit" value="Enviar" className="block mt-6 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl hover:hue-rotate-15"/>
                         </form>
