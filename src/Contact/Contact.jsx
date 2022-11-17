@@ -7,7 +7,7 @@ export function Contact() {
     return (
         <>
             <Navbar />
-            <div className="lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 bg-white w-full  flex flex-col md:px-20 px-6 font-main">
+            <div className="lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 bg-white w-full flex flex-col md:px-20 px-6 font-main lg:min-h-max min-h-[90vh]">
                 <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Contacto</h1>
                 <div className="flex flex-row w-full">
                     <div className="flex flex-col lg:w-1/2 w-full ml-24">
