@@ -6,13 +6,16 @@ import Prices from "./assets/Prices.svg"
 import { Link } from "react-router-dom";
 import { useState } from 'react';
 import MenuIcon from './assets/menu-outline.svg'
+import LogIcon from './assets/logIcon.svg'
 
 export function Navbar() {
     const [tracking, setTracking] = useState(false)
     const [newMenu, setNew] = useState(false);
-    const [price, setPrice] = useState(false)
+    const [price, setPrice] = useState(false);
+    const [sideMenu, setVis] = useState(false);
 
     return (
+        <>
         <nav className="bg-gray1 w-full h-16 flex lg:justify-between z-40 justify-between lg:pl-24 select-none fixed">
             <div id="logo" className="flex-start h-14 w-48"><Link to="/"><img src={Logo} className="object-contain"></img></Link></div>
             <div id="menu" className="lg:flex hidden flex-row w-9/12 text-center align-middle justify-around pl-16 select-none font-main text-gray2">
@@ -34,9 +37,17 @@ export function Navbar() {
                     <Link to="/signup"><div id="signup" className="bg-purple1 cursor-pointer align-middle leading-[2rem] text-white rounded-full mt-4 w-28 h-8 text-center -ml-8 font-semibold drop-shadow-lg hover:scale-105 hover:hue-rotate-15">Sign Up</div></Link>
                 </div>
             </div>
-            <div className="lg:hidden flex">
+            <div className="lg:hidden flex pr-2 w-16" onClick={() => setVis(!sideMenu)}>
                     <img src={MenuIcon}></img>
-                </div>
+            </div>
         </nav>
+        {sideMenu && <nav className="absolute top-16 w-16 right-0 bg-gray1 h-fit rounded-bl-3xl grid grid-cols-1 items-center px-4 lg:hidden drop-shadow-xl">
+            <Link to="/tracking"><img src={Tracking} className="w-full py-4 border-b-2"></img></Link>
+            <Link to="/new"><img src={Box} className="w-full py-4 border-b-2"></img></Link>
+            <Link to="/prices"><img src={Prices} className="w-full py-4 border-b-2"></img></Link>
+            <Link to="/signup"><img src={LogIcon} className="w-full py-4"></img></Link>
+        </nav>}
+        </>
+        
     );
 }
