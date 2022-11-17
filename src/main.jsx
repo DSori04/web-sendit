@@ -50,6 +50,10 @@ const router = createBrowserRouter([
     path: "/tracking",
     element: <Tracking/>,
   },
+  {
+    path: "/tracking/:id",
+    element: <Tracking />,
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
