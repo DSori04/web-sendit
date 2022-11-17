@@ -8,10 +8,26 @@ export function Contact() {
         <>
             <Navbar />
             <div className="lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 bg-white w-full  flex flex-col md:px-20 px-6 font-main">
-                <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8">Contacto</h1>
+                <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Contacto</h1>
                 <div className="flex flex-row w-full">
-                    <div className="flex flex-col lg:w-1/2 w-full">
-                        Aqui va todo lo del formulario, al terminar avisame y ya pondre los margenes yo xd
+                    <div className="flex flex-col lg:w-1/2 w-full ml-24">
+                        <form className="select-none">
+                            <label htmlFor="name" className="text-main block mt-8">Nombre completo <span className="text-main text-red1">*</span></label>
+                            <input type="text" name="name" id="name" className="border-b-2 block" required/>
+
+                            <label htmlFor="tlf" className="text-main block mt-8">Teléfono</label>
+                            <input type="tel" name="tlf" id="tlf" className="border-b-2 block"/>
+
+                            <label htmlFor="email" className="text-main block mt-8">Correo Electrónico <span className="text-main text-red1">*</span></label>
+                            <input type="email" name="email" id="email" className="border-b-2 block" required></input>
+
+                            <label for="details" className="text-main block mt-8">Mensaje</label>
+                            <textarea name="details" id="" cols="30" rows="10" className="mt-2 rounded-xl border-2 p-2"></textarea>
+
+                            <input type="submit" value="Enviar" className="block mt-6 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl hover:hue-rotate-15"/>
+                        </form>
+                        
+
                     </div>
                     <div className="flex-col lg:flex hidden lg:w-1/2 h-auto lg:mt-10">
                         <div className="text-right text-main flex flex-row justify-center">

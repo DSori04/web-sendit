@@ -38,7 +38,6 @@ export function LogIn() {
                 </div>
             </div>
             <Footer />
-            <Error type="login" />
         </>
     );
 }
