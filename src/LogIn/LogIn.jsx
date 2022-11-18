@@ -10,7 +10,7 @@ export function LogIn() {
     return (
         <>
             <Navbar />
-            <div className="lg:absolute lg:pt-20 pt-16 top-16 sm:bottom-14 bottom-28 w-full flex flex-col md:px-20 px-6 font-main lg:min-h-0 min-h-screen">
+            <div className="xl:w-3/4 xl:ml-[15%] lg:absolute lg:pt-20 pt-16 top-16 sm:bottom-14 bottom-28 w-full flex flex-col md:px-20 px-6 font-main lg:min-h-0 min-h-screen">
                 <div className="flex lg:flex-row flex-col w-full flex-nowrap">
                     <div className="flex flex-col lg:w-1/2 w-full h-auto ml-24">
                         <div className="flex flex-row justify-start pt-3 font-main -ml-4">
