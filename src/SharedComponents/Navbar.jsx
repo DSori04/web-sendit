@@ -17,7 +17,12 @@ export function Navbar() {
     return (
         <>
             <nav className="bg-gray1 w-full h-16 flex lg:justify-between z-40 justify-between lg:px-24 select-none fixed">
-                <div id="logo" className="flex-start h-14 w-48"><Link to="/"><img src={Logo} className="object-contain"></img></Link></div>
+                <div id="logo" className="flex-start h-14 w-48">
+                    <Link to="/">
+                        <img src={Logo} className="object-contain">
+                        </img>
+                    </Link>
+                </div>
                 <div id="menu" className="lg:flex hidden flex-row w-max text-center align-middle justify-around select-none font-main text-gray2">
                     <div className="w-max lg:flex flex-col justify-center">
                         <div className="flex lg:flex-row flex-col justify-end w-max  h-max">
