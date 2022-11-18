@@ -12,7 +12,8 @@ module.exports = {
       'purple1' : '#7903C1',
       'purple2' : '#E4B8FF',
       'red1' : '#FF0000',
-      'gray2' : '#4A4A4A'
+      'gray2' : '#4A4A4A',
+      'gray3' : '#D9D9D9'
     },
     fontFamily: {
       'main' : "'Montserrat', sans-serif",
