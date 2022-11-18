@@ -38,13 +38,14 @@ export function Prices() {
     return (
         <>
             <Navbar />
-            <div className="lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 bg-white w-full  flex flex-col md:px-20 px-6 font-main]">
+            <div className="flex justify-center w-full">
+            <div className="lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 bg-white w-3/4 flex flex-col font-main">
                 <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8">Precios</h1>
                 <p className=" py-10 text-2xl">
                     Con nosotros, estar cerca vale <span className="font-bold text-purple1">menos que nunca</span>
                 </p>
-                <div className="flex flex-row w-full">
-                    <div className="flex flex-col lg:w-1/2 w-full">
+                <div className="flex flex-row w-full justify-around">
+                    <div className="flex flex-col w-full">
                         <table className="text-xl">
                             <thead>
                                 <tr className=" border-b-2">
@@ -78,11 +79,11 @@ export function Prices() {
                             <Link to="/contact" className=" text-purple1 underline hover:hue-rotate-15"> ¡Utiliza nuestros beneficios!</Link>
                         </div>
                     </div>
-                    <div className="flex-row lg:flex hidden lg:w-1/2 h-full justify-center">
+                    <div className="flex-row lg:flex w-3/4 hidden h-full justify-center">
                         <img src={savings} alt="Imagen de ahorros" className=" xl:max-h-96 lg:max-h-80 xl:mt-0 lg:mt-10 mt-20" />
                     </div>
                 </div>
-
+                </div>
             </div>
             <Footer />
         </>

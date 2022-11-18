@@ -29,7 +29,8 @@ export function Tracking() {
     return (
         <>
             <Navbar />
-            <div className="xl:w-3/4 xl:ml-[20%] xl:top-[20%] lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 bg-white w-full  flex flex-col md:px-20 px-6 font-main">
+            <div className="flex justify-center w-full">
+            <div className="xl:top-[20%] lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 bg-white w-3/4  flex flex-col md:px-20 px-6 font-main">
                 <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Tracking #{id == undefined ? orderId : id}</h1>
                 {inputting && <div className="flex flex-row w-full">
                     <TrackingForm />
@@ -37,7 +38,7 @@ export function Tracking() {
                         <img src={TrackIcon} alt="Imagen de About Us" className=" xl:max-h-96 lg:max-h-80 sm:max-h-80 xl:mt-0 lg:mt-10 mt-10 min-h-fit" />
                     </div>
                 </div>}
-
+            </div>
             </div>
             <Footer />
         </>

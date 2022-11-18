@@ -10,15 +10,16 @@ export function LogIn() {
     return (
         <>
             <Navbar />
-            <div className="xl:w-3/4 xl:ml-[15%] lg:absolute lg:pt-20 pt-16 top-16 sm:bottom-14 bottom-28 w-full flex flex-col md:px-20 px-6 font-main lg:min-h-0 min-h-screen">
+            <div className="w-full flex justify-center">
+            <div className="w-3/4 lg:absolute lg:pt-20 pt-16 top-16 sm:bottom-14 bottom-28 flex flex-col md:px-20 px-6 font-main lg:min-h-0 min-h-screen">
                 <div className="flex lg:flex-row flex-col w-full flex-nowrap">
-                    <div className="flex flex-col lg:w-1/2 w-full h-auto ml-24">
-                        <div className="flex flex-row justify-start pt-3 font-main -ml-4">
-                            <div className={`ml-12 font-bold text-purple1 text-lg cursor-pointer`}>Log In</div>
-                            <Link to="/signup"><div className={`ml-12 text-lg cursor-pointer hover:text-purple1 hover:font-semibold`}>Sign Up</div></Link>
+                    <div className="flex flex-col lg:w-1/2 w-full h-auto">
+                        <div className="flex flex-row justify-start pt-3 font-main">
+                            <div className={`ml-8 font-bold text-purple1 text-lg cursor-pointer`}>Log In</div>
+                            <Link to="/signup"><div className={`ml-8 text-lg cursor-pointer hover:text-purple1 hover:font-semibold`}>Sign Up</div></Link>
                         </div>
-                        <div className="w-96 h-1.5 bg-gray2 absolute top-[8rem]">
-                            <div className="relative h-full w-24 ml-3 bg-purple2 "></div>
+                        <div className="lg:w-96 w-[40%] h-1.5 bg-gray2 absolute top-[8rem]">
+                            <div className="relative h-full w-28 ml-3 bg-purple2 "></div>
                         </div>
                         <div className="flex flex-col relative mt-12 lg:ml-24">
                             <form>
@@ -32,10 +33,11 @@ export function LogIn() {
                     </div>
                     
                     <div className="flex-col lg:flex hidden lg:w-1/2 h-auto lg:mt-10">
-                        <img src={LoginIcon} alt="Login page icon" className=" xl:max-h-96 lg:max-h-80 xl:mt-0 lg:mt-10 mt-10" />
+                        <img src={LoginIcon} alt="Login page icon" className=" xl:max-h-96 lg:max-h-80 xl:mt-0 lg:mt-10 mt-10 min-w-fit" />
                     </div>
                     
                 </div>
+            </div>
             </div>
             <Footer />
         </>
