@@ -59,7 +59,8 @@ export function Home() {
     return (
         <>
             <Navbar />
-            <div className="pt-16 bg-white w-full h-max flex flex-col md:px-20 px-6">
+            <div className="flex justify-center w-full">
+            <div className="pt-16 bg-white w-3/4 xl:absolute h-max flex flex-col md:px-20 px-6">
                 <div id="text-main" className="flex flex-row justify-around mt-12 flex-wrap-reverse w-full">
                     <div id="text-content" className="flex flex-col lg:w-4/12 w-full lg:mt-32 mt-10">
                         <div id="text" className="flex flex-col w-full h-max lg:tracking-wider tracking-wide font-bold lg:text-right text-center xl:test-9xl lg:text-4xl sm:text-3xl text-2xl font-main lg">
@@ -77,7 +78,7 @@ export function Home() {
                     <div id="home-img" className="lg:-ml-44"><img src={HomeImg} ></img></div>
 
                 </div> <br />
-                <div id="counters" className="w-full h-max flex justify-around text-center lg:mt-36 md:mt-12 mt-5 lg:scale-100 scale-75">
+                <div id="counters" className="xl:w-[70%] xl:ml-[20%] w-full h-max flex justify-around text-center lg:mt-36 md:mt-12 mt-5 lg:scale-100 scale-75">
                     <div id="clientes" className="flex flex-col sm:px-10 px-4 h-max">
                         <div className="sm:text-6xl text-4xl font-numbers font-semibold">{clients}k</div>
                         <div className="font-main text-xl">Clientes satisfechos</div>
@@ -91,6 +92,7 @@ export function Home() {
                         <div className="font-main text-xl">Pedidos completados</div>
                     </div>
                 </div>
+            </div>
             </div>
             <Footer />
         </>

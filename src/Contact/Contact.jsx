@@ -7,7 +7,8 @@ export function Contact() {
     return (
         <>
             <Navbar />
-            <div className="lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 bg-white w-full flex flex-col md:px-20 px-6 font-main lg:min-h-max min-h-[90vh]">
+            <div className="flex justify-center w-full">
+            <div className="xl:w-3/4 xl:ml-[15%] lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 bg-white w-full flex flex-col md:px-20 px-6 font-main lg:min-h-max min-h-[90vh]">
                 <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Contacto</h1>
                 <div className="flex flex-row w-full">
                     <div className="flex flex-col lg:w-1/2 w-full ml-24">
@@ -22,7 +23,7 @@ export function Contact() {
                             <input type="email" name="email" id="email" className="border-b-2 block" required></input>
 
                             <label for="details" className="text-main block mt-8">Mensaje</label>
-                            <textarea name="details" id="" cols="30" rows="5" className="mt-2 sm:w-fit w-full rounded-xl border-2 p-2"></textarea>
+                            <textarea name="details" id="" cols="30" rows="5" className="mt-2 sm:w-1/2 w-full rounded-xl border-2 p-2"></textarea>
 
                             <input type="submit" value="Enviar" className="block mt-6 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl hover:hue-rotate-15"/>
                         </form>
@@ -44,6 +45,7 @@ export function Contact() {
 
                 </div>
 
+            </div>
             </div>
             <Footer />
         </>
