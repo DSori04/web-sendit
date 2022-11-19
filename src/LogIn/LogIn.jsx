@@ -3,11 +3,23 @@ import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
 import { useState, useEffect } from "react"
 import LoginIcon from "./assets/undraw_world_re_768.svg"
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Error } from '../SharedComponents/Error'
+import { UserContext } from '../GlobalStates';
 
 export function LogIn() {
+    const navigate = useNavigate();
+
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const [data, setData] = useState({'email': email, 'password': password});
+
+    useEffect(() => {
+        setData({'email': email, 'password': password})
+    }, [email, password])
+
     return (
+        <UserContext.Provider value={{ user_id: null, logged: true }}>
         <>
             <Navbar />
             <div className="w-full flex justify-center">
@@ -41,5 +53,6 @@ export function LogIn() {
             </div>
             <Footer />
         </>
+        </UserContext.Provider>
     );
 }

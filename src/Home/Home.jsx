@@ -4,6 +4,7 @@ import { Navbar } from '../SharedComponents/Navbar'
 import { Footer } from '../SharedComponents/Footer'
 import HomeImg from './Assets/Image1.svg'
 import { useState, useEffect } from 'react'
+import { UserContext } from "../GlobalStates";
 
 export function Home() {
     const [clients, setClients] = useState(700)
@@ -57,6 +58,7 @@ export function Home() {
       }, [])
     
     return (
+        <UserContext.Provider value={{ user_id: null, logged: true }}>
         <>
             <Navbar />
             <div className="flex justify-center w-full">
@@ -96,5 +98,6 @@ export function Home() {
             </div>
             <Footer />
         </>
+        </UserContext.Provider>
     );
 }

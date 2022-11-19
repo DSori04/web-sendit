@@ -3,9 +3,11 @@ import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
 import aboutusimage from "./assets/aboutusicon.svg"
 import ods from "./assets/ods.png"
+import { UserContext } from "../GlobalStates";
 
 export function AboutUs() {
     return (
+        <UserContext.Provider value={{ user_id: null, logged: true }}>
         <>
             <Navbar />
             <div className="flex justify-center w-full">
@@ -38,5 +40,6 @@ export function AboutUs() {
             </div>
             <Footer />
         </>
+        </UserContext.Provider>
     );
 }

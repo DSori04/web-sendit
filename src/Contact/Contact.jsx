@@ -2,9 +2,11 @@ import React from "react";
 import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
 import imagenContacto from "./assets/contact.svg";
+import { UserContext } from "../GlobalStates";
 
 export function Contact() {
     return (
+        <UserContext.Provider value={{ user_id: null, logged: true }}>
         <>
             <Navbar />
             <div className="flex justify-center w-full">
@@ -49,5 +51,6 @@ export function Contact() {
             </div>
             <Footer />
         </>
+        </UserContext.Provider>
     );
 }

@@ -4,17 +4,22 @@ import Tracking from "./assets/Tracking.svg"
 import New from "./assets/New.svg"
 import Prices from "./assets/Prices.svg"
 import { Link } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import MenuIcon from './assets/menu-outline.svg'
 import LogIcon from './assets/logIcon.svg'
+import { UserContext } from '../GlobalStates';
+import useUser from "../hooks/useUser";
 
 export function Navbar() {
     const [tracking, setTracking] = useState(false)
     const [newMenu, setNew] = useState(false);
     const [price, setPrice] = useState(false);
     const [sideMenu, setVis] = useState(false);
+    const {user_id, logged} = useUser();
+    
 
     return (
+        <UserContext.Provider value={{ user_id: null, logged: true }}>
         <>
             <nav className="bg-gray1 w-full h-16 flex lg:justify-between z-40 justify-between lg:px-24 select-none fixed">
                 <div id="logo" className="flex-start h-14 w-48">
@@ -31,7 +36,7 @@ export function Navbar() {
                                     <img src={Tracking} className="text-center fill-black md:w-5 w-11" alt="tracking-icon">
                                     </img>
                                     <div className="lg:flex hidden flex-col justify-center">
-                                        <span className="mx-4 hover:underline-offset-4 hover:underline">
+                                        <span className="mx-4 hover:underline-offset-4 hover:underline hover:font-semibold">
                                             Tracking
                                         </span>
                                     </div>
@@ -40,7 +45,7 @@ export function Navbar() {
                                     <img src={New} className="text-center fill-black md:w-5 w-11" alt="box-icon">
                                     </img>
                                     <div className="lg:flex hidden flex-col justify-center">
-                                        <span className="mx-4 hover:underline-offset-4 hover:underline">
+                                        <span className="mx-4 hover:underline-offset-4 hover:underline hover:font-semibold">
                                             Nuevo pedido
                                         </span>
                                     </div>
@@ -49,7 +54,7 @@ export function Navbar() {
                                     <img src={Prices} className="text-center fill-black md:w-5 w-11" alt="prices-icon">
                                     </img>
                                     <div className="lg:flex hidden flex-col justify-center">
-                                        <span className="mx-4 hover:underline-offset-4 hover:underline">
+                                        <span className="mx-4 hover:underline-offset-4 hover:underline hover:font-semibold">
                                             Precios
                                         </span>
                                     </div>
@@ -69,22 +74,22 @@ export function Navbar() {
 
                         </div>
                     </div>
-                    <div className="flex justify-around w-max">
+                    {!logged && <div className="flex justify-around w-max">
                         <div className=" w-full flex flex-row justify-end">
                             <Link to="/login" className="w-max px-8">
                                 <div id="login" className=" cursor-pointer align-middle leading-[3.5rem] h-16">
-                                    <p className="text-purple1 font-main font-semibold pt-1 hover:hue-rotate-15">
+                                    <p className="text-purple1 font-main font-semibold pt-1 hover:hue-rotate-15 hover:font-bold">
                                         Log In
                                     </p>
                                 </div>
                             </Link>
                         </div>
                         <Link to="/signup">
-                            <div id="signup" className="bg-purple1 cursor-pointer align-middle leading-[2rem] text-white rounded-full mt-4 w-28 h-8 text-center font-semibold drop-shadow-lg hover:scale-105 hover:hue-rotate-15">
+                            <div id="signup" className="bg-purple1 cursor-pointer align-middle leading-[2rem] text-white rounded-full mt-4 w-28 h-8 text-center font-semibold drop-shadow-lg hover:scale-105 hover:hue-rotate-15 hover:font-bold">
                                 Sign Up
                             </div>
                         </Link>
-                    </div>
+                    </div>}
                 </div>
                 <div className="lg:hidden flex pr-2 w-16" onClick={() => setVis(!sideMenu)}>
                     <img src={MenuIcon}></img>
@@ -97,6 +102,6 @@ export function Navbar() {
                 <Link to="/signup"><img src={LogIcon} className="w-full py-4"></img></Link>
             </nav>}
         </>
-
+        </UserContext.Provider>
     );
 }

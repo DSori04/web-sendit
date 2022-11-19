@@ -5,6 +5,7 @@ import TrackIcon from "./assets/tracking.svg"
 import { TrackingForm } from "./components/TrackingForm";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
+import { UserContext } from "../GlobalStates";
 
 export function Tracking() {
     const [inputting, setInput] = useState(true);
@@ -27,6 +28,7 @@ export function Tracking() {
     }, [orderId, inputting])
     
     return (
+        <UserContext.Provider value={{ user_id: null, logged: true }}>
         <>
             <Navbar />
             <div className="flex justify-center w-full">
@@ -42,5 +44,6 @@ export function Tracking() {
             </div>
             <Footer />
         </>
+        </UserContext.Provider>
     );
 }

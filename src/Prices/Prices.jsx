@@ -3,6 +3,7 @@ import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
 import { Link } from "react-router-dom";
 import savings from "./assets/savings.svg";
+import { UserContext } from "../GlobalStates";
 
 
 export function Prices() {
@@ -36,6 +37,7 @@ export function Prices() {
     ]
 
     return (
+        <UserContext.Provider value={{ user_id: null, logged: true }}>
         <>
             <Navbar />
             <div className="flex justify-center w-full">
@@ -87,5 +89,6 @@ export function Prices() {
             </div>
             <Footer />
         </>
+        </UserContext.Provider>
     );
 }
