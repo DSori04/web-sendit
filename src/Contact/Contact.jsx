@@ -2,7 +2,7 @@ import React from "react";
 import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
 import imagenContacto from "./assets/contact.svg";
-import { UserContext } from "../GlobalStates";
+import UserContext from "../GlobalStates";
 
 export function Contact() {
     return (

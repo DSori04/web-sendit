@@ -4,7 +4,7 @@ import { Footer } from "../SharedComponents/Footer";
 import { useState, useEffect } from "react"
 import LoginIcon from "./assets/undraw_world_re_768.svg"
 import { Link } from 'react-router-dom'
-import { UserContext } from "../GlobalStates";
+import UserContext from "../GlobalStates";
 
 export function SignUp(){
     const [name, setName] = useState("");

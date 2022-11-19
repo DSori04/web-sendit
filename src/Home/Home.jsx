@@ -4,7 +4,7 @@ import { Navbar } from '../SharedComponents/Navbar'
 import { Footer } from '../SharedComponents/Footer'
 import HomeImg from './Assets/Image1.svg'
 import { useState, useEffect } from 'react'
-import { UserContext } from "../GlobalStates";
+import UserContext from "../GlobalStates";
 
 export function Home() {
     const [clients, setClients] = useState(700)

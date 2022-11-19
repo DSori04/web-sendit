@@ -3,7 +3,7 @@ import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
 import aboutusimage from "./assets/aboutusicon.svg"
 import ods from "./assets/ods.png"
-import { UserContext } from "../GlobalStates";
+import UserContext from "../GlobalStates";
 
 export function AboutUs() {
     return (

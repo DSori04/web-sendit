@@ -5,7 +5,7 @@ import TrackIcon from "./assets/tracking.svg"
 import { TrackingForm } from "./components/TrackingForm";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { UserContext } from "../GlobalStates";
+import UserContext from "../GlobalStates";
 
 export function Tracking() {
     const [inputting, setInput] = useState(true);

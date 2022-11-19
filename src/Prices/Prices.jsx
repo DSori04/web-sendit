@@ -3,8 +3,7 @@ import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
 import { Link } from "react-router-dom";
 import savings from "./assets/savings.svg";
-import { UserContext } from "../GlobalStates";
-
+import UserContext from "../GlobalStates";
 
 export function Prices() {
 

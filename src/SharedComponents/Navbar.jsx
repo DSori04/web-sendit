@@ -7,19 +7,22 @@ import { Link } from "react-router-dom";
 import { useState, useEffect, useContext } from 'react';
 import MenuIcon from './assets/menu-outline.svg'
 import LogIcon from './assets/logIcon.svg'
-import { UserContext } from '../GlobalStates';
-import useUser from "../hooks/useUser";
+import UserContext from '../GlobalStates';
 
 export function Navbar() {
+    // Remove these useState and remove onMouseEnter and onMouseLeave from the div
     const [tracking, setTracking] = useState(false)
     const [newMenu, setNew] = useState(false);
     const [price, setPrice] = useState(false);
     const [sideMenu, setVis] = useState(false);
-    const {user_id, logged} = useUser();
+    const {userData, setUserData} = useContext(UserContext);
     
+    const {user, setUser, logged, setLogged} = useContext(UserContext);
 
+    console.log(logged);
+    
+    
     return (
-        <UserContext.Provider value={{ user_id: null, logged: true }}>
         <>
             <nav className="bg-gray1 w-full h-16 flex lg:justify-between z-40 justify-between lg:px-24 select-none fixed">
                 <div id="logo" className="flex-start h-14 w-48">
@@ -102,6 +105,5 @@ export function Navbar() {
                 <Link to="/signup"><img src={LogIcon} className="w-full py-4"></img></Link>
             </nav>}
         </>
-        </UserContext.Provider>
     );
 }

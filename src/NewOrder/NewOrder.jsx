@@ -6,7 +6,7 @@ import { useState } from "react";
 import neworder1 from "./assets/neworder1.svg"
 import neworder2 from "./assets/neworder2.svg"
 import neworder3 from "./assets/neworder3.svg"
-import { UserContext } from "../GlobalStates";
+import UserContext from "../GlobalStates";
 
 
 export function NewOrder() {

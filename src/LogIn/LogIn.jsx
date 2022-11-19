@@ -1,11 +1,11 @@
 import React from "react";
 import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import LoginIcon from "./assets/undraw_world_re_768.svg"
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Error } from '../SharedComponents/Error'
-import { UserContext } from '../GlobalStates';
+import UserContext from '../GlobalStates';
 
 export function LogIn() {
     const navigate = useNavigate();
@@ -13,13 +13,22 @@ export function LogIn() {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [data, setData] = useState({'email': email, 'password': password});
+    const [user, setUser] = useState(1);
+    const [logged, setLogged] = useState(false);
+    
 
     useEffect(() => {
         setData({'email': email, 'password': password})
     }, [email, password])
 
+    function submitForm(){
+        setLogged(true)
+        console.log(logged);
+        navigate('/')
+    }
+
     return (
-        <UserContext.Provider value={{ user_id: null, logged: true }}>
+        <UserContext.Provider value={{user, setUser, logged, setLogged}}>
         <>
             <Navbar />
             <div className="w-full flex justify-center">
@@ -34,13 +43,13 @@ export function LogIn() {
                             <div className="relative h-full w-28 ml-3 bg-purple2 "></div>
                         </div>
                         <div className="flex flex-col relative mt-12 lg:ml-24">
-                            <form>
+                            <form onSubmit={submitForm}>
                                 <label htmlFor="mail" className="text-main block mt-8">Correo Electrónico</label>
                                 <input type="email" className="border-b-2 block" required onInvalid={(e) => e.target.setCustomValidity('Introduce un correo electrónico válido')} onInput={(e) => e.target.setCustomValidity('')}></input>
                                 <label htmlFor="pw" className="text-main block mt-8">Contraseña</label>
                                 <input type="password" className="border-b-2" required onInvalid={(e) => e.target.setCustomValidity('Introduce una contraseña')} onInput={(e) => e.target.setCustomValidity('')}></input>
-                                <input type="submit" value="Log In" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl lg:hover:hue-rotate-15"/>
                             </form>
+                            <button className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl lg:hover:hue-rotate-15 w-32" onClick={submitForm}>Log In</button>
                         </div>
                     </div>
                     

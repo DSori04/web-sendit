@@ -2,12 +2,14 @@ import React from "react";
 import imagen404 from "./Assets/Notfound.svg";
 import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
+import UserContext from "../GlobalStates";
 
 export function NotFound() {
 
     console.log("NotFound");
 
     return (
+        <UserContext.Provider value={{ user_id: null, logged: true }}>
         <>
             <div className="h-screen max-h-screen">
                 <Navbar />
@@ -32,5 +34,6 @@ export function NotFound() {
                 <Footer />
             </div>
         </>
+        </UserContext.Provider>
     );
 }
