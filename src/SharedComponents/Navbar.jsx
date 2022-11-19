@@ -7,20 +7,16 @@ import { Link } from "react-router-dom";
 import { useState, useEffect, useContext } from 'react';
 import MenuIcon from './assets/menu-outline.svg'
 import LogIcon from './assets/logIcon.svg'
-import UserContext from '../GlobalStates';
+import {UserContext} from '../GlobalStates';
 
 export function Navbar() {
     // Remove these useState and remove onMouseEnter and onMouseLeave from the div
-    const [tracking, setTracking] = useState(false)
-    const [newMenu, setNew] = useState(false);
-    const [price, setPrice] = useState(false);
     const [sideMenu, setVis] = useState(false);
     const {userData, setUserData} = useContext(UserContext);
     
     const {user, setUser, logged, setLogged} = useContext(UserContext);
 
     console.log(logged);
-    
     
     return (
         <>
@@ -35,7 +31,7 @@ export function Navbar() {
                     <div className="w-max lg:flex flex-col justify-center">
                         <div className="flex lg:flex-row flex-col justify-end w-max  h-max">
                             <div id="imgs" className="flex flex-row justify-around lg:h-max">
-                                <Link to="/tracking" onMouseEnter={() => setTracking(true)} onMouseLeave={() => setTracking(false)} className="lg:mx-5 lg:flex lg:flex-row">
+                                <Link to="/tracking" className="lg:mx-5 lg:flex lg:flex-row">
                                     <img src={Tracking} className="text-center fill-black md:w-5 w-11" alt="tracking-icon">
                                     </img>
                                     <div className="lg:flex hidden flex-col justify-center">
@@ -44,7 +40,7 @@ export function Navbar() {
                                         </span>
                                     </div>
                                 </Link>
-                                <Link to="/new" onMouseEnter={() => setNew(true)} onMouseLeave={() => setNew(false)} className="lg:mx-5 lg:flex lg:flex-row">
+                                <Link to="/new" className="lg:mx-5 lg:flex lg:flex-row">
                                     <img src={New} className="text-center fill-black md:w-5 w-11" alt="box-icon">
                                     </img>
                                     <div className="lg:flex hidden flex-col justify-center">
@@ -53,7 +49,7 @@ export function Navbar() {
                                         </span>
                                     </div>
                                 </Link>
-                                <Link to="/prices" onMouseEnter={() => setPrice(true)} onMouseLeave={() => setPrice(false)} className="lg:mx-5 lg:flex lg:flex-row">
+                                <Link to="/prices" className="lg:mx-5 lg:flex lg:flex-row">
                                     <img src={Prices} className="text-center fill-black md:w-5 w-11" alt="prices-icon">
                                     </img>
                                     <div className="lg:flex hidden flex-col justify-center">
@@ -64,13 +60,13 @@ export function Navbar() {
                                 </Link>
                             </div>
                             <div id="links" className="flex flex-row justify-around -mt-2 lg:hidden">
-                                <Link to="/tracking" className={`text-center ${tracking ? 'text-gray2' : 'text-gray1'}`}>
+                                <Link to="/tracking" className={`text-center text-gray2`}>
                                     Tracking
                                 </Link>
-                                <Link to="/new" className={`text-center ${newMenu ? 'text-gray2' : 'text-gray1'}`}>
+                                <Link to="/new" className={`text-center text-gray2`}>
                                     Nuevo
                                 </Link>
-                                <Link to="/prices" className={`text-center ${price ? 'text-gray2' : 'text-gray1'}`}>
+                                <Link to="/prices" className={`text-center text-gray2`}>
                                     Precios
                                 </Link>
                             </div>

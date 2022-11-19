@@ -2,13 +2,14 @@ import React from "react";
 import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
 import imagenContacto from "./assets/contact.svg";
-import UserContext from "../GlobalStates";
+import AppContextProvider from "../GlobalStates";
 
 export function Contact() {
     return (
-        <UserContext.Provider value={{ user_id: null, logged: true }}>
         <>
-            <Navbar />
+            <AppContextProvider>
+                <Navbar />
+            </AppContextProvider>
             <div className="flex justify-center w-full">
             <div className="xl:w-3/4 xl:ml-[15%] lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 bg-white w-full flex flex-col md:px-20 px-6 font-main lg:min-h-max min-h-[90vh]">
                 <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Contacto</h1>
@@ -51,6 +52,5 @@ export function Contact() {
             </div>
             <Footer />
         </>
-        </UserContext.Provider>
     );
 }

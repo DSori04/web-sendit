@@ -6,15 +6,16 @@ import { useState } from "react";
 import neworder1 from "./assets/neworder1.svg"
 import neworder2 from "./assets/neworder2.svg"
 import neworder3 from "./assets/neworder3.svg"
-import UserContext from "../GlobalStates";
+import AppContextProvider from "../GlobalStates";
 
 
 export function NewOrder() {
     const [step, setstep] = useState(1)
     return (
-        <UserContext.Provider value={{ user_id: null, logged: true }}>
         <>
-            <Navbar />
+            <AppContextProvider>
+                <Navbar />
+            </AppContextProvider>
             <div className="flex flex-row w-full justify-center">
                 <div className="xl:w-3/4 lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 w-full flex flex-col h-24 md:px-20 px-6 font-main">
                     <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Nuevo pedido</h1>
@@ -65,6 +66,5 @@ export function NewOrder() {
             </div>
             {/* <Footer /> */}
         </>
-        </UserContext.Provider>
     );
 }

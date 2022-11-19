@@ -4,7 +4,7 @@ import { Footer } from "../SharedComponents/Footer";
 import { useState, useEffect } from "react"
 import LoginIcon from "./assets/undraw_world_re_768.svg"
 import { Link } from 'react-router-dom'
-import UserContext from "../GlobalStates";
+import AppContextProvider from '../GlobalStates';
 
 export function SignUp(){
     const [name, setName] = useState("");
@@ -27,9 +27,10 @@ export function SignUp(){
 
 
     return (
-        <UserContext.Provider value={{ user_id: null, logged: true }}>
         <>
-            <Navbar />
+            <AppContextProvider>
+                <Navbar />
+            </AppContextProvider>
             <div className="w-full flex shrink-0 justify-center">
             <div className="w-3/4 lg:absolute lg:pt-20 pt-16 top-16 sm:bottom-14 bottom-28 flex flex-col md:px-20 px-6 font-main lg:min-h-0 min-h-screen select-none">
                 <div className="flex lg:flex-row flex-col w-full">
@@ -75,6 +76,5 @@ export function SignUp(){
             </div>
             <Footer />
         </>
-        </UserContext.Provider>
     );
 }
