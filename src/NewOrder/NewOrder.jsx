@@ -13,9 +13,22 @@ import Stripe from "./assets/Stripe.svg";
 
 export function NewOrder() {
     const [step, setstep] = useState(1)
-    const handleSubmit = (e, n) => {
+    const handleSubmitOrigin = (e) => {
+        const origin = new FormData(e.target);
         e.preventDefault();
-        setstep(n)
+        setstep(2)
+        console.log(origin);
+    }
+    const handleSubmitDestination = (e) => {
+        const destination = new FormData(e.target);
+        e.preventDefault();
+        setstep(3);
+        console.log(destination);
+    }
+    const handleSubmitPayment = (e) => {
+        const payment = new FormData(e.target);
+        e.preventDefault();
+        console.log(payment);
     }
     return (
         <>
@@ -43,7 +56,7 @@ export function NewOrder() {
                             </div>
                         </div>
                         <div id="newform">
-                            <form onSubmit={(e) => handleSubmit(e, 2)}>
+                            <form onSubmit={(e) => handleSubmitOrigin(e)}>
                                 <label htmlFor="name" className="text-main block mt-8">Nombre completo <span className="text-main text-red1">*</span></label>
                                 <input type="text" name="name" id="name" className="border-b-2 block" required />
 
@@ -96,7 +109,7 @@ export function NewOrder() {
                             </div>
                         </div>
                         <div id="newform">
-                            <form onSubmit={(e) => handleSubmit(e, 3)}>
+                            <form onSubmit={(e) => handleSubmitDestination(e)}>
                                 <label htmlFor="name" className="text-main block mt-8">Nombre completo <span className="text-main text-red1">*</span></label>
                                 <input type="text" name="name" id="name" className="border-b-2 block" required />
 
@@ -149,7 +162,7 @@ export function NewOrder() {
                             </div>
                         </div>
                         <div id="newform">
-                            <form>
+                            <form onSubmit={(e) => handleSubmitPayment(e)}>
                                 <label htmlFor="Comentarios" className="text-main block mt-8">Comentarios</label>
                                 <textarea name="Comentarios" id="Comentarios" className="border-b-2 block w-64" rows="1"></textarea>
                                 <div className="bg-gray1 w-fit h-fit mt-5 rounded-lg font-main px-3 py-3 leading-6">
