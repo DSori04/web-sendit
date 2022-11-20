@@ -1,8 +1,9 @@
-FROM node:10.15.3-alpine
-WORKDIR '/app'
+FROM node:18-alpine
+WORKDIR '/'
 
-COPY package.json .
-RUN npm install
-COPY . .
-CMD ["npm", "start"]
+EXPOSE 3000
 
+COPY package.json package-lock.json ./
+RUN npm install --silent
+COPY . ./
+CMD ["npm", "run", "dev"]
