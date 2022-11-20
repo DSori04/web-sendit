@@ -15,6 +15,7 @@ import { Prices } from './Prices/Prices'
 import { Tracking } from './Tracking/Tracking'
 import { NotFound } from "./NotFound/NotFound";
 import { SignUp } from "./LogIn/SignUp";
+import AppContextProvider from "./GlobalStates";
 
 const router = createBrowserRouter([
   {
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <LogIn/>,
+    element: <AppContextProvider><LogIn/></AppContextProvider>,
   },
   {
     path: "/signup",

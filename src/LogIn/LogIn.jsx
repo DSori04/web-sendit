@@ -6,6 +6,7 @@ import LoginIcon from "./assets/undraw_world_re_768.svg"
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Error } from '../SharedComponents/Error'
 import AppContextProvider from '../GlobalStates';
+import {UserContext} from '../GlobalStates';
 
 export function LogIn() {
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ export function LogIn() {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [data, setData] = useState({'email': email, 'password': password});
+    const {logged, setLogged} = useContext(UserContext);
 
     useEffect(() => {
         setData({'email': email, 'password': password})
@@ -20,9 +22,7 @@ export function LogIn() {
 
     return (
         <>
-            <AppContextProvider>
-                <Navbar />
-            </AppContextProvider>
+            <Navbar />
             <div className="w-full flex justify-center">
             <div className="w-3/4 lg:absolute lg:pt-20 pt-16 top-16 sm:bottom-14 bottom-28 flex flex-col md:px-20 px-6 font-main lg:min-h-0 min-h-screen">
                 <div className="flex lg:flex-row flex-col w-full flex-nowrap">
@@ -40,8 +40,9 @@ export function LogIn() {
                                 <input type="email" className="border-b-2 block" required onInvalid={(e) => e.target.setCustomValidity('Introduce un correo electrónico válido')} onInput={(e) => e.target.setCustomValidity('')}></input>
                                 <label htmlFor="pw" className="text-main block mt-8">Contraseña</label>
                                 <input type="password" className="border-b-2" required onInvalid={(e) => e.target.setCustomValidity('Introduce una contraseña')} onInput={(e) => e.target.setCustomValidity('')}></input>
+                                <input type="submit" value="Log In" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl lg:hover:hue-rotate-15" onClick={() => setLogged(true)}/>
                             </form>
-                            <button className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl lg:hover:hue-rotate-15 w-32">Log In</button>
+                            {/* <button className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl lg:hover:hue-rotate-15 w-32">Log In</button> */}
                         </div>
                     </div>
                     
