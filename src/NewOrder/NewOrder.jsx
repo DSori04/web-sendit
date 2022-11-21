@@ -40,18 +40,42 @@ export function NewOrder() {
                     <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Nuevo pedido</h1>
                     {step == 1 && <div className="w-full flex flex-row sm:justify-start justify-center">
                         <div className="flex flex-col h-full justify-center">
-                        <div id="steps" className="flex flex-col h-2/3 mr-14 justify-around">
-                                <div className="w-48 font-main text-sm flex flex-row justify-end">
-                                    <span className="inline-block text-right pr-3 pt-1 font-bold text-xl">Datos Envio</span>
-                                    <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block">1</div>
+                            <div id="steps" className="flex flex-col h-2/3 mr-14 w-48 justify-around">
+                                <div className="w-full font-main text-sm flex flex-row justify-end">
+                                    <div className="flex flex-col justify-center mr-5">
+                                        <span className="inline-block text-right font-bold text-xl h-max">
+                                            Datos Envio
+                                        </span>
+                                    </div>
+                                    <div className=" w-max">
+                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block drop-shadow-lg">
+                                            1
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="w-48 font-main text-sm flex flex-row justify-end">
-                                    <span className="inline-block text-right pr-3 pt-2">Datos Destinatario</span>
-                                    <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-black w-16 h-16 bg-gray3 rounded-full inline-block">2</div>
+                                <div className="w-full font-main text-sm flex flex-row justify-end">
+                                    <div className="flex flex-col justify-center mr-5">
+                                        <span className="inline-block text-right h-max">
+                                            Datos destinatario
+                                        </span>
+                                    </div>
+                                    <div className="w-max">
+                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-black w-16 h-16 bg-gray3 rounded-full inline-block drop-shadow-lg">
+                                            2
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="w-48 font-main text-sm flex flex-row justify-end">
-                                    <span className="inline-block text-right pr-3 pt-4 ">Pago</span>
-                                    <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-black w-16 h-16 bg-gray3 rounded-full inline-block">3</div>
+                                <div className="w-full font-main text-sm flex flex-row justify-end">
+                                    <div className="flex flex-col justify-center mr-5">
+                                        <span className="inline-block text-right h-max">
+                                            Pago
+                                        </span>
+                                    </div>
+                                    <div className="w-max">
+                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-black w-16 h-16 bg-gray3 rounded-full inline-block drop-shadow-lg">
+                                            3
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -86,25 +110,53 @@ export function NewOrder() {
                             </form>
                         </div>
                         <div id="image" className="sm:block hidden min-h-fit">
-                            {step === 1 && <img src={neworder1}></img>}
-                            {step === 2 && <img src={neworder2}></img>}
-                            {step === 3 && <img src={neworder3}></img>}
+                            <div className="flex flex-col h-full justify-center">
+                                <div className="h-max">
+                                    {step === 1 && <img src={neworder1}></img>}
+                                    {step === 2 && <img src={neworder2}></img>}
+                                    {step === 3 && <img src={neworder3}></img>}
+                                </div>
+                            </div>
                         </div>
                     </div>}
                     {step == 2 && <div className="w-full flex flex-row sm:justify-start justify-center">
                         <div className="flex flex-col h-full justify-center">
-                        <div id="steps" className="flex flex-col h-2/3 mr-14 justify-around">
-                                <div className="w-48 font-main text-sm flex flex-row justify-end">
-                                    <span className="inline-block text-right pr-3 pt-5">Datos Envio</span>
-                                    <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block">1</div>
+                            <div id="steps" className="flex flex-col h-2/3 mr-14 w-48 justify-around">
+                                <div className="w-full font-main text-sm flex flex-row justify-end">
+                                    <div className="flex flex-col justify-center mr-5">
+                                        <span className="inline-block text-right h-max">
+                                            Datos Envio
+                                        </span>
+                                    </div>
+                                    <div className=" w-max">
+                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block drop-shadow-lg">
+                                            1
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="w-48 font-main text-sm flex flex-row justify-end">
-                                    <span className="inline-block text-right pr-2 pt-2 font-bold text-xl">Datos Destinatario</span>
-                                    <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block">2</div>
+                                <div className="w-full font-main text-sm flex flex-row justify-end">
+                                    <div className="flex flex-col justify-center mr-5">
+                                        <span className="inline-block text-right font-bold text-xl h-max">
+                                            Datos destinatario
+                                        </span>
+                                    </div>
+                                    <div className="w-max">
+                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block drop-shadow-lg">
+                                            2
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="w-48 font-main text-sm flex flex-row justify-end">
-                                    <span className="inline-block text-right pr-3 pt-4 ">Pago</span>
-                                    <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-black w-16 h-16 bg-gray3 rounded-full inline-block">3</div>
+                                <div className="w-full font-main text-sm flex flex-row justify-end">
+                                    <div className="flex flex-col justify-center mr-5">
+                                        <span className="inline-block text-right h-max">
+                                            Pago
+                                        </span>
+                                    </div>
+                                    <div className="w-max">
+                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-black w-16 h-16 bg-gray3 rounded-full inline-block drop-shadow-lg">
+                                            3
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -139,25 +191,53 @@ export function NewOrder() {
                             </form>
                         </div>
                         <div id="image" className="sm:block hidden min-h-fit">
-                            {step === 1 && <img src={neworder1}></img>}
-                            {step === 2 && <img src={neworder2}></img>}
-                            {step === 3 && <img src={neworder3}></img>}
+                            <div className="flex flex-col h-full justify-center">
+                                <div className="h-max">
+                                    {step === 1 && <img src={neworder1}></img>}
+                                    {step === 2 && <img src={neworder2}></img>}
+                                    {step === 3 && <img src={neworder3}></img>}
+                                </div>
+                            </div>
                         </div>
                     </div>}
                     {step == 3 && <div className="w-full flex flex-row justify-around">
                         <div className="flex flex-col h-full justify-center">
-                            <div id="steps" className="flex flex-col h-2/3 mr-14 justify-around">
-                                <div className="w-48 font-main text-sm flex flex-row justify-end">
-                                    <span className="inline-block text-right pr-3 pt-5">Datos Envio</span>
-                                    <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block border-2">1</div>
+                            <div id="steps" className="flex flex-col h-2/3 mr-14 w-48 justify-around">
+                                <div className="w-full font-main text-sm flex flex-row justify-end">
+                                    <div className="flex flex-col justify-center mr-5">
+                                        <span className="inline-block text-right h-max">
+                                            Datos Envio
+                                        </span>
+                                    </div>
+                                    <div className=" w-max">
+                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block drop-shadow-lg">
+                                            1
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="w-48 font-main text-sm flex flex-row justify-end">
-                                    <span className="inline-block text-right pr-3 pt-2">Datos Destinatario</span>
-                                    <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block border-2">2</div>
+                                <div className="w-full font-main text-sm flex flex-row justify-end">
+                                    <div className="flex flex-col justify-center mr-5">
+                                        <span className="inline-block text-right h-max">
+                                            Datos destinatario
+                                        </span>
+                                    </div>
+                                    <div className="w-max">
+                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block drop-shadow-lg">
+                                            2
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="w-48 font-main text-sm flex flex-row justify-end">
-                                    <span className="inline-block text-right pr-3 pt-4 font-bold text-xl">Pago</span>
-                                    <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block border-2">3</div>
+                                <div className="w-full font-main text-sm flex flex-row justify-end">
+                                    <div className="flex flex-col justify-center mr-5">
+                                        <span className="inline-block text-right font-bold text-xl h-max">
+                                            Pago
+                                        </span>
+                                    </div>
+                                    <div className="w-max">
+                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block drop-shadow-lg">
+                                            3
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -173,21 +253,25 @@ export function NewOrder() {
                                 </div>
                                 <button className="w-40 mt-12 bg-purple1 h-12 rounded-full">
                                     <img src={payicon} className="inline-block h-7"></img>
-                                   <span className="text-white text-xl font-semibold ml-3 inline-block">Pagar</span>
-                                    
+                                    <span className="text-white text-xl font-semibold ml-3 inline-block">Pagar</span>
+
                                 </button>
                                 <img src={Stripe} className="mt-4"></img>
                             </form>
                         </div>
-                        <div id="image" className="lg:block hidden min-h-fit">
-                            {step === 1 && <img src={neworder1}></img>}
-                            {step === 2 && <img src={neworder2}></img>}
-                            {step === 3 && <img src={neworder3}></img>}
+                        <div id="image" className="sm:block hidden min-h-fit">
+                            <div className="flex flex-col h-full justify-center">
+                                <div className="h-max">
+                                    {step === 1 && <img src={neworder1}></img>}
+                                    {step === 2 && <img src={neworder2}></img>}
+                                    {step === 3 && <img src={neworder3}></img>}
+                                </div>
+                            </div>
                         </div>
                     </div>}
                 </div>
             </div>
-            {/* <Footer /> */}
+            <Footer />
         </>
     );
 }
