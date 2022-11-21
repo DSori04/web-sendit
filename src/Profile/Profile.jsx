@@ -46,12 +46,12 @@ export function Profile() {
         <>
             <Navbar />
             <div className="flex flex-row w-full justify-center">
-                <div className="flex flex-row justify-around xl:w-3/4 w-full absolute lg:pt-0 top-16 sm:bottom-14 bottom-28 h-full md:px-20 px-6 font-main">
-                    <div className="w-1/3 h-5/6 mt-4 border-r-4 border-gray2 flex flex-col justify-around pt-8 min-w-fit">
+                <div className="flex flex-row justify-around xl:w-3/4 w-full absolute lg:pt-0 top-16 sm:bottom-14 bottom-28 h-5/6 md:px-20 px-6 font-main">
+                    <div className="w-1/3 h-5/6 mt-16 border-r-4 border-gray2 flex flex-col justify-around pt-8 min-w-fit">
                         <div id="icon" className="w-64 h-64 rounded-full bg-purple2 text-7xl font-bold text-main leading-[16rem] text-center mx-auto">C</div>
                         <Options selected={selected}/>
                     </div>
-                    <div className="w-2/3 h-5/6 mt-4 flex flex-col pt-24 pl-32 min-w-fit">
+                    <div className="w-2/3 h-5/6 mt-16 flex flex-col pt-24 pl-32 min-w-fit">
                         <form>
                         <b className="block">Nombre</b>
                         {!editting ? <span className="block mt-2">{name}</span> : <input type="text" defaultValue={name} className="border-b-2 w-1/3" onChange={(e) => setName(e.target.value) } ></input>}

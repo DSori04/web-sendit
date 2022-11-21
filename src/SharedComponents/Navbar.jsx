@@ -8,7 +8,6 @@ import { useState, useEffect, useContext } from 'react';
 import MenuIcon from './assets/menu-outline.svg'
 import LogIcon from './assets/logIcon.svg'
 import {UserContext} from '../GlobalStates';
-import randomColor from "randomcolor";
 
 export function Navbar() {
     const [sideMenu, setVis] = useState(false);
