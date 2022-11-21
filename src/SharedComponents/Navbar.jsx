@@ -15,16 +15,6 @@ export function Navbar() {
     const [logged, setLogged] = useState(localStorage.getItem('logged'))
     const [email, setEmail] = useState(localStorage.getItem('email'))
     
-    // useEffect(() => {  
-    //   return () => {
-    //     setLogged(localStorage.getItem('logged'))
-    //     setEmail(localStorage.getItem('email'))
-    //   }
-    // }, [])
-    console.log(email)
-    const color = randomColor()
-    console.log(`bg-[${color}]`)
-    
     return (
         <>
             <nav className="bg-gray1 w-full h-16 flex lg:justify-between z-40 justify-between lg:px-24 select-none fixed">
@@ -96,10 +86,10 @@ export function Navbar() {
                             </div>
                         </Link>
                     </div>}
-                    {logged && <div className={`w-11 h-11 mt-3 rounded-full bg-[${color}] ml-2`}>
+                    {logged && <Link to="/profile"><div className={`w-11 h-11 mt-3 rounded-full bg-purple1 text-white ml-2`}>
                         <span className="leading-[2.8rem] align-middle text-2xl font-bold text-main">{email.charAt(0).toUpperCase()}</span>
 
-                    </div>}
+                    </div></Link>}
                 </div>
                 <div className="lg:hidden flex pr-2 w-16" onClick={() => setVis(!sideMenu)}>
                     <img src={MenuIcon}></img>

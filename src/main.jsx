@@ -16,6 +16,7 @@ import { Tracking } from './Tracking/Tracking'
 import { NotFound } from "./NotFound/NotFound";
 import { SignUp } from "./LogIn/SignUp";
 import AppContextProvider from "./GlobalStates";
+import { Profile } from "./Profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -54,7 +55,12 @@ const router = createBrowserRouter([
   {
     path: "/tracking/:id",
     element: <Tracking />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />
   }
+
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
