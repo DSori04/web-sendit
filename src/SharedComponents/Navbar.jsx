@@ -13,10 +13,17 @@ export function Navbar() {
     // Remove these useState and remove onMouseEnter and onMouseLeave from the div
     const [sideMenu, setVis] = useState(false);
     const {userData, setUserData} = useContext(UserContext);
+    const [logged, setLogged] = useState(localStorage.getItem('logged'))
     
-    const {user, setUser, logged, setLogged} = useContext(UserContext);
+    // const {user, setUser, logged, setLogged} = useContext(UserContext);
 
     console.log(logged);
+    useEffect(() => {  
+      return () => {
+        setLogged(localStorage.getItem('logged'))
+      }
+    }, [])
+    
     
     return (
         <>
