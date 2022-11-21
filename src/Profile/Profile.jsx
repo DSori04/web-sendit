@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
 import { Options } from "./components/Options";
+import { useNavigate } from "react-router";
 
 export function Profile() {
+    const navigate = useNavigate()
     const [editting, setEdit] = useState(false)
     const [deleting, setDelete] = useState(false)
     const [selected, setSelected] = useState(1)
@@ -30,6 +32,15 @@ export function Profile() {
         e.preventDefault()
         setEdit(false)
     }
+    useEffect(() => {    
+      return () => {
+        if(!localStorage.getItem('logged')){
+        navigate('/login')
+    }
+      }
+    }, [])
+    
+    
 
     return (
         <>

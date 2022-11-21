@@ -15,6 +15,16 @@ export function Navbar() {
     const [logged, setLogged] = useState(localStorage.getItem('logged'))
     const [email, setEmail] = useState(localStorage.getItem('email'))
     
+    useEffect(() => {    
+      return () => {
+        setInterval(() => {
+            setLogged(localStorage.getItem('logged'))
+            setEmail(localStorage.getItem('email'))
+        }, 1000);
+        
+      }
+    }, [])
+    
     return (
         <>
             <nav className="bg-gray1 w-full h-16 flex lg:justify-between z-40 justify-between lg:px-24 select-none fixed">
