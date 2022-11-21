@@ -23,7 +23,7 @@ export function LogIn() {
     function handleSubmitLogin(e){
         e.preventDefault();
         const formdata = new FormData(e.target)
-        localStorage.setItem('mail', formdata.get('email'))
+        localStorage.setItem('email', formdata.get('email'))
         localStorage.setItem('logged', true)
         setLogged(true)
         navigate('/')
@@ -46,7 +46,7 @@ export function LogIn() {
                         <div className="flex flex-col relative mt-12 lg:ml-24">
                             <form onSubmit={(e) => handleSubmitLogin(e)}>
                                 <label htmlFor="mail" className="text-main block mt-8">Correo Electrónico</label>
-                                <input type="email" className="border-b-2 block" required onInvalid={(e) => e.target.setCustomValidity('Introduce un correo electrónico válido')} onInput={(e) => e.target.setCustomValidity('')}></input>
+                                <input type="email" id="email" name="email" className="border-b-2 block" required onInvalid={(e) => e.target.setCustomValidity('Introduce un correo electrónico válido')} onInput={(e) => e.target.setCustomValidity('')}></input>
                                 <label htmlFor="pw" className="text-main block mt-8">Contraseña</label>
                                 <input type="password" className="border-b-2" required onInvalid={(e) => e.target.setCustomValidity('Introduce una contraseña')} onInput={(e) => e.target.setCustomValidity('')}></input>
                                 <input type="submit" value="Log In" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl lg:hover:hue-rotate-15"/>

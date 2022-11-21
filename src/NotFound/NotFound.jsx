@@ -3,6 +3,7 @@ import imagen404 from "./Assets/Notfound.svg";
 import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
 import AppContextProvider from "../GlobalStates";
+import { Link } from 'react-router-dom'
 
 export function NotFound() {
 
@@ -26,7 +27,7 @@ export function NotFound() {
                         <span className=" lg:hidden inline">
                             <br />
                         </span>
-                        <a href="/" className=" text-purple1 underline hover:hue-rotate-15">Volver a inicio</a>
+                        <Link to="/" className=" text-purple1 underline hover:hue-rotate-15">Volver a inicio</Link>
 
                     </h1>
                 </div>

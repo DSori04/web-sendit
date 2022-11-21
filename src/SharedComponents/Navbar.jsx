@@ -8,22 +8,22 @@ import { useState, useEffect, useContext } from 'react';
 import MenuIcon from './assets/menu-outline.svg'
 import LogIcon from './assets/logIcon.svg'
 import {UserContext} from '../GlobalStates';
+import randomColor from "randomcolor";
 
 export function Navbar() {
-    // Remove these useState and remove onMouseEnter and onMouseLeave from the div
     const [sideMenu, setVis] = useState(false);
-    const {userData, setUserData} = useContext(UserContext);
     const [logged, setLogged] = useState(localStorage.getItem('logged'))
+    const [email, setEmail] = useState(localStorage.getItem('email'))
     
-    // const {user, setUser, logged, setLogged} = useContext(UserContext);
-
-    console.log(logged);
-    useEffect(() => {  
-      return () => {
-        setLogged(localStorage.getItem('logged'))
-      }
-    }, [])
-    
+    // useEffect(() => {  
+    //   return () => {
+    //     setLogged(localStorage.getItem('logged'))
+    //     setEmail(localStorage.getItem('email'))
+    //   }
+    // }, [])
+    console.log(email)
+    const color = randomColor()
+    console.log(`bg-[${color}]`)
     
     return (
         <>
@@ -96,12 +96,16 @@ export function Navbar() {
                             </div>
                         </Link>
                     </div>}
+                    {logged && <div className={`w-11 h-11 mt-3 rounded-full bg-[${color}] ml-2`}>
+                        <span className="leading-[2.8rem] align-middle text-2xl font-bold text-main">{email.charAt(0).toUpperCase()}</span>
+
+                    </div>}
                 </div>
                 <div className="lg:hidden flex pr-2 w-16" onClick={() => setVis(!sideMenu)}>
                     <img src={MenuIcon}></img>
                 </div>
             </nav>
-            {sideMenu && <nav className="absolute top-16 w-16 right-0 bg-gray1 h-fit rounded-bl-3xl grid grid-cols-1 items-center px-4 lg:hidden drop-shadow-xl z-40">
+            {sideMenu && <nav className="absolute top-16 w-16 right-0 bg-gray1 h-fit rounded-bl-3xl grid grid-cols-1 items-center px-4 lg:hidden drop-shadow-xl z-40" onScroll={() => setVis(false)}>
                 <Link to="/tracking"><img src={Tracking} className="w-full py-4 border-b-2"></img></Link>
                 <Link to="/new"><img src={New} className="w-full py-4 border-b-2"></img></Link>
                 <Link to="/prices"><img src={Prices} className="w-full py-4 border-b-2"></img></Link>
