@@ -6,6 +6,7 @@ import { TrackingForm } from "./components/TrackingForm";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import AppContextProvider from "../GlobalStates";
+import { Helmet } from "react-helmet-async";
 
 export function Tracking() {
     const [inputting, setInput] = useState(true);
@@ -29,6 +30,10 @@ export function Tracking() {
     
     return (
         <>
+        <Helmet>
+            <title>Tracking</title>
+            <meta name="description" content="Tracking" />
+        </Helmet>
         <AppContextProvider>
                 <Navbar />
             </AppContextProvider>

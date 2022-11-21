@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 import LoginIcon from "./assets/undraw_world_re_768.svg"
 import { Link } from 'react-router-dom'
 import AppContextProvider from '../GlobalStates';
+import { Helmet } from "react-helmet-async";
 
 export function SignUp(){
     const [name, setName] = useState("");
@@ -28,6 +29,10 @@ export function SignUp(){
 
     return (
         <>
+        <Helmet>
+            <title>Sign Up</title>
+            <meta name="description" content="Sign Up" />
+        </Helmet>
             <AppContextProvider>
                 <Navbar />
             </AppContextProvider>

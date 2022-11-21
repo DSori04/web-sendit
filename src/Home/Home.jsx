@@ -5,6 +5,7 @@ import { Footer } from '../SharedComponents/Footer'
 import HomeImg from './Assets/Image1.svg'
 import { useState, useEffect } from 'react'
 import AppContextProvider from "../GlobalStates";
+import { Helmet } from "react-helmet-async";
 
 export function Home() {
     const [clients, setClients] = useState(700)
@@ -60,6 +61,10 @@ export function Home() {
     return (
 
         <>
+            <Helmet>
+                <title>SendIT</title>
+                <meta name="description" content="Home" />
+            </Helmet>
             <AppContextProvider>
                 <Navbar />
             </AppContextProvider>

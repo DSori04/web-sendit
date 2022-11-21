@@ -7,6 +7,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Error } from '../SharedComponents/Error'
 import AppContextProvider from '../GlobalStates';
 import {UserContext} from '../GlobalStates';
+import { Helmet } from "react-helmet-async";
 
 export function LogIn() {
     const navigate = useNavigate();
@@ -31,6 +32,10 @@ export function LogIn() {
 
     return (
         <>
+            <Helmet>
+                <title>Log In</title>
+                <meta name="description" content="Log In" />
+            </Helmet>
             <Navbar />
             <div className="w-full flex justify-center">
             <div className="w-3/4 lg:absolute lg:pt-20 pt-16 top-16 sm:bottom-14 bottom-28 flex flex-col md:px-20 px-6 font-main lg:min-h-0 min-h-screen">

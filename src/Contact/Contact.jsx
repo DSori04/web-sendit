@@ -3,10 +3,15 @@ import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
 import imagenContacto from "./assets/contact.svg";
 import AppContextProvider from "../GlobalStates";
+import { Helmet } from "react-helmet-async";
 
 export function Contact() {
     return (
         <>
+            <Helmet>
+                <title>Contact</title>
+                <meta name="description" content="Contact information" />
+            </Helmet>
             <AppContextProvider>
                 <Navbar />
             </AppContextProvider>

@@ -4,10 +4,15 @@ import { Footer } from "../SharedComponents/Footer";
 import aboutusimage from "./assets/aboutusicon.svg"
 import ods from "./assets/ods.png"
 import AppContextProvider from "../GlobalStates";
+import { Helmet } from "react-helmet-async";
 
 export function AboutUs() {
     return (
         <>
+        <Helmet>
+            <title>About Us</title>
+            <meta name="description" content="About Us" />
+        </Helmet>
         <AppContextProvider>
                 <Navbar />
             </AppContextProvider>

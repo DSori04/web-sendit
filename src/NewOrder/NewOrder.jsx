@@ -9,29 +9,35 @@ import neworder3 from "./assets/neworder3.svg"
 import AppContextProvider from "../GlobalStates";
 import payicon from "./assets/payicon.svg"
 import Stripe from "./assets/Stripe.svg";
+import { Helmet } from "react-helmet-async";
 
 
 export function NewOrder() {
     const [step, setstep] = useState(1)
     const handleSubmitOrigin = (e) => {
-        const origin = new FormData(e.target);
         e.preventDefault();
-        setstep(2)
+        const origin = Object.fromEntries(new FormData(e.target));
         console.log(origin);
+        setstep(2)
+        
     }
     const handleSubmitDestination = (e) => {
-        const destination = new FormData(e.target);
         e.preventDefault();
+        const destination = Object.fromEntries(new FormData(e.target));
         setstep(3);
-        console.log(destination);
+        console.log(destination)
     }
     const handleSubmitPayment = (e) => {
-        const payment = new FormData(e.target);
+        const payment = Object.fromEntries(new FormData(e.target));
         e.preventDefault();
         console.log(payment);
     }
     return (
         <>
+        <Helmet>
+            <title>New Order</title>
+            <meta name="description" content="New Order" />
+        </Helmet>
             <AppContextProvider>
                 <Navbar />
             </AppContextProvider>
@@ -79,31 +85,31 @@ export function NewOrder() {
                                 </div>
                             </div>
                         </div>
-                        <div id="newform">
+                        <div id="originform">
                             <form onSubmit={(e) => handleSubmitOrigin(e)}>
                                 <label htmlFor="name" className="text-main block mt-8">Nombre completo <span className="text-main text-red1">*</span></label>
-                                <input type="text" name="name" id="name" className="border-b-2 block" required />
+                                <input type="text" name="name" id="origin_name" className="border-b-2 block" required />
 
-                                <label htmlFor="email" className="text-main block mt-8">Correo Electrónico <span className="text-main text-red1">*</span></label>
-                                <input type="email" name="email" id="email" className="border-b-2 block" required></input>
+                                <label htmlFor="origin_email" className="text-main block mt-8">Correo Electrónico <span className="text-main text-red1">*</span></label>
+                                <input type="email" name="email" id="origin_email" className="border-b-2 block" required></input>
 
-                                <label htmlFor="tlf" className="text-main block mt-8">Teléfono</label>
-                                <input type="tel" name="tlf" id="tlf" className="border-b-2 block" />
+                                <label htmlFor="origin_tlf" className="text-main block mt-8">Teléfono  <span className="text-main text-red1">*</span></label>
+                                <input type="tel" name="tlf" id="origin_tlf" className="border-b-2 block" required />
 
-                                <label htmlFor="name" className="text-main block mt-8">Dirección 1 <span className="text-main text-red1">*</span></label>
-                                <input type="text" name="name" id="name" className="border-b-2 block" required />
+                                <label htmlFor="origin_addr1name" className="text-main block mt-8">Dirección 1 <span className="text-main text-red1">*</span></label>
+                                <input type="text" name="addr1" id="origin_addr1" className="border-b-2 block" required />
 
-                                <label htmlFor="name" className="text-main block mt-8">Dirección 2 <span className="text-main text-red1">*</span></label>
-                                <input type="text" name="name" id="name" className="border-b-2 block" required />
+                                <label htmlFor="origin_addr_2" className="text-main block mt-8">Dirección 2</label>
+                                <input type="text" name="addr2" id="origin_addr2" className="border-b-2 block" />
 
                                 <div className="w-full flex flex-row">
                                     <div className="w-1/3">
-                                        <label htmlFor="name" className="text-main block mt-8">Ciudad <span className="text-main text-red1">*</span></label>
-                                        <input type="text" name="name" id="name" className="border-b-2 block w-3/4" required />
+                                        <label htmlFor="city" className="text-main block mt-8">Ciudad <span className="text-main text-red1">*</span></label>
+                                        <input type="text" name="city" id="origin_city" className="border-b-2 block w-3/4" required />
                                     </div>
                                     <div className="w-1/4">
-                                        <label htmlFor="name" className="text-main block mt-8">CP <span className="text-main text-red1">*</span></label>
-                                        <input type="text" name="name" id="name" className="border-b-2 block w-2/3" required />
+                                        <label htmlFor="origin_cp" className="text-main block mt-8">CP <span className="text-main text-red1">*</span></label>
+                                        <input type="text" name="cp" id="origin_cp" className="border-b-2 block w-2/3" required />
                                     </div>
                                 </div>
                                 <input type="submit" value="Continuar" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl lg:hover:hue-rotate-15" />
@@ -160,31 +166,31 @@ export function NewOrder() {
                                 </div>
                             </div>
                         </div>
-                        <div id="newform">
+                        <div id="destform">
                             <form onSubmit={(e) => handleSubmitDestination(e)}>
                                 <label htmlFor="name" className="text-main block mt-8">Nombre completo <span className="text-main text-red1">*</span></label>
-                                <input type="text" name="name" id="name" className="border-b-2 block" required />
+                                <input type="text" name="name" id="dest_name" className="border-b-2 block" required />
 
-                                <label htmlFor="email" className="text-main block mt-8">Correo Electrónico <span className="text-main text-red1">*</span></label>
-                                <input type="email" name="email" id="email" className="border-b-2 block" required></input>
+                                <label htmlFor="dest_email" className="text-main block mt-8">Correo Electrónico <span className="text-main text-red1">*</span></label>
+                                <input type="email" name="email" id="dest_email" className="border-b-2 block" required></input>
 
-                                <label htmlFor="tlf" className="text-main block mt-8">Teléfono</label>
-                                <input type="tel" name="tlf" id="tlf" className="border-b-2 block" />
+                                <label htmlFor="dest_tlf" className="text-main block mt-8">Teléfono  <span className="text-main text-red1">*</span></label>
+                                <input type="tel" name="tlf" id="dest_tlf" className="border-b-2 block" required />
 
-                                <label htmlFor="name" className="text-main block mt-8">Dirección 1 <span className="text-main text-red1">*</span></label>
-                                <input type="text" name="name" id="name" className="border-b-2 block" required />
+                                <label htmlFor="dest_addr1name" className="text-main block mt-8">Dirección 1 <span className="text-main text-red1">*</span></label>
+                                <input type="text" name="addr1" id="dest_addr1" className="border-b-2 block" required />
 
-                                <label htmlFor="name" className="text-main block mt-8">Dirección 2 <span className="text-main text-red1">*</span></label>
-                                <input type="text" name="name" id="name" className="border-b-2 block" required />
+                                <label htmlFor="dest_addr_2" className="text-main block mt-8">Dirección 2</label>
+                                <input type="text" name="addr2" id="dest_addr2" className="border-b-2 block" />
 
                                 <div className="w-full flex flex-row">
                                     <div className="w-1/3">
-                                        <label htmlFor="name" className="text-main block mt-8">Ciudad <span className="text-main text-red1">*</span></label>
-                                        <input type="text" name="name" id="name" className="border-b-2 block w-3/4" required />
+                                        <label htmlFor="dest_city" className="text-main block mt-8">Ciudad <span className="text-main text-red1">*</span></label>
+                                        <input type="text" name="city" id="dest_city" className="border-b-2 block w-3/4" required />
                                     </div>
                                     <div className="w-1/4">
-                                        <label htmlFor="name" className="text-main block mt-8">CP <span className="text-main text-red1">*</span></label>
-                                        <input type="text" name="name" id="name" className="border-b-2 block w-2/3" required />
+                                        <label htmlFor="dest_cp" className="text-main block mt-8">CP <span className="text-main text-red1">*</span></label>
+                                        <input type="text" name="cp" id="dest_cp" className="border-b-2 block w-2/3" required />
                                     </div>
                                 </div>
                                 <input type="submit" value="Continuar" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl lg:hover:hue-rotate-15" />

@@ -4,6 +4,7 @@ import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
 import AppContextProvider from "../GlobalStates";
 import { Link } from 'react-router-dom'
+import { Helmet } from "react-helmet-async";
 
 export function NotFound() {
 
@@ -11,7 +12,10 @@ export function NotFound() {
 
     return (
         <AppContextProvider>
-        <>
+        <>  
+        <Helmet>
+            <title>Not Found</title>
+        </Helmet>
             <div className="h-screen max-h-screen">
                 <Navbar />
 

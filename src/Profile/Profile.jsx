@@ -3,6 +3,7 @@ import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
 import { Options } from "./components/Options";
 import { useNavigate } from "react-router";
+import { Helmet } from "react-helmet-async";
 
 export function Profile() {
     const navigate = useNavigate()
@@ -44,6 +45,9 @@ export function Profile() {
 
     return (
         <>
+            <Helmet>
+                <title>Profile</title>
+            </Helmet>
             <Navbar />
             <div className="flex flex-row w-full justify-center">
                 <div className="flex flex-row justify-around xl:w-3/4 w-full absolute lg:pt-0 top-16 sm:bottom-14 bottom-28 h-5/6 md:px-20 px-6 font-main">
@@ -54,13 +58,13 @@ export function Profile() {
                     <div className="w-2/3 h-5/6 mt-16 flex flex-col pt-24 pl-32 min-w-fit">
                         <form>
                         <b className="block">Nombre</b>
-                        {!editting ? <span className="block mt-2">{name}</span> : <input type="text" defaultValue={name} className="border-b-2 w-1/3" onChange={(e) => setName(e.target.value) } ></input>}
+                        {!editting ? <span className="block mt-2">{name}</span> : <input type="text" defaultValue={name} name="name" className="border-b-2 w-1/3" onChange={(e) => setName(e.target.value) } ></input>}
                         <b className="block mt-10">Apellidos</b>
-                        {!editting ? <span className="mt-2">{surname}</span> : <input type="text" defaultValue={surname} className="border-b-2 w-1/3" onChange={(e) => setSurname(e.target.value)}></input>}
+                        {!editting ? <span className="mt-2">{surname}</span> : <input type="text" defaultValue={surname} name="surname" className="border-b-2 w-1/3" onChange={(e) => setSurname(e.target.value)}></input>}
                         <b className="block mt-10">Email</b>
-                        {!editting ? <span className="mt-2">{email}</span> : <input type="text" defaultValue={email} className="border-b-2 w-1/3" onChange={(e) => setPw(e.target.value)}></input>}
+                        {!editting ? <span className="mt-2">{email}</span> : <input type="text" defaultValue={email} name="email" className="border-b-2 w-1/3" onChange={(e) => setPw(e.target.value)}></input>}
                         <b className="block mt-10">Contraseña</b>
-                        {!editting ? <span className="mt-2">***********</span> : <input type="password" className="border-b-2 w-1/3"></input>}
+                        {!editting ? <span className="mt-2">***********</span> : <input type="password" name="password" className="border-b-2 w-1/3"></input>}
                         {(!editting && !deleting) && <div className="flex flex-row justify-start mt-10 flex-wrap">
                             <button className="w-fit rounded-full bg-purple1 px-4 text-white font-bold py-2 shadow-xl hover:hue-rotate-15" onClick={() => setEdit(true)}>Editar Perfil</button>
                             <button className="w-fit rounded-full bg-red1 px-4 text-white font-bold py-2 ml-6 shadow-xl hover:hue-rotate-15" onClick={() => setDelete(true)}>Eliminar Perfil</button>

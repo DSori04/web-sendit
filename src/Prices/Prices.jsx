@@ -4,6 +4,7 @@ import { Footer } from "../SharedComponents/Footer";
 import { Link } from "react-router-dom";
 import savings from "./assets/savings.svg";
 import AppContextProvider from "../GlobalStates";
+import { Helmet } from "react-helmet-async";
 
 export function Prices() {
 
@@ -37,6 +38,10 @@ export function Prices() {
 
     return (
         <>
+        <Helmet>
+            <title>Prices</title>
+            <meta name="description" content="Prices" />
+        </Helmet>
         <AppContextProvider>
                 <Navbar />
             </AppContextProvider>
