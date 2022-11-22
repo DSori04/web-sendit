@@ -374,7 +374,7 @@ app.put('/orders/:order_id', (req, res) => {
     }
  })
 
-//To get orders from user
+//To get orders from user -- Replace user_id with param + create new one with order_id
 app.get('/orders/:user_id', (req, res) => {
     try {
         const sql = 'SELECT * FROM ORDERS WHERE user_id = ?';
@@ -387,6 +387,33 @@ app.get('/orders/:user_id', (req, res) => {
         res.status(404).send({ error: error.message });
     }
 })
+
+//To get order by order_id
+app.get('/orders', (req, res) => {
+    try {
+        const { order_id, user_id } = req.body;
+    const params = ['order_id', 'user_id'];
+    //const sql = 'SELECT * FROM ORDERS WHERE order_id = ? OR user_id = ?';
+    let sql = 'SELECT * FROM ORDERS WHERE ';
+    let i = 0;
+    let valid_params = []
+    params.forEach(param => {
+        if (req.body[param] != undefined) {
+            valid_params.push(req.body[param]);
+            if (i == 0) {
+                sql += param + ' = ?';
+            } else {
+                sql += ' AND ' + param + ' = ?';
+            }
+            i++;
+        }
+    });
+    } catch (error) {
+        res.status(404).send({ error: error.message });
+    }
+})
+    
+
 
 //Port forwarding
 app.listen(port, () => {
