@@ -1,16 +1,10 @@
 import express from 'express'
 import mysql from 'mysql'
 import bcrypt from 'bcrypt'
+import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+dotenv.config()
 
-//mysql://root:rnh1gHT4zhFuOCmOVOvz@containers-us-west-74.railway.app:5726/railway
-/*
-DATABASE railway
-HOST containers-us-west-74.railway.app
-PW rnh1gHT4zhFuOCmOVOvz
-PORT 5726
-USER root
-URL mysql://${{ MYSQLUSER }}:${{ MYSQLPASSWORD }}@${{ MYSQLHOST }}:${{ MYSQLPORT }}/${{ MYSQLDATABASE }}
-*/
+console.log(process.env) //.env variables
 
 const app = express()
 const port = 3000
