@@ -6,8 +6,11 @@ dotenv.config()
 
 const app = express()
 const port = 3000
-const cnx = mysql.createConnection(process.env.FULL_URL)
-console.log(cnx);
+// const cnx = mysql.createConnection(process.env.FULL_URL)
+
+// cnx.connect();
+
+// console.log(cnx);
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
@@ -113,7 +116,10 @@ app.get('/prices', (req, res) => {
 
 //Update prices
 app.put('/prices', (req, res) => {
-    //
+    // cnx.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+    //     if (err) throw err;
+    //     console.log('The solution is: ', rows[0].solution);
+    //   });
 })
 
 app.delete('/prices', (req, res) => { })
@@ -170,3 +176,4 @@ app.listen(port, () => {
     console.log(`SendIT Server running on port ${port}`)
 })
 
+// cnx.end()
