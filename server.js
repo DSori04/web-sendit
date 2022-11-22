@@ -5,7 +5,7 @@ const app = express()
 const port = 3000
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+    res.send('Hello World!')
 })
 
 // const salt = await bcrypt.genSalt(10);
@@ -15,34 +15,95 @@ app.get('/', (req, res) => {
 
 //For Login - Returns user data
 app.post('/user', (req, res) => {
-    res.send({Auth : 'success'})
-    //res.send({Auth : 'failed'})
+    try {
+        console.log("There was a POST request to /user to get the user info", req.body);
+        getUserData = async () => {
+            // Code here to get user data from database
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.send({ Auth: 'success', data: getUserData });
+    } catch (error) {
+        res.writeHead(400, { 'Content-Type': 'text/plain' });
+        res.send("Error");
+    }
 })
 
 //To create users
 app.put('/user', (req, res) => {
-    res.send({Success : true})
-    //res.send({Success: false})
+    try {
+        console.log("There was a PUT request to /user to create an user ", req.body);
+        createUser = async () => {
+            const newUser = new User({
+                // New user object
+            });
+            // Code here to save user to database
+        }
+    } catch (error) {
+        res.writeHead(400, { 'Content-Type': 'text/plain' });
+        res.send("Error");
+    }
 })
 
 //To update users
 app.put('/user/:user_id', (req, res) => {
-    res.send({Success : true})
-    //res.send({Success: false})
+    try {
+        console.log("There was a PUT request to /user to update an user ", req.body);
+        updateUser(req.params.user_id) = async (user) => {
+            // Code here to update user data in database
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.send({ Success: true });
+    } catch (error) {
+        res.writeHead(400, { 'Content-Type': 'text/plain' });
+        res.send("Error");
+    }
 })
 
 //To delete users
 app.delete('/user', (req, res) => {
-    res.send({Success: true})
-    //res.send({Success: false})
+    try {
+        console.log("There was a DELETE request to /user to delete an user ", req.body);
+        deleteUser = async () => {
+            // Code here to delete user from database
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+    } catch (error) {
+        res.writeHead(400, { 'Content-Type': 'text/plain' });
+        res.send("Error");
+    }
 })
 
 //To get Prices
 app.get('/prices', (req, res) => {
-    const prices = [
-        {'Tier' : 'S', 'minDistance' : 0, 'maxDistance' : 5, 'Price' : 1}
-    ]
-    res.send(prices)
+
+    // class tier {
+    //     constructor(tier, minDistance, maxDistance, price) {
+    //         this.tier = tier;
+    //         this.minDistance = minDistance;
+    //         this.maxDistance = maxDistance;
+    //         this.price = price;
+    //     }
+    // }
+
+    // const tiers = [
+    //     new tier("S", 0, 5, 1),
+    //     new tier("M", 5, 10, 0.97),
+    //     new tier("L", 10, 15, 0.94),
+    //     new tier("XL", 15, 20, 0.81),
+    //     new tier("Ultra", 20, undefined, 0.81)
+    // ]
+
+    try {
+        console.log("There was a GET request to /prices to get the prices ", req.body);
+        getPrices = async () => {
+            // Code here to get prices from database
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.send({ Auth: 'success', data: getPrices });
+    } catch (error) {
+        res.writeHead(400, { 'Content-Type': 'text/plain' });
+        res.send("Error");
+    }
 })
 
 //Update prices
@@ -50,29 +111,29 @@ app.put('/prices', (req, res) => {
     //
 })
 
-app.delete('/prices', (req, res) => {})
+app.delete('/prices', (req, res) => { })
 
 //To add an address - Returns address id
 app.post('/address', (req, res) => {
-    res.send({Success : true})
+    res.send({ Success: true })
     //res.send({Success: false})
 })
 
 //To get an address
 app.get('/address', (req, res) => {
-    res.send({Success : true})
+    res.send({ Success: true })
     //res.send({Success: false})
 })
 
 //To add personal info - Returns info id
 app.post('/info', (req, res) => {
-    res.send({Success : true})
+    res.send({ Success: true })
     //res.send({Success: false})
 })
 
 //To get info 
 app.get('/info', (req, res) => {
-    res.send({Success : true})
+    res.send({ Success: true })
     //res.send({Success: false})
 })
 
@@ -81,15 +142,26 @@ app.put('/orders', (req, res) => {
     res.send()
 })
 
-app.put('/orders/:order_id', (req, res) => {})
+app.put('/orders/:order_id', (req, res) => { })
 
 //To get orders from user
 app.get('/orders/:user_id', (req, res) => {
-    //
-})
+    try {
+        console.log("There was a GET request to /orders to get the orders from an user ", req.body);
+        const user = req.params.user_id;
+        getOrders(user) = async (user) => {
+            // Code here to get orders from database
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.send({ Auth: 'success', data: getOrders });
+    } catch (error) {
+        res.writeHead(400, { 'Content-Type': 'text/plain' });
+        res.send("Error");
+    }
+})  
 
 //Port forwarding
 app.listen(port, () => {
-  console.log(`SendIT Server running on port ${port}`)
+    console.log(`SendIT Server running on port ${port}`)
 })
 
