@@ -1,4 +1,5 @@
 import express from 'express'
+import mysql from 'mysql'
 import bcrypt from 'bcrypt'
 
 const app = express()
