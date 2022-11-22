@@ -1,4 +1,5 @@
 import express from 'express'
+import bcrypt from 'bcrypt'
 
 const app = express()
 const port = 3000
@@ -6,6 +7,11 @@ const port = 3000
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
+
+// const salt = await bcrypt.genSalt(10);
+//     // now we set user password to hashed password
+//     user.password = await bcrypt.hash(user.password, salt);
+// const validPassword = await bcrypt.compare(body.password, user.password);
 
 //For Login - Returns user data
 app.post('/user', (req, res) => {
@@ -86,3 +92,4 @@ app.get('/orders/:user_id', (req, res) => {
 app.listen(port, () => {
   console.log(`SendIT Server running on port ${port}`)
 })
+
