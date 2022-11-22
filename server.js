@@ -233,7 +233,16 @@ app.delete('/prices/:tier_id', (req, res) => {
 //To add an address - Returns address id
 app.post('/address', (req, res) => {
     try {
-
+        const { CP, city, street, other } = req.body;
+        const sql = 'INSERT INTO ADDRESSES (CP, city, street, other) VALUES (?, ?, ?, ?)';
+        cnx.query(sql, [CP, city, street, other], (err, result) => {
+            if (err) throw err;
+            res.send({
+                address_id: result.insertId,
+                success: true,
+                message: 'Address created'
+            })
+        });
     } catch (error) {
         res.status(404).send({ error: error.message });
     }
@@ -242,7 +251,45 @@ app.post('/address', (req, res) => {
 //To get an address
 app.get('/address', (req, res) => {
     try {
+        const { address_id, CP, city, street, other } = req.body;
+        const params = ['address_id', 'CP', 'city', 'street', 'other'];
+        //const sql = 'SELECT * FROM ADDRESS WHERE address_id = ? OR CP = ? OR city = ? OR street = ? OR other = ?';
+        let sql = 'SELECT * FROM ADDRESS WHERE ';
+        let i = 0;
+        let valid_params = []
+        params.forEach(param => {
+            if (req.body[param] != undefined) {
+                valid_params.push(req.body[param]);
+                if (i == 0) {
+                    sql += param + ' = ?';
+                } else {
+                    sql += ' AND ' + param + ' = ?';
+                }
+                i++;
+            }
+        });
 
+        cnx.query(sql, valid_params, (err, rows) => {
+            if (err) throw err;
+            res.send(rows);
+        }
+        );
+    } catch (error) {
+        res.status(404).send({ error: error.message });
+    }
+})
+
+//To delete an address
+app.delete('/address/:address_id', (req, res) => {
+    try {
+        const sql = 'DELETE FROM ADDRESSES WHERE address_id = ?';
+        cnx.query(sql, [req.params.address_id], (err, result) => {
+            if (err) throw err;
+            res.send({
+                success: true,
+                message: 'Address deleted'
+            })
+        });
     } catch (error) {
         res.status(404).send({ error: error.message });
     }
@@ -251,7 +298,16 @@ app.get('/address', (req, res) => {
 //To add personal info - Returns info id
 app.post('/info', (req, res) => {
     try {
-
+        const { name, surname, phone, email } = req.body;
+        const sql = 'INSERT INTO PERSONAL_INFO (name, surname, phone, email) VALUES (?, ?, ?, ?)';
+        cnx.query(sql, [name, surname, phone, email], (err, result) => {
+            if (err) throw err;
+            res.send({
+                info_id: result.insertId,
+                success: true,
+                message: 'Info created'
+            })
+        });
     } catch (error) {
         res.status(404).send({ error: error.message });
     }
@@ -260,6 +316,23 @@ app.post('/info', (req, res) => {
 //To get info 
 app.get('/info', (req, res) => {
     try {
+        const { info_id, name, surname, phone, email } = req.body;
+        const params = ['info_id', 'name', 'surname', 'phone', 'email'];
+        //const sql = 'SELECT * FROM PERSONAL_INFO WHERE info_id = ? OR name = ? OR surname = ? OR phone = ? OR email = ?';
+        let sql = 'SELECT * FROM PERSONAL_INFO WHERE ';
+        let i = 0;
+        let valid_params = []
+        params.forEach(param => {
+            if (req.body[param] != undefined) {
+                valid_params.push(req.body[param]);
+                if (i == 0) {
+                    sql += param + ' = ?';
+                } else {
+                    sql += ' AND ' + param + ' = ?';
+                }
+                i++;
+            }
+        });
 
     } catch (error) {
         res.status(404).send({ error: error.message });
@@ -269,15 +342,33 @@ app.get('/info', (req, res) => {
 //To add orders
 app.put('/orders', (req, res) => {
     try {
-
+        const { user_id, origin_info_id, destiny_info_id, tier_id, date_creation, date_arrival, order_status, comments } = req.body;
+        const sql = 'INSERT INTO ORDERS (user_id, origin_info_id, destiny_info_id, tier_id, date_creation, date_arrival, order_status, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+        cnx.query(sql, [user_id, origin_info_id, destiny_info_id, tier_id, date_creation, date_arrival, order_status, comments], (err, result) => {
+            if (err) throw err;
+            res.send({
+                order_id: result.insertId,
+                success: true,
+                message: 'Order created'
+            })
+        });
     } catch (error) {
         res.status(404).send({ error: error.message });
     }
 })
 
+//To update orders
 app.put('/orders/:order_id', (req, res) => {
     try {
-
+        const { user_id, origin_info_id, destiny_info_id, tier_id, date_creation, date_arrival, order_status, comments } = req.body;
+        const sql = 'UPDATE ORDERS SET user_id = ?, origin_info_id = ?, destiny_info_id = ?, tier_id = ?, date_creation = ?, date_arrival = ?, order_status = ?, comments = ? WHERE order_id = ?';
+        cnx.query(sql, [user_id, origin_info_id, destiny_info_id, tier_id, date_creation, date_arrival, order_status, comments, req.params.order_id], (err, result) => {
+            if (err) throw err;
+            res.send({
+                success: true,
+                message: 'Order updated'
+            })
+        });
     } catch (error) {
         res.status(404).send({ error: error.message });
     }
@@ -286,7 +377,12 @@ app.put('/orders/:order_id', (req, res) => {
 //To get orders from user
 app.get('/orders/:user_id', (req, res) => {
     try {
-
+        const sql = 'SELECT * FROM ORDERS WHERE user_id = ?';
+        cnx.query(sql, [req.params.user_id], (err, rows) => {
+            if (err) throw err;
+            res.send(rows);
+        }
+        );
     } catch (error) {
         res.status(404).send({ error: error.message });
     }
