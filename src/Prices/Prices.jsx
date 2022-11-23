@@ -4,10 +4,11 @@ import { Footer } from "../SharedComponents/Footer";
 import { Link } from "react-router-dom";
 import savings from "./assets/savings.svg";
 import AppContextProvider from "../GlobalStates";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "react-helmet-async"
+import axios from "axios";
 
 export function Prices() {
-
+    const y = axios.get('http://192.168.86.242:3170/prices').then((res) => {console.log(res)})
     const prices = [
         {
             tier: "S",
