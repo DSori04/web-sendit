@@ -41,43 +41,43 @@ export function NewOrder() {
             <AppContextProvider>
                 <Navbar />
             </AppContextProvider>
-            <div className="flex flex-row w-full justify-center">
-                <div className="xl:w-3/4 lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 w-full flex flex-col h-24 md:px-20 px-6 font-main">
+            <div className="flex flex-row w-full justify-center min-h-[90vh]">
+                <div className="xl:w-3/4 lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 w-full flex flex-col h-max lg:px-20 px-6 font-main">
                     <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Nuevo pedido</h1>
-                    {step == 1 && <div className="w-full flex flex-row sm:justify-start justify-center">
-                        <div className="flex flex-col h-full justify-center">
-                            <div id="steps" className="flex flex-col h-2/3 mr-14 w-48 justify-around">
-                                <div className="w-full font-main text-sm flex flex-row justify-end">
-                                    <div className="flex flex-col justify-center mr-5">
-                                        <span className="inline-block text-right font-bold text-xl h-max">
+                    {step == 1 && <div className="w-full h-max flex lg:flex-row flex-col justify-center">
+                        <div className="flex flex-row h-full justify-center ">
+                            <div id="steps" className="flex lg:flex-col flex-row h-2/3 w-48 justify-around">
+                                <div className="w-full font-main text-sm flex lg:flex-row flex-col-reverse justify-end">
+                                    <div className="flex flex-col justify-center">
+                                        <span className="inline-block lg:text-right text-center font-bold text-xl h-max">
                                             Datos Envio
                                         </span>
                                     </div>
-                                    <div className=" w-max">
+                                    <div className="flex lg:w-max w-24 lg:justify-end justify-center">
                                         <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block drop-shadow-lg">
                                             1
                                         </div>
                                     </div>
                                 </div>
-                                <div className="w-full font-main text-sm flex flex-row justify-end">
-                                    <div className="flex flex-col justify-center mr-5">
-                                        <span className="inline-block text-right h-max">
+                                <div className="w-full font-main text-sm flex lg:flex-row flex-col-reverse justify-end">
+                                    <div className="flex flex-col justify-center">
+                                        <span className="inline-block lg:text-right text-center h-max">
                                             Datos destinatario
                                         </span>
                                     </div>
-                                    <div className="w-max">
+                                    <div className="flex lg:w-max w-24 lg:justify-end justify-center">
                                         <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-black w-16 h-16 bg-gray3 rounded-full inline-block drop-shadow-lg">
                                             2
                                         </div>
                                     </div>
                                 </div>
-                                <div className="w-full font-main text-sm flex flex-row justify-end">
-                                    <div className="flex flex-col justify-center mr-5">
-                                        <span className="inline-block text-right h-max">
+                                <div className="w-full font-main text-sm flex lg:flex-row flex-col-reverse justify-end">
+                                    <div className="flex flex-col justify-center">
+                                        <span className="inline-block lg:text-right text-center h-max">
                                             Pago
                                         </span>
                                     </div>
-                                    <div className="w-max">
+                                    <div className="flex lg:w-max w-24 lg:justify-end justify-center">
                                         <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-black w-16 h-16 bg-gray3 rounded-full inline-block drop-shadow-lg">
                                             3
                                         </div>
