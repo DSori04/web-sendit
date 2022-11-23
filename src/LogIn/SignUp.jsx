@@ -6,6 +6,7 @@ import LoginIcon from "./assets/undraw_world_re_768.svg"
 import { Link } from 'react-router-dom'
 import AppContextProvider from '../GlobalStates';
 import { Helmet } from "react-helmet-async";
+import axios from "axios";
 
 export function SignUp(){
     const [name, setName] = useState("");
@@ -24,6 +25,10 @@ export function SignUp(){
         } else{
             e.target.setCustomValidity("Este campo es obligatorio")
         }
+    }
+
+    function addUser(){
+        
     }
 
 
