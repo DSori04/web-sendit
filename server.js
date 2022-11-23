@@ -10,9 +10,11 @@ dotenv.config()
 import Stripe from 'stripe'
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
-const app = express()
-const port = 3170
+const PORT = 3170
+
 const cnx = mysql.createConnection(process.env.FULL_URL)
+
+const app = express()
 app.use(express.json())
 app.use(cors(
     {
@@ -543,6 +545,17 @@ app.get('/orders', (req, res) => {
     }
 })
 
+app.post('/getCost', (req, res) => {
+
+    try {    
+        console.log(req.body);
+        res.send({cost: 32.5});
+
+    } catch (error) {
+        res.status(404).send({ error: error.message });
+    }
+});
+
 
 //To create a payment link
 app.post('/pay', async (req, res) => {
@@ -609,6 +622,6 @@ app.post('/pay', async (req, res) => {
 });
 
 // Port listening
-app.listen(port, () => {
-    console.log(`SendIT Server running on port ${port}`)
+app.listen(PORT, () => {
+    console.log(`SendIT Server running on port ${PORT}`)
 })

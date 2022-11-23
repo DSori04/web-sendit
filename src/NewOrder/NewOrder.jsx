@@ -10,22 +10,52 @@ import AppContextProvider from "../GlobalStates";
 import payicon from "./assets/payicon.svg"
 import Stripe from "./assets/Stripe.svg";
 import { Helmet } from "react-helmet-async";
+import axios from "axios";
 
+const SERVER_URL = "http://localhost:3170";
 
 export function NewOrder() {
-    const [step, setstep] = useState(1)
+
+    const [step, setstep] = useState(1);
+    const [orderCost, setCost] = useState(0);
+
+    let orderData = {}
+    let origin;
+    let destination;
+
     const handleSubmitOrigin = (e) => {
         e.preventDefault();
-        const origin = Object.fromEntries(new FormData(e.target));
-        console.log(origin);
+
+        // Gets all the data from the form
+        origin = Object.fromEntries(new FormData(e.target));
         setstep(2);
+
     }
 
-    const handleSubmitDestination = (e) => {
+    const handleSubmitDestination = async (e) => {
         e.preventDefault();
-        const destination = Object.fromEntries(new FormData(e.target));
+
+        // Gets all the data from the form
+        destination = Object.fromEntries(new FormData(e.target));
+
+        // Append the destination data to orderData
+        orderData = { ...orderData, destination };
+
+        // Send data to the server and get the cost of the order
+        const getCost = axios({
+            method: "POST",
+            url: `${SERVER_URL}/getCost`,
+            contentType: "application/json",
+            data: origin + destination,
+        }).then((response) => {
+            setCost(response.data.cost);
+            setstep(3);
+        }).catch((error) => {
+            console.log(error);
+        });
+
         setstep(3);
-        console.log(destination)
+
     }
 
     const handleSubmitPayment = (e) => {
@@ -97,28 +127,28 @@ export function NewOrder() {
                             <div id="originform" className="lg:block flex-row justify-center min-w-min">
                                 <form onSubmit={(e) => handleSubmitOrigin(e)} className="lg:block flex flex-col lg:w-full w-64">
                                     <label htmlFor="name" className="text-main block mt-8">Nombre completo <span className="text-main text-red1">*</span></label>
-                                    <input type="text" name="name" id="origin_name" className="border-b-2 inline-block" required />
+                                    <input type="text" name="originName" id="origin_name" className="border-b-2 inline-block" required />
 
                                     <label htmlFor="origin_email" className="text-main block mt-8">Correo Electrónico <span className="text-main text-red1">*</span></label>
-                                    <input type="email" name="email" id="origin_email" className="border-b-2 inline-block" required></input>
+                                    <input type="email" name="originEmail" id="origin_email" className="border-b-2 inline-block" required></input>
 
                                     <label htmlFor="origin_tlf" className="text-main block mt-8">Teléfono  <span className="text-main text-red1">*</span></label>
-                                    <input type="tel" name="tlf" id="origin_tlf" className="border-b-2 inline-block" required />
+                                    <input type="tel" name="originPhone" id="origin_tlf" className="border-b-2 inline-block" required />
 
                                     <label htmlFor="origin_addr1name" className="text-main block mt-8">Dirección 1 <span className="text-main text-red1">*</span></label>
-                                    <input type="text" name="addr1" id="origin_addr1" className="border-b-2 inline-block" required />
+                                    <input type="text" name="originAddr1" id="origin_addr1" className="border-b-2 inline-block" required />
 
                                     <label htmlFor="origin_addr_2" className="text-main block mt-8">Dirección 2</label>
-                                    <input type="text" name="addr2" id="origin_addr2" className="border-b-2 inline-block" />
+                                    <input type="text" name="originAddr2" id="origin_addr2" className="border-b-2 inline-block" />
 
                                     <div className="w-full flex flex-row">
                                         <div className="w-1/3">
                                             <label htmlFor="city" className="text-main block mt-8">Ciudad <span className="text-main text-red1">*</span></label>
-                                            <input type="text" name="city" id="origin_city" className="border-b-2 inline-block w-3/4" required />
+                                            <input type="text" name="originCity" id="origin_city" className="border-b-2 inline-block w-3/4" required />
                                         </div>
                                         <div className="w-1/4">
                                             <label htmlFor="origin_cp" className="text-main block mt-8">CP <span className="text-main text-red1">*</span></label>
-                                            <input type="text" name="cp" id="origin_cp" className="border-b-2 inline-block w-2/3" required />
+                                            <input type="text" name="originCP" id="origin_cp" className="border-b-2 inline-block w-2/3" required />
                                         </div>
                                     </div>
                                     <div className="flex flex-row lg:justify-start justify-center">
@@ -183,28 +213,28 @@ export function NewOrder() {
                             <div id="destform" className="lg:block flex-row justify-center min-w-min">
                                 <form onSubmit={(e) => handleSubmitDestination(e)} className="lg:block flex flex-col lg:w-full w-64">
                                     <label htmlFor="name" className="text-main block mt-8">Nombre completo <span className="text-main text-red1">*</span></label>
-                                    <input type="text" name="name" id="dest_name" className="border-b-2 inline-block" required />
+                                    <input type="text" name="destName" id="dest_name" className="border-b-2 inline-block" required />
 
                                     <label htmlFor="dest_email" className="text-main block mt-8">Correo Electrónico <span className="text-main text-red1">*</span></label>
-                                    <input type="email" name="email" id="dest_email" className="border-b-2 inline-block" required></input>
+                                    <input type="email" name="destEmail" id="dest_email" className="border-b-2 inline-block" required></input>
 
                                     <label htmlFor="dest_tlf" className="text-main block mt-8">Teléfono  <span className="text-main text-red1">*</span></label>
-                                    <input type="tel" name="tlf" id="dest_tlf" className="border-b-2 inline-block" required />
+                                    <input type="tel" name="destPhone" id="dest_tlf" className="border-b-2 inline-block" required />
 
                                     <label htmlFor="dest_addr1name" className="text-main block mt-8">Dirección 1 <span className="text-main text-red1">*</span></label>
-                                    <input type="text" name="addr1" id="dest_addr1" className="border-b-2 inline-block" required />
+                                    <input type="text" name="destAddr1" id="dest_addr1" className="border-b-2 inline-block" required />
 
                                     <label htmlFor="dest_addr_2" className="text-main block mt-8">Dirección 2</label>
-                                    <input type="text" name="addr2" id="dest_addr2" className="border-b-2 inline-block" />
+                                    <input type="text" name="destAddr2" id="dest_addr2" className="border-b-2 inline-block" />
 
                                     <div className="w-full flex flex-row">
                                         <div className="w-1/3">
                                             <label htmlFor="city" className="text-main block mt-8">Ciudad <span className="text-main text-red1">*</span></label>
-                                            <input type="text" name="city" id="dest_city" className="border-b-2 inline-block w-3/4" required />
+                                            <input type="text" name="destCity" id="dest_city" className="border-b-2 inline-block w-3/4" required />
                                         </div>
                                         <div className="w-1/4">
                                             <label htmlFor="dest_cp" className="text-main block mt-8">CP <span className="text-main text-red1">*</span></label>
-                                            <input type="text" name="cp" id="dest_cp" className="border-b-2 inline-block w-2/3" required />
+                                            <input type="text" name="destCP" id="dest_cp" className="border-b-2 inline-block w-2/3" required />
                                         </div>
                                     </div>
                                     <div className="flex flex-row lg:justify-start justify-center">
@@ -258,7 +288,7 @@ export function NewOrder() {
                                         </span>
                                     </div>
                                     <div className="flex lg:w-max w-24 lg:justify-end justify-center">
-                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-black w-16 h-16 bg-gray3 rounded-full inline-block drop-shadow-lg">
+                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block drop-shadow-lg">
                                             3
                                         </div>
                                     </div>
@@ -273,7 +303,9 @@ export function NewOrder() {
                                     <textarea name="Comentarios" id="Comentarios" className="border-b-2 block w-64" rows="1"></textarea>
                                     <div className="bg-gray1 w-fit h-fit mt-5 rounded-lg font-main px-3 py-3 leading-6">
                                         <span className="text-3xl font-semibold">Total</span><br></br>
-                                        <span className="text-3xl text-right w-full block">22.28€</span><br></br>
+                                        <span className="text-3xl text-right w-full block">
+                                            {orderCost}€
+                                        </span><br></br>
                                         <span className="font-bold">Tier: </span>Ultra (&gt;20Km)<br></br>
                                         <span className="font-bold">Distancia: </span>27.5Km (x0.81€/Km)
                                     </div>
@@ -303,32 +335,3 @@ export function NewOrder() {
         </>
     );
 }
-{/* <div id="newform">
-                            <form onSubmit={(e) => handleSubmitPayment(e)}>
-                                <label htmlFor="Comentarios" className="text-main block mt-8">Comentarios</label>
-                                <textarea name="Comentarios" id="Comentarios" className="border-b-2 block w-64" rows="1"></textarea>
-                                <div className="bg-gray1 w-fit h-fit mt-5 rounded-lg font-main px-3 py-3 leading-6">
-                                    <span className="text-3xl font-semibold">Total</span><br></br>
-                                    <span className="text-3xl text-right w-full block">22.28€</span><br></br>
-                                    <span className="font-bold">Tier: </span>Ultra (&gt;20Km)<br></br>
-                                    <span className="font-bold">Distancia: </span>27.5Km (x0.81€/Km)
-                                </div>
-                                <button className="w-40 mt-12 bg-purple1 h-12 rounded-full">
-                                    <img src={payicon} className="inline-block h-7"></img>
-
-                                    <span className="text-white text-xl font-semibold ml-3 inline-block">Pagar</span>
-
-                                </button>
-                                <img src={Stripe} className="mt-4"></img>
-                            </form>
-                        </div> */}
-
-                        // <div id="image" className="sm:block hidden min-h-fit">
-                        //     <div className="flex flex-col h-full justify-center">
-                        //         <div className="h-max">
-                        //             {step === 1 && <img src={neworder1}></img>}
-                        //             {step === 2 && <img src={neworder2}></img>}
-                        //             {step === 3 && <img src={neworder3}></img>}
-                        //         </div>
-                        //     </div>
-                        // </div>
