@@ -2,8 +2,13 @@ import express from 'express'
 import mysql from 'mysql'
 import bcrypt from 'bcrypt'
 import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
-dotenv.config()
 import cors from 'cors'
+
+dotenv.config()
+
+// Import stripe with secret key
+import Stripe from 'stripe'
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 const app = express()
 const port = 3170
@@ -38,10 +43,14 @@ app.post('/user', async (req, res) => {
 
         // Gets from db all users with the same email from the request
         const sql = 'SELECT * FROM USERS WHERE email = ?';
-        const resp = cnx.query(sql, [email], async (err, rows) => {
-            // If an user does exist
-            if (rows.length > 0) { //? It should be rows.length == 1; thre can't be more than one user with the same email
-                password = await bcrypt.hash(password, salt);
+        const resp = cnx.query(sql, [email]); //! resp isn't used anywhere
+
+        console.log(rows, fields);
+
+        // If an user does exist
+        if (rows.length > 0) { //? It should be rows.length == 1; thre can't be more than one user with the same email
+            res.send(rows);
+            password = await bcrypt.hash(password, salt);
 
                 // If the password from user matches the databese password
                 if (await bcrypt.compare(password, rows[0].password)) {
@@ -242,16 +251,28 @@ app.delete('/user/:user_id', (req, res) => {
     }
 })
 
+//To get all tiers
 app.get('/prices', async (req, res) => {
-    console.log('prices');
     try {
+        // Query to get all tiers from the database
         const sql = 'SELECT * FROM TIERS';
+        // Gets all tiers from the db
         cnx.query(sql, (err, rows) => {
+            
+            // If there's an SQL error, throw it
             if (err) throw err;
-            res.send(rows);
+
+            if (rows.length > 0) {
+                // If there are tiers, return them
+                res.send(rows);
+            } else {
+                // If there aren't tiers, return an error
+                res.status(404).send({ success: false, message: "No tiers found" });
+            }
         });
     } catch (error) {
-        res.status(404).send({ error: error.message });
+        // If there's an error, return it
+        res.status(500).send({ error: error.message });
     }
 })
 
@@ -289,23 +310,38 @@ app.put('/prices', (req, res) => {
     }
 })
 
+// To delete prices
 app.delete('/prices/:tier_id', (req, res) => {
     try {
-        const sql = "SELECT * FROM TIERS WHERE tier_id = ?";
-        cnx.query(sql, [req.params.tier_id], (err, rows) => {
+        // Query to get the tier from the database
+        const sql1 = "SELECT * FROM TIERS WHERE tier_id = ?";
+        // Gets the tier from the db
+        cnx.query(sql1, [req.params.tier_id], (err, rows) => {
+
+            // If there's an SQL error, throw it
             if (err) throw (err);
+
+            // If that tier exists
             if (rows.length > 0) {
-                const sql1 = 'DELETE FROM TIERS WHERE tier_id = ?';
-                cnx.query(sql1, [req.params.tier_id], (err, result) => {
+
+                // Query to delete the tier from the datsqlabase
+                const sql2 = 'DELETE FROM TIERS WHERE tier_id = ?';
+                // Deletes the tier from the db
+                cnx.query(sql2, [req.params.tier_id], (err, result) => {
+
+                    // If there's an SQL error, throw it
                     if (err) throw err;
+
+                    // If the tier is deleted, return a success message
                     res.send({
                         success: true,
                         message: 'Price deleted'
                     })
-                }
-                );
+                });
+
             } else {
-                res.send({ success: false, message: "Tier does not exist" });
+                // If the tier does not exist, return an error
+                res.status(404).send({ success: false, message: "Tier does not exist" });
             }
         });
     } catch (error) {
@@ -316,10 +352,17 @@ app.delete('/prices/:tier_id', (req, res) => {
 //To add an address - Returns address id
 app.post('/address', (req, res) => {
     try {
+        // Gets the address from the request body
         const { CP, city, street, other } = req.body;
+        // Query to insert the address into the database
         const sql = 'INSERT INTO ADDRESSES (CP, city, street, other) VALUES (?, ?, ?, ?)';
+        // Inserts the address into the db
         cnx.query(sql, [CP, city, street, other], (err, result) => {
+            
+            // If there's an SQL error, throw it
             if (err) throw err;
+
+            // If the address is inserted, return a sucess message
             res.send({
                 address_id: result.insertId,
                 success: true,
@@ -327,7 +370,7 @@ app.post('/address', (req, res) => {
             })
         });
     } catch (error) {
-        res.status(404).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 })
 
@@ -446,6 +489,7 @@ app.put('/orders', (req, res) => {
 
 //To update orders
 app.put('/orders/:order_id', (req, res) => {
+    
     try {
         const { user_id, origin_info_id, destiny_info_id, tier_id, date_creation, date_arrival, order_status, comments } = req.body;
         const sql = 'UPDATE ORDERS SET user_id = ?, origin_info_id = ?, destiny_info_id = ?, tier_id = ?, date_creation = ?, date_arrival = ?, order_status = ?, comments = ? WHERE order_id = ?';
@@ -501,8 +545,71 @@ app.get('/orders', (req, res) => {
 })
 
 
+//To create a payment link
+app.post('/pay', async (req, res) => {
 
-// //Port forwarding
+    try {
+        // Gets the price from the request body
+        const clientPrice = req.body.price;
+        const tier = req.body.tier;
+
+        // If there isn't a price, return an error
+        if (!clientPrice) {
+            return res.status(400).send({
+                error: 'Price is required'
+            });
+        }
+
+        // If price is lower than 0, return an error
+        if (clientPrice < 0) {
+            return res.status(400).send({
+                error: 'Price must be greater than 0'
+            });
+        }
+
+        // If price is lower than 50, make it 50 (minimum price required by stripe)
+        if (clientPrice < 50) {
+            clientPrice = 50;
+        }
+
+
+        // Creates a new product with the price
+        const product = await stripe.products.create({
+            name: 'Envio estandar',
+            description: `El precio viene definido por el peso y la distancia, por lo que puede variar en función de la zona de destino. | El precio de este envío es de \n${clientPrice / 100}€ | Tier: ${tier}`
+        });
+
+        // Creates a new price with the product
+        const price = await stripe.prices.create({
+            product: product.id,
+            unit_amount: clientPrice,
+            currency: 'eur',
+        });
+
+        // Create a checkout session with the product and its price
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card', 'sepa_debit'],
+            line_items: [
+                {
+                    price: price.id,
+                    quantity: 1,
+                },
+            ],
+            mode: 'payment',
+            success_url: 'http://localhost:3000/success',
+            cancel_url: 'http://localhost:3000/cancel',
+        });
+
+        // Send the session id to the client
+        res.status(200).send(session.url);
+
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+
+});
+
+//Port forwarding
 app.listen(port, () => {
     console.log(`SendIT Server running on port ${port}`)
 })
