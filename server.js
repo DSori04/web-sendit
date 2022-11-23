@@ -54,36 +54,36 @@ app.post('/user', async (req, res) => {
             res.send(rows);
             password = await bcrypt.hash(password, salt);
 
-                // If the password from user matches the databese password
-                if (await bcrypt.compare(password, rows[0].password)) {
+            // If the password from user matches the databese password
+            if (await bcrypt.compare(password, rows[0].password)) {
 
-                    // If they match, return the user data
-                    res.send({
-                        success: true,
-                        message: 'User logged in successfully',
-                        user_id: rows[0].user_id,
-                        email: rows[0].email,
-                        name: rows[0].name,
-                        surname: rows[0].surname,
-                    });
+                // If they match, return the user data
+                res.send({
+                    success: true,
+                    message: 'User logged in successfully',
+                    user_id: rows[0].user_id,
+                    email: rows[0].email,
+                    name: rows[0].name,
+                    surname: rows[0].surname,
+                });
 
-                } else {
-                    // If they don't match, return an error
-                    res.status(400).send({ success: false, message: "Incorrect password" });
-
-                }
             } else {
-                // In case users don't exist (rows.length <= 0) return an error
-                res.status(400).send({ success: false, message: "No user found" });
+                // If they don't match, return an error
+                res.status(400).send({ success: false, message: "Incorrect password" });
 
             }
-        });
+        } else {
+            // In case users don't exist (rows.length <= 0) return an error
+            res.status(400).send({ success: false, message: "No user found" });
 
+        }
+    }
 
-    } catch (error) {
+    catch (error) {
         res.status(400).send({ error: error.message });
     }
-})
+    
+});
 
 //To create users
 app.put('/user', async (req, res) => {
@@ -260,7 +260,7 @@ app.get('/prices', async (req, res) => {
         const sql = 'SELECT * FROM TIERS';
         // Gets all tiers from the db
         cnx.query(sql, (err, rows) => {
-            
+
             // If there's an SQL error, throw it
             if (err) throw err;
 
@@ -360,7 +360,7 @@ app.post('/address', (req, res) => {
         const sql = 'INSERT INTO ADDRESSES (CP, city, street, other) VALUES (?, ?, ?, ?)';
         // Inserts the address into the db
         cnx.query(sql, [CP, city, street, other], (err, result) => {
-            
+
             // If there's an SQL error, throw it
             if (err) throw err;
 
@@ -491,7 +491,7 @@ app.put('/orders', (req, res) => {
 
 //To update orders
 app.put('/orders/:order_id', (req, res) => {
-    
+
     try {
         const { user_id, origin_info_id, destiny_info_id, tier_id, date_creation, date_arrival, order_status, comments } = req.body;
         const sql = 'UPDATE ORDERS SET user_id = ?, origin_info_id = ?, destiny_info_id = ?, tier_id = ?, date_creation = ?, date_arrival = ?, order_status = ?, comments = ? WHERE order_id = ?';
@@ -548,9 +548,9 @@ app.get('/orders', (req, res) => {
 
 app.post('/getCost', (req, res) => {
 
-    try {    
+    try {
         console.log(req.body);
-        res.send({cost: 32.5});
+        res.send({ cost: 32.5 });
 
     } catch (error) {
         res.status(404).send({ error: error.message });
