@@ -9,23 +9,41 @@ const port = 3170
 const cnx = mysql.createConnection(process.env.FULL_URL)
 app.use(express.json())
 
-cnx.connect();
+try {
+    // Connects to the database
+    cnx.connect();
+} catch (error) {
+    // If the connection fails, the server will not start
+    console.log(error);
+    // Exit the process
+    process.exit(1);
+}
 
 //For Login - Returns user data
 app.post('/user', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
 
+
     try {
+        // Gets the mail and password from the request body
         let { email, password } = req.body;
-        const dbpassword = await bcrypt.hash("123", salt);
+        const dbpassword = await bcrypt.hash("123", salt); //! dbpassword isn't used anywhere
+
+        // Gets from db all users with the same email from the request
         const sql = 'SELECT * FROM USERS WHERE email = ?';
         const resp = cnx.query(sql, [email]);
+
         console.log(rows, fields);
-        res.send(rows);
-        if (rows.length > 0) {
+
+        // If an user does exist
+        if (rows.length > 0) { //? It should be rows.length == 1; thre can't be more than one user with the same email
             res.send(rows);
             password = await bcrypt.hash(password, salt);
+
+            // If the password from user matches the databese password
             if (await bcrypt.compare(password, rows[0].password)) {
+
+                // If they match, return the user data
                 res.send({
                     success: true,
                     message: 'User logged in successfully',
@@ -34,36 +52,62 @@ app.post('/user', async (req, res) => {
                     name: rows[0].name,
                     surname: rows[0].surname,
                 });
+
             } else {
-                res.status(404).send({ success: false, message: "Incorrect password" });
+                // If they don't match, return an error
+                res.status(400).send({ success: false, message: "Incorrect password" });
+
             }
         } else {
+            // In case users don't exist (rows.length <= 0) return an error
             res.send("No user found");
+
         }
+
     } catch (error) {
-        res.status(404).send({ error: error.message });
+        res.status(400).send({ error: error.message });
     }
 })
 
 //To create users
 app.put('/user', async (req, res) => {
+    // Salt generation
     const salt = await bcrypt.genSalt(10);
 
     try {
+        // Gets the mail, surname, mail and password from the request body
         let { name, surname, mail, password } = req.body;
         const sql1 = 'SELECT * FROM USERS WHERE email = ?';
+
+        // Encrypts the password with a salt
         const hashedpw = await bcrypt.hash(password, salt);
+
+        // Gets from db all users with the same email from the request
         cnx.query(sql1, [mail], (err, rows) => {
+
+            // If there's an SQL error, return it
             if (err) {
-                res.status(404).send({ error: err.message });
+                res.status(500).send({ error: err.message });
+
             } else {
+
+                // If an user does already exist with the same email, return an error
                 if (rows.length > 0) {
-                    res.status(404).send({ success: false, message: "User already exists" });
-                    return
+                    res.status(400).send({ success: false, message: "User already exists" });
+
                 } else {
+                    // If the user doesn't exist, create it
+
+                    // Query to insert the user in the database
                     const sql2 = 'INSERT INTO USERS (name, surname, email, password) VALUES (?, ?, ?, ?)';
+
+                    // Inserts the user in the db
                     cnx.query(sql2, [name, surname, mail, hashedpw], (err, result) => {
+
+                        // If there's an SQL error, return it
                         if (err) throw err;
+
+                        // If the user is created, return the user data
                         res.send({
                             name: name,
                             surname: surname,
@@ -83,80 +127,116 @@ app.put('/user', async (req, res) => {
 
 //To update users
 app.put('/user/:user_id', async (req, res) => {
+    // Salt generation
+    const salt = await bcrypt.genSalt(10);
+
     try {
-        const salt = await bcrypt.genSalt(10);
+        // Gets the mail, surname, mail and password from the request body
         let { name, surname, email, password } = req.body;
-        const hashedpw = await bcrypt.hash(password, salt);
-        const sql = "SELECT * FROM USERS WHERE email = ? AND user_id != ?";
-        cnx.query(sql, [email, req.params.user_id], async (err, rows) => {
-            if (err) {
-                res.status(404).send({ error: err.message });
+        const hashedpw = await bcrypt.hash(password, salt); //! hashedpw isn't used anywhere
+
+        // Query to get user data from the database
+        const sql1 = "SELECT * FROM USERS WHERE email = ? AND user_id != ?";
+
+        cnx.query(sql1, [email, req.params.user_id], async (err, rows) => {
+
+            // If there's an SQL error, throw it
+            if (err) throw err;
+
+            // If an user does already exist with the same email, return an error (can't update the user with the same email)
+            if (rows.length > 0) {
+                res.status(404).send({ success: false, message: "User already exists" });
             } else {
-                if (rows.length > 0) {
-                    res.status(404).send({ success: false, message: "User already exists" });
-                    return 0;
-                } else {
-                    const sql1 = 'SELECT * FROM USERS WHERE user_id = ?';
-                    cnx.query(sql1, [req.params.user_id], async (err, rows2) => {
-                        if (err) { 
-                            res.status(404).send({ error: err.message });
-                        } else {
-                            if (await bcrypt.compare(password, rows2[0].password)){                                
-                                const sql2 = 'UPDATE USERS SET name = ?, surname = ?, email = ? WHERE user_id = ?';
-                                cnx.query(sql2, [name, surname, email, req.params.user_id], (err, result) => {
-                                    if (err) throw err;
-                                    res.send({
-                                        name: name,
-                                        surname: surname,
-                                        email: email,
-                                        success: true,
-                                        message: 'User updated'
-                                    })
-                                });
-                            } else{
-                                res.send({success: false, message: "Password is different"});
-                            }
-                        }
-                    });
-                }
+
+                const sql2 = 'SELECT * FROM USERS WHERE user_id = ?';
+                cnx.query(sql2, [req.params.user_id], async (err, rows2) => {
+                    // If there's an SQL error, throw it
+                    if (err) throw err;
+
+                    // If the password from the db is the same as the one from the request body, update the data
+                    if (await bcrypt.compare(password, rows2[0].password)) {
+
+                        // Query to update the user in the database
+                        const sql2 = 'UPDATE USERS SET name = ?, surname = ?, email = ? WHERE user_id = ?';
+
+                        // Updates the user in the db
+                        cnx.query(sql2, [name, surname, email, req.params.user_id], (err, result) => {
+
+                            // If there's an SQL error, return it
+                            if (err) throw err;
+
+                            // If the user is updated, return the user data
+                            res.send({
+                                name: name,
+                                surname: surname,
+                                email: email,
+                                success: true,
+                                message: 'User updated'
+                            })
+                        });
+
+                    } else {
+                        // If the password from the db is different from the one from the request body, return an error
+                        res.status(400).send({ success: false, message: "Password is different" });
+
+                    }
+
+                });
             }
         });
-        
+
     } catch (error) {
-        res.status(404).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
-})
+});
 
 //To delete users
 app.delete('/user/:user_id', (req, res) => {
     try {
+        // Query to select the user from the database
         const sql1 = 'SELECT * FROM USERS WHERE user_id = ?';
-        const { password } = req.body;
-        cnx.query(sql1, [req.params.user_id], async (err, rows) => {
-            if (err) {
-                res.status(404).send({ error: err.message });
-            } else {
-                if (rows.length > 0) {
-                    if (await bcrypt.compare(password, rows[0].password)) {
 
-                        const sql = 'DELETE FROM USERS WHERE user_id = ?';
-                        cnx.query(sql, [req.params.user_id], (err, result) => {
-                            if (err) throw err;
-                            res.send({
-                                success: true,
-                                message: 'User deleted'
-                            })
-                        });
-                    } else {
-                        res.send({ success: false, message: "Wrong Password" });
-                    }
+        // Gets the password from the request body
+        const { password } = req.body;
+
+        // Selects the user from the db
+        cnx.query(sql1, [req.params.user_id], async (err, rows) => {
+
+            // If there's an SQL error, throw it
+            if (err) throw err;
+
+            // If the user exists
+            if (rows.length > 0) {
+
+                // If the password from the db is the same as the one from the request body
+                if (await bcrypt.compare(password, rows[0].password)) {
+
+                    // Query to delete the user from the database
+                    const sql = 'DELETE FROM USERS WHERE user_id = ?';
+
+                    // Deletes the user from the db
+                    cnx.query(sql, [req.params.user_id], (err, result) => {
+                        
+                        // If there's an SQL error, throw it
+                        if (err) throw err;
+
+                        // If the user is deleted, return a success message
+                        res.send({
+                            success: true,
+                            message: 'User deleted'
+                        })
+                    });
                 } else {
-                    res.status(404).send({ success: false, message: "User does not exist" });
+                    // If the password from the db is different from the one from the request body, return an error
+                    res.status(400).send({ success: false, message: "Wrong Password" });
                 }
+            } else {
+                res.status(404).send({ success: false, message: "User does not exist" });
             }
+
         });
     } catch (error) {
-        res.status(404).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 })
 
@@ -175,7 +255,7 @@ app.get('/prices', async (req, res) => {
 //Update prices
 app.put('/prices', (req, res) => {
     try {
-        const { tier_id, min_distance, max_distance, price} = req.body;
+        const { tier_id, min_distance, max_distance, price } = req.body;
         const sql1 = "SELECT * FROM TIERS WHERE tier_id = ?";
         cnx.query(sql1, [tier_id], (err, rows) => {
             if (err) throw (err);
@@ -206,8 +286,8 @@ app.put('/prices', (req, res) => {
     }
 })
 
-app.delete('/prices/:tier_id', (req, res) => { 
-    try{
+app.delete('/prices/:tier_id', (req, res) => {
+    try {
         const sql = "SELECT * FROM TIERS WHERE tier_id = ?";
         cnx.query(sql, [req.params.tier_id], (err, rows) => {
             if (err) throw (err);
@@ -376,7 +456,7 @@ app.put('/orders/:order_id', (req, res) => {
     } catch (error) {
         res.status(404).send({ error: error.message });
     }
- })
+})
 
 //To get orders from user -- Replace user_id with param + create new one with order_id
 app.get('/orders/:user_id', (req, res) => {
@@ -396,27 +476,27 @@ app.get('/orders/:user_id', (req, res) => {
 app.get('/orders', (req, res) => {
     try {
         const { order_id, user_id } = req.body;
-    const params = ['order_id', 'user_id'];
-    //const sql = 'SELECT * FROM ORDERS WHERE order_id = ? OR user_id = ?';
-    let sql = 'SELECT * FROM ORDERS WHERE ';
-    let i = 0;
-    let valid_params = []
-    params.forEach(param => {
-        if (req.body[param] != undefined) {
-            valid_params.push(req.body[param]);
-            if (i == 0) {
-                sql += param + ' = ?';
-            } else {
-                sql += ' AND ' + param + ' = ?';
+        const params = ['order_id', 'user_id'];
+        //const sql = 'SELECT * FROM ORDERS WHERE order_id = ? OR user_id = ?';
+        let sql = 'SELECT * FROM ORDERS WHERE ';
+        let i = 0;
+        let valid_params = []
+        params.forEach(param => {
+            if (req.body[param] != undefined) {
+                valid_params.push(req.body[param]);
+                if (i == 0) {
+                    sql += param + ' = ?';
+                } else {
+                    sql += ' AND ' + param + ' = ?';
+                }
+                i++;
             }
-            i++;
-        }
-    });
+        });
     } catch (error) {
         res.status(404).send({ error: error.message });
     }
 })
-    
+
 
 
 //Port forwarding
