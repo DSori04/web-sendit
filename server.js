@@ -512,11 +512,25 @@ app.post('/pay', async (req, res) => {
     try {
         // Gets the price from the request body
         const clientPrice = req.body.price;
+        const tier = req.body.tier;
+
+        if (!clientPrice) {
+            return res.status(400).send({
+                error: 'Price is required'
+            });
+        }
+
+        if (clientPrice < 0) {
+            return res.status(400).send({
+                error: 'Price must be greater than 0'
+            });
+        }
+
 
         // Creates a new product with the price
         const product = await stripe.products.create({
             name: 'Envio estandar',
-            description: 'Costes de envio'
+            description: `El precio viene definido por el peso y la distancia, por lo que puede variar en función de la zona de destino. | El precio de este envío es de \n${clientPrice / 100}€ | Tier: ${tier}`
         });
 
         console.log(product);
