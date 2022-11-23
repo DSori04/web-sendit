@@ -333,7 +333,11 @@ app.get('/info', (req, res) => {
                 i++;
             }
         });
-
+        cnx.query(sql, valid_params, (err, rows) => {
+            if (err) throw err;
+            res.send(rows);
+        }
+        );
     } catch (error) {
         res.status(404).send({ error: error.message });
     }
