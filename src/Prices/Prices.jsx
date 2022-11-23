@@ -6,37 +6,39 @@ import savings from "./assets/savings.svg";
 import AppContextProvider from "../GlobalStates";
 import { Helmet } from "react-helmet-async"
 import axios from "axios";
+import { useState, useEffect } from "react";
 
 export function Prices() {
-    const y = axios.get('http://192.168.86.242:3170/prices').then((res) => {console.log(res)})
-    const prices = [
-        {
-            tier: "S",
-            distance: "0 - 5 Km",
-            pricePerKm: 1,
-        },
-        {
-            tier: "M",
-            distance: "5 - 10 Km",
-            pricePerKm: 0.97
-        },
-        {
-            tier: "L",
-            distance: "10 - 15 Km",
-            pricePerKm: 0.94
-        },
-        {
-            tier: "XL",
-            distance: "15 - 20 Km",
-            pricePerKm: 0.89
-        },
-        {
-            tier: "Ultra",
-            distance: "> 20 Km",
-            pricePerKm: 0.81
+    const [prices, setPrices] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const fetchPrices = async () => {
+        await axios.get('http://192.168.86.242:3170/prices')
+        .then((res) => {
+            let response = [];
+            for (let i = 0; i < res.data.length; i++) {
+                response.push({
+                    tier: res.data[i].tier_id,
+                    distance: res.data[i].max_distance == null ? `> ${res.data[i].min_distance} km` : `${res.data[i].min_distance} - ${res.data[i].max_distance} km`,
+                    pricePerKm : res.data[i].price,
+                })
         }
-    ]
+        setPrices(response);
+    })
+    }
+    
+    useEffect(() => {    
+      return () => {
+        fetchPrices()
+        setLoading(false)
+      }
+    }, [])
 
+    if (loading) {
+        return(
+            <div>Loading...</div>
+        ) 
+            
+    }
     return (
         <>
         <Helmet>
