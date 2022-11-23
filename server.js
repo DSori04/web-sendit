@@ -514,16 +514,23 @@ app.post('/pay', async (req, res) => {
         const clientPrice = req.body.price;
         const tier = req.body.tier;
 
+        // If there isn't a price, return an error
         if (!clientPrice) {
             return res.status(400).send({
                 error: 'Price is required'
             });
         }
 
+        // If price is lower than 0, return an error
         if (clientPrice < 0) {
             return res.status(400).send({
                 error: 'Price must be greater than 0'
             });
+        }
+
+        // If price is lower than 50, make it 50 (minimum price required by stripe)
+        if (clientPrice < 50) {
+            clientPrice = 50;
         }
 
 
@@ -533,8 +540,6 @@ app.post('/pay', async (req, res) => {
             description: `El precio viene definido por el peso y la distancia, por lo que puede variar en función de la zona de destino. | El precio de este envío es de \n${clientPrice / 100}€ | Tier: ${tier}`
         });
 
-        console.log(product);
-
         // Creates a new price with the product
         const price = await stripe.prices.create({
             product: product.id,
@@ -542,9 +547,8 @@ app.post('/pay', async (req, res) => {
             currency: 'eur',
         });
 
-        console.log(price);
 
-        // Create a checkout session
+        // Create a checkout session with the product and its price
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card', 'sepa_debit'],
             line_items: [
@@ -569,7 +573,9 @@ app.post('/pay', async (req, res) => {
 
 
 
-//Port forwarding
+
+
+// Port listening
 app.listen(port, () => {
     console.log(`SendIT Server running on port ${port}`)
 })
