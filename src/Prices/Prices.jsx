@@ -12,7 +12,16 @@ export function Prices() {
     const [prices, setPrices] = useState([]);
     const [loading, setLoading] = useState(true);
     const fetchPrices = async () => {
-        await axios.get('http://192.168.86.242:3170/prices')
+        await axios(
+            {
+                method: "get",
+                url: 'http://192.168.86.242:3170/prices',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+            }}
+            )
         .then((res) => {
             let response = [];
             for (let i = 0; i < res.data.length; i++) {
@@ -24,6 +33,10 @@ export function Prices() {
         }
         setPrices(response);
     })
+        .catch((err) => {
+            console.log(err);
+        }
+    )
     }
 
     useLayoutEffect(() => {    

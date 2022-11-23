@@ -19,22 +19,27 @@ export function LogIn() {
         setData({'email': email, 'password': password})
     }, [email, password])
 
-    function handleSubmitLogin(e){
+    async function handleSubmitLogin(e){
         e.preventDefault();
-        const formdata = new FormData(e.target)
-        const response = axios({
+        const formdata = Object.fromEntries(new FormData(e.target))
+        const response = await axios({
             method: "post",
             url: "http://192.168.86.242:3170/user",
             data: formdata,
         }).then(
-            (res) => console.log(res)
+            (res) => {
+                console.log(res)
+                if (res.status == 200 && res.success == true) {
+                    setLogged(true);
+                    localStorage.setItem('email', formdata.get('email'))
+                    localStorage.setItem('logged', true)
+                    localStorage.setItem('expires', Date.now() + 3600000)
+                    navigate('/')
+                }
+            }
+        ).catch(
+            (err) => {}
         )
-        console.log(response)
-        localStorage.setItem('email', formdata.get('email'))
-        localStorage.setItem('logged', true)
-        localStorage.setItem('expires', Date.now() + 3600000)
-        setLogged(true)
-        navigate('/')
     }
 
     useEffect(() => {
@@ -42,7 +47,7 @@ export function LogIn() {
             setLogged(true)
             navigate('/')
         }
-    })
+    }, [])
 
     return (
         <>
@@ -67,10 +72,9 @@ export function LogIn() {
                                 <label htmlFor="mail" className="text-main block mt-8">Correo Electrónico</label>
                                 <input type="email" id="email" name="email" className="border-b-2 block" required onInvalid={(e) => e.target.setCustomValidity('Introduce un correo electrónico válido')} onInput={(e) => e.target.setCustomValidity('')}></input>
                                 <label htmlFor="pw" className="text-main block mt-8">Contraseña</label>
-                                <input type="password" className="border-b-2" required onInvalid={(e) => e.target.setCustomValidity('Introduce una contraseña')} onInput={(e) => e.target.setCustomValidity('')}></input>
+                                <input type="password" id="password" name="password" className="border-b-2" required onInvalid={(e) => e.target.setCustomValidity('Introduce una contraseña')} onInput={(e) => e.target.setCustomValidity('')}></input>
                                 <input type="submit" value="Log In" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl lg:hover:hue-rotate-15"/>
                             </form>
-                            {/* <button className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl lg:hover:hue-rotate-15 w-32">Log In</button> */}
                         </div>
                     </div>
                     

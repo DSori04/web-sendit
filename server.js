@@ -34,42 +34,40 @@ app.post('/user', async (req, res) => {
     try {
         // Gets the mail and password from the request body
         let { email, password } = req.body;
-        const dbpassword = await bcrypt.hash("123", salt); //! dbpassword isn't used anywhere
+        console.log(email, password)
 
         // Gets from db all users with the same email from the request
         const sql = 'SELECT * FROM USERS WHERE email = ?';
-        const resp = cnx.query(sql, [email]);
+        const resp = cnx.query(sql, [email], async (err, rows) => {
+            // If an user does exist
+            if (rows.length > 0) { //? It should be rows.length == 1; thre can't be more than one user with the same email
+                password = await bcrypt.hash(password, salt);
 
-        console.log(rows, fields);
+                // If the password from user matches the databese password
+                if (await bcrypt.compare(password, rows[0].password)) {
 
-        // If an user does exist
-        if (rows.length > 0) { //? It should be rows.length == 1; thre can't be more than one user with the same email
-            res.send(rows);
-            password = await bcrypt.hash(password, salt);
+                    // If they match, return the user data
+                    res.send({
+                        success: true,
+                        message: 'User logged in successfully',
+                        user_id: rows[0].user_id,
+                        email: rows[0].email,
+                        name: rows[0].name,
+                        surname: rows[0].surname,
+                    });
 
-            // If the password from user matches the databese password
-            if (await bcrypt.compare(password, rows[0].password)) {
+                } else {
+                    // If they don't match, return an error
+                    res.status(400).send({ success: false, message: "Incorrect password" });
 
-                // If they match, return the user data
-                res.send({
-                    success: true,
-                    message: 'User logged in successfully',
-                    user_id: rows[0].user_id,
-                    email: rows[0].email,
-                    name: rows[0].name,
-                    surname: rows[0].surname,
-                });
-
+                }
             } else {
-                // If they don't match, return an error
-                res.status(400).send({ success: false, message: "Incorrect password" });
+                // In case users don't exist (rows.length <= 0) return an error
+                res.status(400).send({ success: false, message: "No user found" });
 
             }
-        } else {
-            // In case users don't exist (rows.length <= 0) return an error
-            res.send("No user found");
+        });
 
-        }
 
     } catch (error) {
         res.status(400).send({ error: error.message });
@@ -245,6 +243,7 @@ app.delete('/user/:user_id', (req, res) => {
 })
 
 app.get('/prices', async (req, res) => {
+    console.log('prices');
     try {
         const sql = 'SELECT * FROM TIERS';
         cnx.query(sql, (err, rows) => {
@@ -503,7 +502,7 @@ app.get('/orders', (req, res) => {
 
 
 
-//Port forwarding
+// //Port forwarding
 app.listen(port, () => {
     console.log(`SendIT Server running on port ${port}`)
 })
