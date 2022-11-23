@@ -9,7 +9,7 @@ import AppContextProvider from "../GlobalStates";
 import { Helmet } from "react-helmet-async";
 // import MapComponent from "./components/MapComponent";
 //import Places from "./components/AutoCompleteMap";
-import SearchBox from "./components/MapsPos";
+import Directions from "./components/MapsPos";
 
 export function Tracking() {
     const [inputting, setInput] = useState(false);
@@ -49,6 +49,7 @@ export function Tracking() {
                             <img src={TrackIcon} alt="Imagen de About Us" className=" xl:max-h-96 lg:max-h-80 sm:max-h-80 xl:mt-0 lg:mt-10 mt-10 min-h-fit" />
                         </div>
                     </div>}
+                    {!inputting && <Directions />}
                 </div>
             </div>
             <Footer />

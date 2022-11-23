@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const libraries = ["places"];
 
-function SearchBox() {
+function Directions() {
     const [ libraries ] = useState(["places"]);
     const mapContainerStyle = {
         width: "100%",
@@ -86,4 +86,4 @@ function SearchBox() {
 
 
 
-export default React.memo(SearchBox);
+export default React.memo(Directions);
