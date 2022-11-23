@@ -83,7 +83,7 @@ app.put('/user', async (req, res) => {
         // Gets the mail, surname, mail and password from the request body
         let { name, surname, mail, password } = req.body;
         const sql1 = 'SELECT * FROM USERS WHERE email = ?';
-
+        console.log(name, surname, mail, password)
         // Encrypts the password with a salt
         const hashedpw = await bcrypt.hash(password, salt);
 
