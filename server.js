@@ -5,6 +5,10 @@ import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-d
 dotenv.config()
 import cors from 'cors'
 
+// Import stripe with secret key
+import Stripe from 'stripe'
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+
 const app = express()
 const port = 3170
 const cnx = mysql.createConnection(process.env.FULL_URL)
@@ -500,6 +504,54 @@ app.get('/orders', (req, res) => {
         res.status(404).send({ error: error.message });
     }
 })
+
+
+//To create a payment link
+app.post('/pay', async (req, res) => {
+
+    try {
+        // Gets the price from the request body
+        const clientPrice = req.body.price;
+
+        // Creates a new product with the price
+        const product = await stripe.products.create({
+            name: 'Envio estandar',
+            description: 'Costes de envio'
+        });
+
+        console.log(product);
+
+        // Creates a new price with the product
+        const price = await stripe.prices.create({
+            product: product.id,
+            unit_amount: clientPrice,
+            currency: 'eur',
+        });
+
+        console.log(price);
+
+        // Create a checkout session
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card', 'sepa_debit'],
+            line_items: [
+                {
+                    price: price.id,
+                    quantity: 1,
+                },
+            ],
+            mode: 'payment',
+            success_url: 'http://localhost:3000/success',
+            cancel_url: 'http://localhost:3000/cancel',
+        });
+
+        // Send the session id to the client
+        res.status(200).send(session.url);
+
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+
+});
 
 
 

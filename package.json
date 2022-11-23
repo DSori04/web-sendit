@@ -22,7 +22,8 @@
     "react-hook-form": "^7.39.4",
     "react-hooks-global-state": "^2.0.0",
     "react-router": "^6.4.3",
-    "react-router-dom": "^6.4.3"
+    "react-router-dom": "^6.4.3",
+    "stripe": "^11.1.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.24",
