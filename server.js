@@ -93,38 +93,35 @@ app.put('/user', async (req, res) => {
         cnx.query(sql1, [mail], (err, rows) => {
 
             // If there's an SQL error, return it
-            if (err) {
-                res.status(500).send({ error: err.message });
+            if (err) throw err;
+
+            // If an user does already exist with the same email, return an error
+            if (rows.length > 0) {
+                res.status(400).send({ success: false, message: "User already exists" });
 
             } else {
+                // If the user doesn't exist, create it
 
-                // If an user does already exist with the same email, return an error
-                if (rows.length > 0) {
-                    res.status(400).send({ success: false, message: "User already exists" });
+                // Query to insert the user in the database
+                const sql2 = 'INSERT INTO USERS (name, surname, email, password) VALUES (?, ?, ?, ?)';
 
-                } else {
-                    // If the user doesn't exist, create it
+                // Inserts the user in the db
+                cnx.query(sql2, [name, surname, mail, hashedpw], (err, result) => {
 
-                    // Query to insert the user in the database
-                    const sql2 = 'INSERT INTO USERS (name, surname, email, password) VALUES (?, ?, ?, ?)';
+                    // If there's an SQL error, return it
+                    if (err) throw err;
 
-                    // Inserts the user in the db
-                    cnx.query(sql2, [name, surname, mail, hashedpw], (err, result) => {
-
-                        // If there's an SQL error, return it
-                        if (err) throw err;
-
-                        // If the user is created, return the user data
-                        res.send({
-                            name: name,
-                            surname: surname,
-                            mail: mail,
-                            success: true,
-                            message: 'User created'
-                        })
-                    });
-                }
+                    // If the user is created, return the user data
+                    res.send({
+                        name: name,
+                        surname: surname,
+                        mail: mail,
+                        success: true,
+                        message: 'User created'
+                    })
+                });
             }
+
         });
 
     } catch (error) {
@@ -223,7 +220,7 @@ app.delete('/user/:user_id', (req, res) => {
 
                     // Deletes the user from the db
                     cnx.query(sql, [req.params.user_id], (err, result) => {
-                        
+
                         // If there's an SQL error, throw it
                         if (err) throw err;
 
