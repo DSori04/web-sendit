@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
 import { Link } from "react-router-dom";
@@ -25,8 +25,8 @@ export function Prices() {
         setPrices(response);
     })
     }
-    
-    useEffect(() => {    
+
+    useLayoutEffect(() => {    
       return () => {
         fetchPrices()
         setLoading(false)
@@ -35,9 +35,12 @@ export function Prices() {
 
     if (loading) {
         return(
+            <>
+            <Navbar />
             <div>Loading...</div>
-        ) 
-            
+            <Footer />
+            </>
+        )         
     }
     return (
         <>
