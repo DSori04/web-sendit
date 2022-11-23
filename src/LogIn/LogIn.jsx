@@ -4,9 +4,7 @@ import { Footer } from "../SharedComponents/Footer";
 import { useState, useEffect, useContext } from "react"
 import LoginIcon from "./assets/undraw_world_re_768.svg"
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { Error } from '../SharedComponents/Error'
-import AppContextProvider from '../GlobalStates';
-import {UserContext} from '../GlobalStates';
+import axios from "axios";
 import { Helmet } from "react-helmet-async";
 
 export function LogIn() {
@@ -15,7 +13,7 @@ export function LogIn() {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [data, setData] = useState({'email': email, 'password': password});
-    const {logged, setLogged} = useContext(UserContext);
+    const [logged, setLogged] = useState(false);
 
     useEffect(() => {
         setData({'email': email, 'password': password})
@@ -24,11 +22,27 @@ export function LogIn() {
     function handleSubmitLogin(e){
         e.preventDefault();
         const formdata = new FormData(e.target)
+        const response = axios({
+            method: "post",
+            url: "http://192.168.86.242:3170/user",
+            data: formdata,
+        }).then(
+            (res) => console.log(res)
+        )
+        console.log(response)
         localStorage.setItem('email', formdata.get('email'))
         localStorage.setItem('logged', true)
+        localStorage.setItem('expires', Date.now() + 3600000)
         setLogged(true)
         navigate('/')
     }
+
+    useEffect(() => {
+        if (localStorage.getItem('logged') == 'true') {
+            setLogged(true)
+            navigate('/')
+        }
+    })
 
     return (
         <>
