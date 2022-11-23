@@ -4,6 +4,7 @@ import { Footer } from "../SharedComponents/Footer";
 import { Options } from "./components/Options";
 import { useNavigate } from "react-router";
 import { Helmet } from "react-helmet-async";
+import { Userorders } from "./components/UserOrders";
 
 export function Profile() {
     const navigate = useNavigate()
@@ -53,9 +54,9 @@ export function Profile() {
                 <div className="flex flex-row justify-around xl:w-3/4 w-full absolute lg:pt-0 top-16 sm:bottom-14 bottom-28 h-5/6 md:px-20 px-6 font-main">
                     <div className="w-1/3 h-5/6 mt-16 border-r-4 border-gray2 flex flex-col justify-around pt-8 min-w-fit">
                         <div id="icon" className="w-64 h-64 rounded-full bg-purple2 text-7xl font-bold text-main leading-[16rem] text-center mx-auto">C</div>
-                        <Options selected={selected}/>
+                        <Options selected={selected} setSelected={setSelected}/>
                     </div>
-                    <div className="w-2/3 h-5/6 mt-16 flex flex-col pt-24 pl-32 min-w-fit">
+                    {selected == 1 && <div className="w-2/3 h-5/6 mt-16 flex flex-col pt-24 pl-32 min-w-fit">
                         <form>
                         <b className="block">Nombre</b>
                         {!editting ? <span className="block mt-2">{name}</span> : <input type="text" defaultValue={name} name="name" className="border-b-2 w-1/3" onChange={(e) => setName(e.target.value) } ></input>}
@@ -79,7 +80,8 @@ export function Profile() {
                             <button className="border-2 border-purple1 font-bold text-white bg-purple1 px-6 py-1 ml-4 rounded-full shadow-xl hover:hue-rotate-30" onClick={() => setDelete(false)}>No</button>
                             </div>}
                         </form>    
-                    </div>
+                    </div>}
+                    {selected == 2 && <Userorders />}
                     
                 </div>
             </div>
