@@ -22,6 +22,14 @@ export function LogIn() {
     function handleSubmitLogin(e){
         e.preventDefault();
         const formdata = new FormData(e.target)
+        const response = axios({
+            method: "post",
+            url: "http://192.168.86.242:3170/user",
+            data: formdata,
+        }).then(
+            (res) => console.log(res)
+        )
+        console.log(response)
         localStorage.setItem('email', formdata.get('email'))
         localStorage.setItem('logged', true)
         localStorage.setItem('expires', Date.now() + 3600000)
