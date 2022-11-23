@@ -3,12 +3,13 @@ import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
 import { useState, useEffect } from "react"
 import LoginIcon from "./assets/undraw_world_re_768.svg"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import AppContextProvider from '../GlobalStates';
 import { Helmet } from "react-helmet-async";
 import axios from "axios";
 
 export function SignUp(){
+    const navigate = useNavigate();
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
     const [mail, setMail] = useState("");
@@ -16,6 +17,10 @@ export function SignUp(){
     const [pwrepeat, setPwrepeat] = useState("");
     const [accepted, setAccepted] = useState(false);
     const [valid, setValid] = useState(false);
+    const [error, setError] = useState({
+        state: false,
+        message: ""
+    })
 
     function checkPw(e){
         const val = e.target.value
@@ -27,8 +32,36 @@ export function SignUp(){
         }
     }
 
-    function addUser(){
-        
+    async function addUser(e){
+        e.preventDefault();
+        const user = Object.fromEntries(new FormData(e.target))
+        if (user.password == user.pwrepeat){
+            if (user.mail.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)){
+                console.log(user)
+                await axios({
+                    method: "put",
+                    url: "http://192.168.86.242:3170/user",
+                    data: user,
+                })
+                .then((res) => {
+                    localStorage.setItem('email', user.email)
+                    localStorage.setItem('logged', true)
+                    localStorage.setItem('expires', Date.now() + 3600000)
+                    localStorage.setItem('user_id', res.data.user_id)
+                    localStorage.setItem('name', res.data.name)
+                    localStorage.setItem('surname', res.data.surname)
+                    navigate('/')
+                })
+                .catch((err) => {
+                    setError({state: true, message: err.response?.data.message})
+                    console.log(err.response.data.message)
+                    console.log(error.state)
+                })
+            } else{
+                setError({state: true, message: "Inserte un email válido"})
+            }
+        }
+
     }
 
 
@@ -53,18 +86,19 @@ export function SignUp(){
                             <div className="relative h-full w-28 ml-28 bg-purple2 "></div>
                         </div>
                         <div className="flex flex-col relative mt-12 lg:ml-24">
-                            <form autoComplete="off">
+                            <form autoComplete="off" onSubmit={e => addUser(e)}>
                                 <label htmlFor="name" className="text-main block mt-8">Nombre <span className="text-main text-red1">*</span></label>
                                 <input type="text" name="name" className="border-b-2 block" required onChange={(e) => setName(e.target.value)} onInvalid={(e) => e.target.setCustomValidity('Este campo es obligatorio')} onInput={(e) => e.target.setCustomValidity('')}></input>
                                 
                                 <label htmlFor="surname" className="text-main block mt-8">Apellidos <span className="text-main text-red1">*</span></label>
                                 <input type="text" name="surname" className="border-b-2 block" required onChange={(e) => setSurname(e.target.value)} onInvalid={(e) => e.target.setCustomValidity('Este campo es obligatorio')} onInput={(e) => e.target.setCustomValidity('')}></input>
                                 
-                                <label htmlFor="email" className="text-main block mt-8">Correo Electrónico <span className="text-main text-red1">*</span></label>
-                                <input type="email" name="email" className="border-b-2 block" required onChange={(e) => setMail(e.target.value)} onInvalid={(e) => e.target.setCustomValidity('Introduce un correo electrónico válido')} onInput={(e) => e.target.setCustomValidity('')}></input>
+                                <label htmlFor="mail" className="text-main block mt-8">Correo Electrónico <span className="text-main text-red1">*</span></label>
+                                <input type="email" name="mail" className="border-b-2 block" required onChange={(e) => setError({state: false, message: ""})} onInvalid={(e) => e.target.setCustomValidity('Introduce un correo electrónico válido')} onInput={(e) => e.target.setCustomValidity('')}></input>
+                                {error.state && <span className="font-main text-red1">{error.message}</span>}
                                 
-                                <label htmlFor="pw" className="text-main block mt-8">Contraseña <span className="text-main text-red1">*</span></label>
-                                <input type="password" name="pw" className="border-b-2" required onChange={(e) => setPw(e.target.value)} minLength={6} onInvalid={(e) => checkPw(e)} onInput={(e) => e.target.setCustomValidity('')}></input>
+                                <label htmlFor="password" className="text-main block mt-8">Contraseña <span className="text-main text-red1">*</span></label>
+                                <input type="password" name="password" className="border-b-2" required onChange={(e) => setPw(e.target.value)} minLength={6} onInvalid={(e) => checkPw(e)} onInput={(e) => e.target.setCustomValidity('')}></input>
                                 
                                 <label htmlFor="pwrepeat" className="text-main block mt-8">Repetir Contraseña <span className="text-main text-red1">*</span></label>
                                 <input type="password" name="pwrepeat" className="border-b-2" required minLength={6} onInvalid={(e) => checkPw(e)} onChange={(e) => setPwrepeat(e.target.value)} onInput={(e) => e.target.setCustomValidity('')}></input><br></br>
@@ -72,8 +106,9 @@ export function SignUp(){
 
                                 <input type="checkbox" name="checkTerms" className="inline-block mt-8" required onInvalid={(e) => e.target.setCustomValidity('Este campo es obligatorio')} onInput={(e) => e.target.setCustomValidity('')}></input>                                
                                 <label htmlFor="checkTerms"> Acepto los <span className="text-purple1 font-main underline cursor-pointer">términos de servicio</span> <span className="text-main text-red1">*</span></label>
+                                
+                                
 
-                                <input type="hidden" onSubmit={() => setValid(pw == pwrepeat)}></input>
                                 <input type="submit" value="Sign Up" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl hover:hue-rotate-15"/>
                             </form>
                         </div>

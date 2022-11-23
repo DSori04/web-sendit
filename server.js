@@ -41,7 +41,7 @@ app.post('/user', async (req, res) => {
     try {
         // Gets the mail and password from the request body
         let { email, password } = req.body;
-        const dbpassword = await bcrypt.hash("123", salt); //! dbpassword isn't used anywhere
+        console.log(email, password)
 
         // Gets from db all users with the same email from the request
         const sql = 'SELECT * FROM USERS WHERE email = ?';
@@ -54,29 +54,31 @@ app.post('/user', async (req, res) => {
             res.send(rows);
             password = await bcrypt.hash(password, salt);
 
-            // If the password from user matches the databese password
-            if (await bcrypt.compare(password, rows[0].password)) {
+                // If the password from user matches the databese password
+                if (await bcrypt.compare(password, rows[0].password)) {
 
-                // If they match, return the user data
-                res.send({
-                    success: true,
-                    message: 'User logged in successfully',
-                    user_id: rows[0].user_id,
-                    email: rows[0].email,
-                    name: rows[0].name,
-                    surname: rows[0].surname,
-                });
+                    // If they match, return the user data
+                    res.send({
+                        success: true,
+                        message: 'User logged in successfully',
+                        user_id: rows[0].user_id,
+                        email: rows[0].email,
+                        name: rows[0].name,
+                        surname: rows[0].surname,
+                    });
 
+                } else {
+                    // If they don't match, return an error
+                    res.status(400).send({ success: false, message: "Incorrect password" });
+
+                }
             } else {
-                // If they don't match, return an error
-                res.status(400).send({ success: false, message: "Incorrect password" });
+                // In case users don't exist (rows.length <= 0) return an error
+                res.status(400).send({ success: false, message: "No user found" });
 
             }
-        } else {
-            // In case users don't exist (rows.length <= 0) return an error
-            res.send("No user found");
+        });
 
-        }
 
     } catch (error) {
         res.status(400).send({ error: error.message });
@@ -92,7 +94,7 @@ app.put('/user', async (req, res) => {
         // Gets the mail, surname, mail and password from the request body
         let { name, surname, mail, password } = req.body;
         const sql1 = 'SELECT * FROM USERS WHERE email = ?';
-
+        console.log(name, surname, mail, password)
         // Encrypts the password with a salt
         const hashedpw = await bcrypt.hash(password, salt);
 
@@ -253,7 +255,6 @@ app.delete('/user/:user_id', (req, res) => {
 
 //To get all tiers
 app.get('/prices', async (req, res) => {
-
     try {
         // Query to get all tiers from the database
         const sql = 'SELECT * FROM TIERS';
@@ -621,7 +622,7 @@ app.post('/pay', async (req, res) => {
 
 });
 
-// Port listening
+//Port forwarding
 app.listen(PORT, () => {
     console.log(`SendIT Server running on port ${PORT}`)
 })
