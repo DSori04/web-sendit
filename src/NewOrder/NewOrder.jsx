@@ -45,11 +45,11 @@ export function NewOrder() {
                 <div className="xl:w-3/4 lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 w-full flex flex-col h-max lg:px-20 px-6 font-main">
                     <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Nuevo pedido</h1>
                     {step == 1 && <div className="w-full h-max flex lg:flex-row flex-col justify-center">
-                        <div className="flex flex-row h-full justify-center ">
-                            <div id="steps" className="flex lg:flex-col flex-row h-2/3 w-48 justify-around">
+                        <div className="flex flex-row max-h-fit justify-center lg:py-20 py-10 lg:pr-10 min-w-max ">
+                            <div id="steps" className="flex lg:flex-col flex-row w-48 justify-around">
                                 <div className="w-full font-main text-sm flex lg:flex-row flex-col-reverse justify-end">
                                     <div className="flex flex-col justify-center">
-                                        <span className="inline-block lg:text-right text-center font-bold text-xl h-max">
+                                        <span className="inline-block lg:text-right text-center font-bold text-xl h-max lg:mr-3 lg:mt-0 mt-3">
                                             Datos Envio
                                         </span>
                                     </div>
@@ -61,7 +61,7 @@ export function NewOrder() {
                                 </div>
                                 <div className="w-full font-main text-sm flex lg:flex-row flex-col-reverse justify-end">
                                     <div className="flex flex-col justify-center">
-                                        <span className="inline-block lg:text-right text-center h-max">
+                                        <span className="inline-block lg:text-right text-center h-max lg:mr-3 lg:mt-0 mt-3">
                                             Datos destinatario
                                         </span>
                                     </div>
@@ -73,7 +73,7 @@ export function NewOrder() {
                                 </div>
                                 <div className="w-full font-main text-sm flex lg:flex-row flex-col-reverse justify-end">
                                     <div className="flex flex-col justify-center">
-                                        <span className="inline-block lg:text-right text-center h-max">
+                                        <span className="inline-block lg:text-right text-center h-max lg:mr-3 lg:mt-0 mt-3">
                                             Pago
                                         </span>
                                     </div>
@@ -85,31 +85,31 @@ export function NewOrder() {
                                 </div>
                             </div>
                         </div>
-                        <div id="originform">
-                            <form onSubmit={(e) => handleSubmitOrigin(e)}>
+                        <div id="originform" className="lg:block flex-row justify-center min-w-full">
+                            <form onSubmit={(e) => handleSubmitOrigin(e)} className="lg:block inline-block lg:w-auto w-64 mr-0">
                                 <label htmlFor="name" className="text-main block mt-8">Nombre completo <span className="text-main text-red1">*</span></label>
-                                <input type="text" name="name" id="origin_name" className="border-b-2 block" required />
+                                <input type="text" name="name" id="origin_name" className="border-b-2 inline-block" required />
 
                                 <label htmlFor="origin_email" className="text-main block mt-8">Correo Electrónico <span className="text-main text-red1">*</span></label>
-                                <input type="email" name="email" id="origin_email" className="border-b-2 block" required></input>
+                                <input type="email" name="email" id="origin_email" className="border-b-2 inline-block" required></input>
 
                                 <label htmlFor="origin_tlf" className="text-main block mt-8">Teléfono  <span className="text-main text-red1">*</span></label>
-                                <input type="tel" name="tlf" id="origin_tlf" className="border-b-2 block" required />
+                                <input type="tel" name="tlf" id="origin_tlf" className="border-b-2 inline-block" required />
 
                                 <label htmlFor="origin_addr1name" className="text-main block mt-8">Dirección 1 <span className="text-main text-red1">*</span></label>
-                                <input type="text" name="addr1" id="origin_addr1" className="border-b-2 block" required />
+                                <input type="text" name="addr1" id="origin_addr1" className="border-b-2 inline-block" required />
 
                                 <label htmlFor="origin_addr_2" className="text-main block mt-8">Dirección 2</label>
-                                <input type="text" name="addr2" id="origin_addr2" className="border-b-2 block" />
+                                <input type="text" name="addr2" id="origin_addr2" className="border-b-2 inline-block" />
 
                                 <div className="w-full flex flex-row">
                                     <div className="w-1/3">
                                         <label htmlFor="city" className="text-main block mt-8">Ciudad <span className="text-main text-red1">*</span></label>
-                                        <input type="text" name="city" id="origin_city" className="border-b-2 block w-3/4" required />
+                                        <input type="text" name="city" id="origin_city" className="border-b-2 inline-block w-3/4" required />
                                     </div>
                                     <div className="w-1/4">
                                         <label htmlFor="origin_cp" className="text-main block mt-8">CP <span className="text-main text-red1">*</span></label>
-                                        <input type="text" name="cp" id="origin_cp" className="border-b-2 block w-2/3" required />
+                                        <input type="text" name="cp" id="origin_cp" className="border-b-2 inline-block w-2/3" required />
                                     </div>
                                 </div>
                                 <input type="submit" value="Continuar" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl lg:hover:hue-rotate-15" />
