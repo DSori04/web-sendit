@@ -14,6 +14,10 @@ export function LogIn() {
     const [password, setPassword] = useState();
     const [data, setData] = useState({'email': email, 'password': password});
     const [logged, setLogged] = useState(false);
+    const [error, setError] = useState({
+        state: false,
+        message: ""
+    })
 
     useEffect(() => {
         setData({'email': email, 'password': password})
@@ -33,12 +37,13 @@ export function LogIn() {
                     setLogged(true);
                     localStorage.setItem('email', formdata.get('email'))
                     localStorage.setItem('logged', true)
-                    localStorage.setItem('expires', Date.now() + 3600000)
                     navigate('/')
                 }
             }
         ).catch(
-            (err) => {}
+            (err) => {
+                setError({state: true, message: err.response.data?.message})
+            }
         )
     }
 
@@ -73,8 +78,9 @@ export function LogIn() {
                                 <input type="email" id="email" name="email" className="border-b-2 block" required onInvalid={(e) => e.target.setCustomValidity('Introduce un correo electrónico válido')} onInput={(e) => e.target.setCustomValidity('')}></input>
                                 <label htmlFor="pw" className="text-main block mt-8">Contraseña</label>
                                 <input type="password" id="password" name="password" className="border-b-2" required onInvalid={(e) => e.target.setCustomValidity('Introduce una contraseña')} onInput={(e) => e.target.setCustomValidity('')}></input>
-                                <input type="submit" value="Log In" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl lg:hover:hue-rotate-15"/>
+                                <input type="submit" value="Log In" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl lg:hover:hue-rotate-15 active:scale-95 hover:scale-105"/>
                             </form>
+                            {error.state ? <div className="text-red1 text-sm mt-2">{error.message}</div> : null}
                         </div>
                     </div>
                     
