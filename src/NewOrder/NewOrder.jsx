@@ -10,6 +10,7 @@ import payicon from "./assets/payicon.svg"
 import Stripe from "./assets/Stripe.svg";
 import { Helmet } from "react-helmet-async";
 import axios from "axios";
+import { getGeolocation, getCity } from "./components/getGeolocation";
 
 const SERVER_URL = "http://localhost:3170";
 
@@ -17,6 +18,7 @@ export function NewOrder() {
 
     const [step, setstep] = useState(1);
     const [orderData, setOrderData] = useState({ cost: 0 });
+    const [originCity, setOriginCity] = useState("");
 
     const [origin, setOrigin] = useState({});
 
@@ -36,6 +38,8 @@ export function NewOrder() {
         setOrigin({ ...originData });
 
         console.log(originData);
+        //console.log(await getGeolocation(originData.originAddr1 + ", " + originData.originCity))
+        console.log(await getGeolocation(originForm.originCP))
 
         // Set step to 2 (destination mail)
         setstep(2);
@@ -81,6 +85,15 @@ export function NewOrder() {
         const payment = Object.fromEntries(new FormData(e.target));
         e.preventDefault();
         console.log(payment);
+    }
+
+    const handleOriginCP = async (e) => {
+        const cp = e.target.value;
+        if (cp.length == 5) {
+            let city = await getCity(cp);
+            console.log(city);
+            setOriginCity(city);
+        }
     }
 
     return (
@@ -163,11 +176,11 @@ export function NewOrder() {
                                     <div className="w-full flex flex-row">
                                         <div className="w-1/3">
                                             <label htmlFor="city" className="text-main block mt-8">Ciudad <span className="text-main text-red1">*</span></label>
-                                            <input type="text" name="originCity" id="origin_city" className="border-b-2 inline-block w-3/4" required />
+                                            <input type="text" name="originCity" defaultValue={originCity} id="origin_city" className="border-b-2 inline-block w-3/4" required />
                                         </div>
                                         <div className="w-1/4">
                                             <label htmlFor="origin_cp" className="text-main block mt-8">CP <span className="text-main text-red1">*</span></label>
-                                            <input type="text" name="originCP" id="origin_cp" className="border-b-2 inline-block w-2/3" required />
+                                            <input type="text" name="originCP" id="origin_cp" className="border-b-2 inline-block w-2/3" required onChange={(e) => handleOriginCP(e)}/>
                                         </div>
                                     </div>
                                     <div className="flex flex-row lg:justify-start justify-center">
