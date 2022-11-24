@@ -45,13 +45,9 @@ app.post('/user', async (req, res) => {
 
         // Gets from db all users with the same email from the request
         const sql = 'SELECT * FROM USERS WHERE email = ?';
-        const resp = cnx.query(sql, [email]); //! resp isn't used anywhere
-
-        console.log(rows, fields);
-
-        // If an user does exist
+        cnx.query(sql, [email], async (err, rows) => {
+            // If an user does exist
         if (rows.length > 0) { //? It should be rows.length == 1; thre can't be more than one user with the same email
-            res.send(rows);
             password = await bcrypt.hash(password, salt);
 
             // If the password from user matches the databese password
@@ -77,6 +73,8 @@ app.post('/user', async (req, res) => {
             res.status(400).send({ success: false, message: "No user found" });
 
         }
+        });
+        
     }
 
     catch (error) {
