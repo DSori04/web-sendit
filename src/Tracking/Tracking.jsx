@@ -42,14 +42,27 @@ export function Tracking() {
             </AppContextProvider>
             <div className="flex justify-center w-full">
                 <div className="xl:top-[20%] lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 bg-white w-3/4  flex flex-col md:px-20 px-6 font-main">
-                    <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Tracking #{id == undefined ? orderId : id}</h1>
+                    <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Tracking</h1>
                     {inputting && <div className="flex flex-row w-full">
                         <TrackingForm />
                         <div className="text-right text-main sm:flex hidden flex-row justify-center">
                             <img src={TrackIcon} alt="Imagen de About Us" className=" xl:max-h-96 lg:max-h-80 sm:max-h-80 xl:mt-0 lg:mt-10 mt-10 min-h-fit" />
                         </div>
                     </div>}
-                    {!inputting && <Directions />}
+                    {!inputting && 
+                    <div className="flex flex-col">
+                        <div classname="flex flex-row w-full">
+                            <span>#{orderId}</span>
+                        </div>
+                        <div className="flex flex-row w-full justify-end">
+                            <div className="flex flex-col w-1/2">
+                                <div id="origin"></div>
+                                <div id="destiny"></div>
+                            </div>
+                            <Directions />
+                        </div>
+                    </div>
+                    }
                 </div>
             </div>
             <Footer />
