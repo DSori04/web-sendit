@@ -45,10 +45,10 @@ function Directions() {
     if (loadError) return "Error";
     if (!isLoaded) return "Loading...";
     return (
-        <div>
+        <div className="w-1/2">
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
-                zoom={10}
+                zoom={13}
                 center={center}
                 options={options}
             >
