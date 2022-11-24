@@ -45,13 +45,9 @@ app.post('/user', async (req, res) => {
 
         // Gets from db all users with the same email from the request
         const sql = 'SELECT * FROM USERS WHERE email = ?';
-        const resp = cnx.query(sql, [email]); //! resp isn't used anywhere
-
-        console.log(rows, fields);
-
-        // If an user does exist
+        cnx.query(sql, [email], async (err, rows) => {
+            // If an user does exist
         if (rows.length > 0) { //? It should be rows.length == 1; thre can't be more than one user with the same email
-            res.send(rows);
             password = await bcrypt.hash(password, salt);
 
             // If the password from user matches the databese password
@@ -69,18 +65,20 @@ app.post('/user', async (req, res) => {
 
             } else {
                 // If they don't match, return an error
-                res.status(400).send({ success: false, message: "Incorrect password" });
+                res.status(401).send({ success: false, message: "Incorrect password" });
 
             }
         } else {
             // In case users don't exist (rows.length <= 0) return an error
-            res.status(400).send({ success: false, message: "No user found" });
+            res.status(404).send({ success: false, message: "No user found" });
 
         }
+        });
+        
     }
 
     catch (error) {
-        res.status(400).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
     
 });
@@ -158,7 +156,7 @@ app.put('/user/:user_id', async (req, res) => {
 
             // If an user does already exist with the same email, return an error (can't update the user with the same email)
             if (rows.length > 0) {
-                res.status(404).send({ success: false, message: "User already exists" });
+                res.status(400).send({ success: false, message: "User already exists" });
             } else {
 
                 const sql2 = 'SELECT * FROM USERS WHERE user_id = ?';
@@ -308,7 +306,7 @@ app.put('/prices', (req, res) => {
             }
         });
     } catch (error) {
-        res.status(404).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 })
 
@@ -347,7 +345,7 @@ app.delete('/prices/:tier_id', (req, res) => {
             }
         });
     } catch (error) {
-        res.status(404).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 })
 
@@ -403,7 +401,7 @@ app.get('/address', (req, res) => {
         }
         );
     } catch (error) {
-        res.status(404).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 })
 
@@ -419,7 +417,7 @@ app.delete('/address/:address_id', (req, res) => {
             })
         });
     } catch (error) {
-        res.status(404).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 })
 
@@ -437,7 +435,7 @@ app.post('/info', (req, res) => {
             })
         });
     } catch (error) {
-        res.status(404).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 })
 
@@ -467,7 +465,7 @@ app.get('/info', (req, res) => {
         }
         );
     } catch (error) {
-        res.status(404).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 })
 
@@ -485,7 +483,7 @@ app.put('/orders', (req, res) => {
             })
         });
     } catch (error) {
-        res.status(404).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 })
 
@@ -503,7 +501,7 @@ app.put('/orders/:order_id', (req, res) => {
             })
         });
     } catch (error) {
-        res.status(404).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 })
 
@@ -517,7 +515,7 @@ app.get('/orders/:user_id', (req, res) => {
         }
         );
     } catch (error) {
-        res.status(404).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 })
 
@@ -542,7 +540,7 @@ app.get('/orders', (req, res) => {
             }
         });
     } catch (error) {
-        res.status(404).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 })
 
@@ -553,7 +551,7 @@ app.post('/getCost', (req, res) => {
         res.send({ cost: 32.5 });
 
     } catch (error) {
-        res.status(404).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 });
 

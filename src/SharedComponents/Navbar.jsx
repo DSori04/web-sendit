@@ -17,18 +17,9 @@ export function Navbar() {
     useEffect(() => {    
       return () => {
         setInterval(() => {
-            if(localStorage.getItem('expires') < Date.now()){
                 setLogged(localStorage.getItem('logged'))
                 setEmail(localStorage.getItem('email'))
-            } else {
-                localStorage.removeItem('logged')
-                localStorage.removeItem('email')
-                localStorage.removeItem('expires')
-                setLogged(false)
-                setEmail("")
-            }
         }, 1000);
-        
       }
     }, [])
     
