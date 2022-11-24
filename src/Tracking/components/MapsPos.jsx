@@ -23,7 +23,7 @@ function Directions() {
         zoomControl: false,
     };
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: "AIzaSyC2NjOkCxNilzHlfGGV9DM9Sgp5iFEw9cA",
+        googleMapsApiKey: "AIzaSyBpL4s6zh0bnHbU1E6N4hsVpqyb2XA963Q",
         libraries: libraries
     });
     
@@ -31,7 +31,7 @@ function Directions() {
     const direction = {
         origin: center,
         destination: target,
-        travelMode: "WALKING"
+        travelMode: "BICYCLING"
     }
     const directionsCallback = (response) => {
         if (response !== null) {
@@ -66,9 +66,9 @@ function Directions() {
                     <Polyline
                         path={directionsResponse.routes[0].overview_path}
                         options={{
-                            strokeColor: "#FF0000",
+                            strokeColor: "#7903c1",
                             strokeOpacity: 0.75,
-                            strokeWeight: 2,
+                            strokeWeight: 5,
                             icons: [
                                 {
                                     icon: "hello",
