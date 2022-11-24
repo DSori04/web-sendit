@@ -30,3 +30,14 @@ export const getCity = async (zipcode) => {
             console.error(error);
         });
 }
+
+export const getCP = async(address) => {
+    return Geocode.fromAddress(address)
+        .then(response => {
+            const cp = response.results[0].address_components;
+            return cp;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
