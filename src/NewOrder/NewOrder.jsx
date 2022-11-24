@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
-import { Orderlist } from "./components/Orderlist";
 import neworder1 from "./assets/neworder1.svg"
 import neworder2 from "./assets/neworder2.svg"
 import neworder3 from "./assets/neworder3.svg"
-import AppContextProvider from "../GlobalStates";
 import payicon from "./assets/payicon.svg"
 import Stripe from "./assets/Stripe.svg";
 import { Helmet } from "react-helmet-async";
 import axios from "axios";
+import { getGeolocation, getCity, getCP } from "./components/getGeolocation";
+import { TrackingImage } from "./components/NewTrackingImage";
+import { Steps } from "./components/Steps";
 
 const SERVER_URL = "http://localhost:3170";
 
@@ -17,6 +18,10 @@ export function NewOrder() {
 
     const [step, setstep] = useState(1);
     const [orderData, setOrderData] = useState({ cost: 0 });
+    const [originCity, setOriginCity] = useState("");
+    const [destinationCity, setDestinationCity] = useState("");
+    const [originPersonal, setOriginPersonal] = useState(false)
+    const [destinationPersonal, setDestinationPersonal] = useState(false)
 
     const [origin, setOrigin] = useState({});
 
@@ -33,13 +38,18 @@ export function NewOrder() {
         }
 
         // Sets the origin state to the data from the form
-        setOrigin({ ...originData });
-
-        console.log(originData);
-
+        //setOrigin({ ...originData });
+        setOrigin(originForm)
+        const addr = `${originForm.originAddr1}, ${originForm.originCity}`
+        const geolocation = await getGeolocation(addr);
+        console.log(geolocation)
+        console.log(origin)
         // Set step to 2 (destination mail)
         setstep(2);
 
+    }
+    const usePersonalData = async () => {
+        setOriginPersonal(true)
     }
 
     const handleSubmitDestination = (e) => {
@@ -83,6 +93,28 @@ export function NewOrder() {
         console.log(payment);
     }
 
+    const handleOriginCP = async (e) => {
+        const cp = e.target.value;
+        if (cp.match(/^[0-9]{5}$/)) {
+            let city = await getCity(cp);
+            console.log(city);
+            setOriginCity(city);
+        } else {
+            setOriginCity("");
+        }
+    }
+
+    const handleDestinationCP = async (e) => {
+        const cp = e.target.value;
+        if (cp.length == 5) {
+            let city = await getCity(cp);
+            console.log(city);
+            setDestinationCity(city);
+        } else {
+            setDestinationCity("");
+        }
+    }
+
     return (
         <>
             <Helmet>
@@ -90,9 +122,7 @@ export function NewOrder() {
                 <meta name="description" content="New Order" />
 
             </Helmet>
-            <AppContextProvider>
-                <Navbar />
-            </AppContextProvider>
+            <Navbar />
             <div className="flex flex-row w-full justify-center min-h-[90vh]">
                 <div className="xl:w-3/4 lg:absolute lg:pt-0 pt-16 pb-10 top-16 sm:bottom-14 bottom-28 w-full flex flex-col h-max lg:px-20 px-6 font-main">
                     <div>
@@ -102,164 +132,79 @@ export function NewOrder() {
                         </h1>
                     </div>
                     {step == 1 && <div className="w-full h-max flex lg:flex-row flex-col justify-center">
-                        <div className="flex flex-row max-h-fit justify-center lg:py-20 py-10 pb-2 lg:pr-10 min-w-max ">
-                            <div id="steps" className="flex lg:flex-col flex-row w-48 justify-around">
-                                <div className="w-full font-main text-sm flex lg:flex-row flex-col-reverse justify-end">
-                                    <div className="flex flex-col justify-center">
-                                        <span className="inline-block lg:text-right text-center font-bold text-xl h-max lg:mr-3 lg:mt-0 mt-3">
-                                            Datos Orígen
-                                        </span>
-                                    </div>
-                                    <div className="flex lg:w-max w-24 lg:justify-end justify-center">
-                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block drop-shadow-lg">
-                                            1
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full font-main text-sm flex lg:flex-row flex-col-reverse justify-end">
-                                    <div className="flex flex-col justify-center">
-                                        <span className="inline-block lg:text-right text-center h-max lg:mr-3 lg:mt-0 mt-3">
-                                            Datos destinatario
-                                        </span>
-                                    </div>
-                                    <div className="flex lg:w-max w-24 lg:justify-end justify-center">
-                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-black w-16 h-16 bg-gray3 rounded-full inline-block drop-shadow-lg">
-                                            2
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full font-main text-sm flex lg:flex-row flex-col-reverse justify-end">
-                                    <div className="flex flex-col justify-center">
-                                        <span className="inline-block lg:text-right text-center h-max lg:mr-3 lg:mt-0 mt-3">
-                                            Pago
-                                        </span>
-                                    </div>
-                                    <div className="flex lg:w-max w-24 lg:justify-end justify-center">
-                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-black w-16 h-16 bg-gray3 rounded-full inline-block drop-shadow-lg">
-                                            3
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <Steps step={1} setStep={setstep} />
                         <div className="lg:w-auto w-full flex flex-row justify-center">
                             <div id="originform" className="lg:block flex-row justify-center min-w-min">
+                                {(localStorage.getItem('logged') && !originPersonal) && <button className="w-fit border-2 rounded-full block font-main border-purple1 text-purple1 text-sm mt-4 px-1 shadow-xl bg-white hover:scale-105 active:scale-95" onClick={() => usePersonalData()}>Utiliza tus datos personales</button>}
                                 <form onSubmit={(e) => handleSubmitOrigin(e)} className="lg:block flex flex-col lg:w-full w-64">
                                     <label htmlFor="name" className="text-main block mt-8">Nombre completo <span className="text-main text-red1">*</span></label>
-                                    <input type="text" name="originName" id="origin_name" className="border-b-2 inline-block" required />
+                                    {!originPersonal && <input type="text" name="originName" id="origin_name" defaultValue={origin.originName} className="border-b-2 inline-block" required />}
+                                    {originPersonal && <span>{`${localStorage.getItem('name')} ${localStorage.getItem('surname')}`}</span>}
 
                                     <label htmlFor="origin_email" className="text-main block mt-8">Correo Electrónico <span className="text-main text-red1">*</span></label>
-                                    <input type="email" name="originEmail" id="origin_email" className="border-b-2 inline-block" required></input>
+                                    {!originPersonal && <input type="email" name="originEmail" id="origin_email" defaultValue={origin.originEmail} className="border-b-2 inline-block" required></input>}
+                                    {originPersonal && <span>{localStorage.getItem('email')}</span>}
 
                                     <label htmlFor="origin_tlf" className="text-main block mt-8">Teléfono  <span className="text-main text-red1">*</span></label>
-                                    <input type="tel" name="originPhone" id="origin_tlf" className="border-b-2 inline-block" required />
+                                    {!originPersonal && <input type="tel" name="originPhone" id="origin_tlf" defaultValue={origin.originPhone} className="border-b-2 inline-block" required />}
+                                    {originPersonal && <span>{localStorage.getItem('phone')}</span>}
 
                                     <label htmlFor="origin_addr1name" className="text-main block mt-8">Dirección 1 <span className="text-main text-red1">*</span></label>
-                                    <input type="text" name="originAddr1" id="origin_addr1" className="border-b-2 inline-block" required />
+                                    <input type="text" name="originAddr1" id="origin_addr1" defaultValue={origin.originAddr1} className="border-b-2 inline-block" required />
 
                                     <label htmlFor="origin_addr_2" className="text-main block mt-8">Dirección 2</label>
-                                    <input type="text" name="originAddr2" id="origin_addr2" className="border-b-2 inline-block" />
+                                    <input type="text" name="originAddr2" id="origin_addr2" defaultValue={origin.originAddr2} className="border-b-2 inline-block" />
 
-                                    <div className="w-full flex flex-row">
-                                        <div className="w-1/3">
-                                            <label htmlFor="city" className="text-main block mt-8">Ciudad <span className="text-main text-red1">*</span></label>
-                                            <input type="text" name="originCity" id="origin_city" className="border-b-2 inline-block w-3/4" required />
-                                        </div>
-                                        <div className="w-1/4">
-                                            <label htmlFor="origin_cp" className="text-main block mt-8">CP <span className="text-main text-red1">*</span></label>
-                                            <input type="text" name="originCP" id="origin_cp" className="border-b-2 inline-block w-2/3" required />
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-row lg:justify-start justify-center">
-                                        <input type="submit" value="Continuar" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl max-w-fit lg:hover:hue-rotate-15" />
+                                    <label htmlFor="origin_cp" className="text-main block mt-8">CP <span className="text-main text-red1">*</span></label>
+                                    <input type="text" name="originCP" id="origin_cp" defaultValue={origin.originCP} className="border-b-2 inline-block w-full" required onChange={(e) => handleOriginCP(e)} />
 
-                                    </div>
+                                    <label htmlFor="city" className="text-main block mt-8">Ciudad <span className="text-main text-red1">*</span></label>
+                                    <input type="text" name="originCity" value={originCity} id="origin_city" className="border-b-2 inline-block w-full" required onChange={(e) => setOriginCity(e.target.value)} />
+
+                                    
+                                    
+                                    <input type="submit" value="Continuar" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl max-w-fit lg:hover:hue-rotate-15 mx-auto"  />
+                                    
                                 </form>
+                                
                             </div>
                         </div>
                         <div id="image" className="sm:block hidden min-h-fit">
-                            <div className="flex flex-col h-full justify-center">
-                                <div className="h-max">
-                                    {step === 1 && <img src={neworder1}></img>}
-                                    {step === 2 && <img src={neworder2}></img>}
-                                    {step === 3 && <img src={neworder3}></img>}
-                                </div>
-                            </div>
+                            <TrackingImage step={step} />
                         </div>
                     </div>}
                     {step == 2 && <div className="w-full h-max flex lg:flex-row flex-col justify-center">
-                        <div className="flex flex-row max-h-fit justify-center lg:py-20 py-10 pb-2 lg:pr-10 min-w-max ">
-                            <div id="steps" className="flex lg:flex-col flex-row w-48 justify-around">
-                                <div className="w-full font-main text-sm flex lg:flex-row flex-col-reverse justify-end">
-                                    <div className="flex flex-col justify-center">
-                                        <span className="inline-block lg:text-right text-center h-max lg:mr-3 lg:mt-0 mt-3">
-                                            Datos Orígen
-                                        </span>
-                                    </div>
-                                    <div className="flex lg:w-max w-24 lg:justify-end justify-center">
-                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-black w-16 h-16 bg-purple1 text-white rounded-full inline-block drop-shadow-lg">
-                                            1
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full font-main text-sm flex lg:flex-row flex-col-reverse justify-end">
-                                    <div className="flex flex-col justify-center">
-                                        <span className="inline-block lg:text-right text-center font-bold text-xl h-max lg:mr-3 lg:mt-0 mt-3">
-                                            Datos destinatario
-                                        </span>
-                                    </div>
-                                    <div className="flex lg:w-max w-full lg:justify-end justify-center">
-                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block drop-shadow-lg">
-                                            2
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full font-main text-sm flex lg:flex-row flex-col-reverse justify-end">
-                                    <div className="flex flex-col justify-center">
-                                        <span className="inline-block lg:text-right text-center h-max lg:mr-3 lg:mt-0 mt-3">
-                                            Pago
-                                        </span>
-                                    </div>
-                                    <div className="flex lg:w-max w-24 lg:justify-end justify-center">
-                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-black w-16 h-16 bg-gray3 rounded-full inline-block drop-shadow-lg">
-                                            3
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <Steps step={2} setStep={setstep} />
                         <div className="lg:w-auto w-full flex flex-row justify-center">
                             <div id="destform" className="lg:block flex-row justify-center min-w-min">
+                                {(localStorage.getItem('logged') && !destinationPersonal && !originPersonal) && <button className="w-fit border-2 rounded-full block font-main border-purple1 text-purple1 text-sm mt-4 px-1 shadow-xl bg-white hover:scale-105 active:scale-95" onClick={() => setDestinationPersonal(true)}>Utiliza tus datos personales</button>}
                                 <form onSubmit={(e) => handleSubmitDestination(e)} className="lg:block flex flex-col lg:w-full w-64">
                                     <label htmlFor="name" className="text-main block mt-8">Nombre completo <span className="text-main text-red1">*</span></label>
-                                    <input type="text" name="destName" id="dest_name" className="border-b-2 inline-block" required />
+                                    {!destinationPersonal && <input type="text" name="destName" id="dest_name" className="border-b-2 inline-block" required />}
+                                    {destinationPersonal && <span>{`${localStorage.getItem('name')} ${localStorage.getItem('surname')}`}</span>}
 
                                     <label htmlFor="dest_email" className="text-main block mt-8">Correo Electrónico <span className="text-main text-red1">*</span></label>
-                                    <input type="email" name="destEmail" id="dest_email" className="border-b-2 inline-block" required></input>
-
+                                    {!destinationPersonal && <input type="email" name="destEmail" id="dest_email" className="border-b-2 inline-block" required></input>}
+                                    {destinationPersonal && <span>{localStorage.getItem('email')}</span>}
+                                    
                                     <label htmlFor="dest_tlf" className="text-main block mt-8">Teléfono  <span className="text-main text-red1">*</span></label>
-                                    <input type="tel" name="destPhone" id="dest_tlf" className="border-b-2 inline-block" required />
+                                    {!destinationPersonal && <input type="tel" name="destPhone" id="dest_tlf" className="border-b-2 inline-block" required />}
+                                    {destinationPersonal && <span>{localStorage.getItem('phone')}</span>}
 
                                     <label htmlFor="dest_addr1name" className="text-main block mt-8">Dirección 1 <span className="text-main text-red1">*</span></label>
-                                    <input type="text" name="destAddr1" id="dest_addr1" className="border-b-2 inline-block" required />
-
+                                    {!destinationPersonal && <input type="text" name="destAddr1" id="dest_addr1" className="border-b-2 inline-block" required />}
+                                    
                                     <label htmlFor="dest_addr_2" className="text-main block mt-8">Dirección 2</label>
-                                    <input type="text" name="destAddr2" id="dest_addr2" className="border-b-2 inline-block" />
+                                    {!destinationPersonal && <input type="text" name="destAddr2" id="dest_addr2" className="border-b-2 inline-block" />}
+                                    
+                                    <label htmlFor="dest_cp" className="text-main block mt-8">CP <span className="text-main text-red1">*</span></label>
+                                    {!destinationPersonal && <input type="text" name="destCP" id="dest_cp" className="border-b-2 inline-block w-2/3" required onBlur={(e) => handleDestinationCP(e)} />}
+                                    
+                                    <label htmlFor="city" className="text-main block mt-8">Ciudad <span className="text-main text-red1">*</span></label>
+                                    {!destinationPersonal && <input type="text" name="destCity" id="dest_city" value={destinationCity} className="border-b-2 inline-block" required onChange={(e) => setDestinationCity(e.target.value)} />}
+                                    
+                                    <input type="submit" value="Continuar" className="mx-auto block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl max-w-fit lg:hover:hue-rotate-15" />
 
-                                    <div className="w-full flex flex-row">
-                                        <div className="w-1/3">
-                                            <label htmlFor="city" className="text-main block mt-8">Ciudad <span className="text-main text-red1">*</span></label>
-                                            <input type="text" name="destCity" id="dest_city" className="border-b-2 inline-block w-3/4" required />
-                                        </div>
-                                        <div className="w-1/4">
-                                            <label htmlFor="dest_cp" className="text-main block mt-8">CP <span className="text-main text-red1">*</span></label>
-                                            <input type="text" name="destCP" id="dest_cp" className="border-b-2 inline-block w-2/3" required />
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-row lg:justify-start justify-center">
-                                        <input type="submit" value="Continuar" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl max-w-fit lg:hover:hue-rotate-15" />
-
-                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -274,46 +219,7 @@ export function NewOrder() {
                         </div>
                     </div>}
                     {step == 3 && <div className="w-full h-max flex lg:flex-row flex-col justify-center">
-                        <div className="flex flex-row max-h-fit justify-center lg:py-20 py-10 pb-2 lg:pr-10 min-w-max ">
-                            <div id="steps" className="flex lg:flex-col flex-row w-48 justify-around">
-                                <div className="w-full font-main text-sm flex lg:flex-row flex-col-reverse justify-end">
-                                    <div className="flex flex-col justify-center">
-                                        <span className="inline-block lg:text-right text-center h-max lg:mr-3 lg:mt-0 mt-3">
-                                            Datos Orígen
-                                        </span>
-                                    </div>
-                                    <div className="flex lg:w-max w-24 lg:justify-end justify-center">
-                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-black w-16 h-16 bg-purple1 text-white rounded-full inline-block drop-shadow-lg">
-                                            1
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full font-main text-sm flex lg:flex-row flex-col-reverse justify-end">
-                                    <div className="flex flex-col justify-center">
-                                        <span className="inline-block lg:text-right text-center h-max lg:mr-3 lg:mt-0 mt-3">
-                                            Datos destinatario
-                                        </span>
-                                    </div>
-                                    <div className="flex lg:w-max w-full lg:justify-end justify-center">
-                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block drop-shadow-lg">
-                                            2
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full font-main text-sm flex lg:flex-row flex-col-reverse justify-end">
-                                    <div className="flex flex-col justify-center">
-                                        <span className="inline-block lg:text-right text-center font-bold text-xl h-max lg:mr-3 lg:mt-0 mt-3">
-                                            Pago
-                                        </span>
-                                    </div>
-                                    <div className="flex lg:w-max w-24 lg:justify-end justify-center">
-                                        <div className="font-main text-3xl text-center leading-[4rem] font-bold align-middle text-white w-16 h-16 bg-purple1 rounded-full inline-block drop-shadow-lg">
-                                            3
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <Steps step={3} setStep={setstep} />
                         <div className="lg:w-auto w-full flex flex-row justify-center">
 
                             <div id="newform" className="lg:block flex-row justify-center min-w-min">
@@ -346,13 +252,7 @@ export function NewOrder() {
                             </div>
                         </div>
                         <div id="image" className="sm:block hidden min-h-fit">
-                            <div className="flex flex-col h-full justify-center">
-                                <div className="h-max">
-                                    {step === 1 && <img src={neworder1}></img>}
-                                    {step === 2 && <img src={neworder2}></img>}
-                                    {step === 3 && <img src={neworder3}></img>}
-                                </div>
-                            </div>
+                           <TrackingImage step={step} />
                         </div>
                     </div>}
                 </div>

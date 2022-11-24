@@ -10,6 +10,7 @@ import { Helmet } from "react-helmet-async";
 // import MapComponent from "./components/MapComponent";
 //import Places from "./components/AutoCompleteMap";
 import Directions from "./components/MapsPos";
+import Completer from "./components/AutoComplete";
 
 export function Tracking() {
     const [inputting, setInput] = useState(false);
@@ -51,15 +52,17 @@ export function Tracking() {
                     </div>}
                     {!inputting && 
                     <div className="flex flex-col">
-                        <div classname="flex flex-row w-full">
+                        <div className="flex flex-row w-full">
                             <span>#{orderId}</span>
                         </div>
                         <div className="flex flex-row w-full justify-end">
                             <div className="flex flex-col w-1/2">
-                                <div id="origin"></div>
+                                <div id="origin">
+                                    <Completer />
+                                </div>
                                 <div id="destiny"></div>
                             </div>
-                            <Directions />
+                            {/* <Directions /> */}
                         </div>
                     </div>
                     }
