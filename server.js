@@ -1,4 +1,4 @@
-import express from 'express'
+import express from 'express' 
 import mysql from 'mysql'
 import bcrypt from 'bcrypt'
 import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
@@ -12,8 +12,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 const PORT = 3170
 
-const cnx = mysql.createConnection(process.env.FULL_URL)
-
+// Express + cors (All data is sent as json)
 const app = express()
 app.use(express.json())
 app.use(cors(
@@ -23,6 +22,8 @@ app.use(cors(
     }
 ))
 
+// Database connection
+const cnx = mysql.createConnection(process.env.FULL_URL)
 try {
     // Connects to the database
     cnx.connect();
@@ -33,7 +34,20 @@ try {
     process.exit(1);
 }
 
-//For Login - Returns user data
+
+/**
+ * To get the user data
+ * 
+ * Body format: {email: String, password: String}
+ * 
+ * Response: 
+ * {success: true, 
+ * message: 'User logged in successfully', 
+ * user_id: num, 
+ * email: String, 
+ * name: String, 
+ * surname: String}
+ */
 app.post('/user', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
 
@@ -47,34 +61,34 @@ app.post('/user', async (req, res) => {
         const sql = 'SELECT * FROM USERS WHERE email = ?';
         cnx.query(sql, [email], async (err, rows) => {
             // If an user does exist
-        if (rows.length > 0) { //? It should be rows.length == 1; thre can't be more than one user with the same email
-            password = await bcrypt.hash(password, salt);
+            if (rows.length > 0) { //? It should be rows.length == 1; thre can't be more than one user with the same email
+                password = await bcrypt.hash(password, salt);
 
-            // If the password from user matches the databese password
-            if (await bcrypt.compare(password, rows[0].password)) {
+                // If the password from user matches the databese password
+                if (await bcrypt.compare(password, rows[0].password)) {
 
-                // If they match, return the user data
-                res.send({
-                    success: true,
-                    message: 'User logged in successfully',
-                    user_id: rows[0].user_id,
-                    email: rows[0].email,
-                    name: rows[0].name,
-                    surname: rows[0].surname,
-                });
+                    // If they match, return the user data
+                    res.send({
+                        success: true,
+                        message: 'User logged in successfully',
+                        user_id: rows[0].user_id,
+                        email: rows[0].email,
+                        name: rows[0].name,
+                        surname: rows[0].surname,
+                    });
 
+                } else {
+                    // If they don't match, return an error
+                    res.status(401).send({ success: false, message: "Incorrect password" });
+
+                }
             } else {
-                // If they don't match, return an error
-                res.status(401).send({ success: false, message: "Incorrect password" });
+                // In case users don't exist (rows.length <= 0) return an error
+                res.status(404).send({ success: false, message: "No user found" });
 
             }
-        } else {
-            // In case users don't exist (rows.length <= 0) return an error
-            res.status(404).send({ success: false, message: "No user found" });
-
-        }
         });
-        
+
     }
 
     catch (error) {
@@ -83,7 +97,23 @@ app.post('/user', async (req, res) => {
 
 });
 
-//To create users
+
+/**
+ * To create a new user
+ * 
+ * Body format: 
+ * {name: String, 
+ * surname: String, 
+ * mail: String,
+ * password: String}
+ *
+ * Response: 
+ * {name: String,
+ * surname: String,
+ * mail: String, 
+ * success: true,
+ * message: 'User created'}
+ */
 app.put('/user', async (req, res) => {
     // Salt generation
     const salt = await bcrypt.genSalt(10);
@@ -519,12 +549,18 @@ app.get('/orders/:user_id', (req, res) => {
     }
 })
 
-//To get order by order_id
+/**
+ * To get the info of an order
+ * 
+ * Body format: {order_id: num | undefined, user_id: num | undefined}
+ * 
+ * Response: De momento nada 
+ */
 app.get('/orders', (req, res) => {
     try {
         const { order_id, user_id } = req.body;
         const params = ['order_id', 'user_id'];
-        //const sql = 'SELECT * FROM ORDERS WHERE order_id = ? OR user_id = ?';
+        // const sql = 'SELECT * FROM ORDERS WHERE order_id = ? OR user_id = ?';
         let sql = 'SELECT * FROM ORDERS WHERE ';
         let i = 0;
         let valid_params = []
@@ -536,6 +572,7 @@ app.get('/orders', (req, res) => {
                 } else {
                     sql += ' AND ' + param + ' = ?';
                 }
+                // TODO TERMINAR ESTO carlos
                 i++;
             }
         });
@@ -548,11 +585,8 @@ app.get('/orders', (req, res) => {
 app.post('/getOrderCost', (req, res) => {
 
     try {
-        
-        
 
-        // TODO Get the distance in KM from the origin and destiny
-        
+
         /* 
         Format of the request body:
         {
@@ -568,35 +602,76 @@ app.post('/getOrderCost', (req, res) => {
             }
         */
 
-        let distanceKm = 10;
+        // TODO Get the distance in KM from the origin and destiny
+
+
+        let distanceKm = 26;
 
         try {
             // Query to get the from the database with the correct distance
-            const sql = 'SELECT * FROM TIERS WHERE min_distance <= ? AND max_distance >= ?';
+            const sql = 'SELECT * FROM TIERS WHERE ISNULL(max_distance)';
 
-            cnx.query(sql, [distanceKm], (err, rows) => {
-                // If there's an SQL error, throw it
+            cnx.query(sql, (err, rows) => {
                 if (err) throw err;
 
+                // If any tier has no max distance, then it is the default one
+                // If any tier without max distance is not found, throw an error
                 if (rows.length > 0) {
-                    let tier = rows[0];
-                    res.send({
-                        success: true,
-                        message: 'Tier found',
-                        data: {
-                            cost: tier.price * distanceKm,
-                            tier: tier.tier_id,
-                            distance: distanceKm,
-                            pricePerKm: tier.price
-                        }
-                    });
 
+                    // If there is a tier with no max distance, then we just return the one where max is null
+                    if (distanceKm > rows[0].min_distance) {
+                        res.send({
+                            success: true,
+                            message: 'Tier found',
+                            data: {
+                                // TODO: Add the data to be sent
+                                tier_id: rows[0].tier_id,
+                                tier_name: rows[0].tier_name,
+                                min_distance: rows[0].min_distance,
+                            }
+                        })
+
+                    } else {
+                        // If the distance is not greater than the highest min distance do this
+
+                        // Query to get the from the database with the correct distance
+                        const sql2 = 'SELECT * FROM TIERS WHERE ? BETWEEN min_distance AND max_distance';
+                        // Gets the tier with the correct distance
+                        cnx.query(sql2, [distanceKm], (err, rows) => {
+
+                            // If there's an SQL error, throw it
+                            if (err) throw err;
+
+                            // If there's no tier found, throw an error
+                            if (rows.length > 0) {
+                                // If there's a tier found, send the data
+                                res.send({
+                                    success: true,
+                                    message: 'Tier found',
+                                    data: {
+                                        // TODO: Add the data to be sent
+                                        tier_id: rows[0].tier_id,
+                                        tier_name: rows[0].tier_name,
+                                        min_distance: rows[0].min_distance,
+                                        max_distance: rows[0].max_distance,
+                                    }
+                                })
+                            } else {
+                                res.status(500).send({
+                                    success: false,
+                                    message: 'No tier found'
+                                })
+                            }
+                        });
+                    }
                 } else {
-                    // If there aren't tiers, return an error
-                    res.status(404).send({ success: false, message: "No tiers found" });
+                    res.status(500).send({
+                        success: false,
+                        message: 'No tier found'
+                    })
                 }
-            });
 
+            });
 
         } catch (error) {
             res.status(500).send({ error: error.message });
@@ -608,7 +683,15 @@ app.post('/getOrderCost', (req, res) => {
 })
 
 
-//To create a payment link
+/**
+ * To get the payment link
+ * 
+ * Body format: {price: num, tier: "String"}
+ * 
+ * Response: {sucess: true, url: String}
+ * 
+ * ! This endpoint MUST NOT be used by the client, only by the server
+ */
 app.post('/pay', async (req, res) => {
 
     try {
@@ -664,7 +747,10 @@ app.post('/pay', async (req, res) => {
         });
 
         // Send the session id to the client
-        res.status(200).send(session.url);
+        res.status(200).send({
+            success: true,
+            url: session.url
+        });
 
     } catch (error) {
         res.status(500).send({ error: error.message });
