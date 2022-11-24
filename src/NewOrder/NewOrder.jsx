@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navbar } from "../SharedComponents/Navbar";
 import { Footer } from "../SharedComponents/Footer";
 import { Orderlist } from "./components/Orderlist";
-import { useState } from "react";
 import neworder1 from "./assets/neworder1.svg"
 import neworder2 from "./assets/neworder2.svg"
 import neworder3 from "./assets/neworder3.svg"
@@ -17,38 +16,58 @@ const SERVER_URL = "http://localhost:3170";
 export function NewOrder() {
 
     const [step, setstep] = useState(1);
-    const [orderCost, setCost] = useState(0);
+    const [orderData, setOrderData] = useState({ cost: 0 });
 
-    let orderData = {}
-    let origin;
-    let destination;
+    const [origin, setOrigin] = useState({});
 
-    const handleSubmitOrigin = (e) => {
+    const handleSubmitOrigin = async (e) => {
         e.preventDefault();
 
         // Gets all the data from the form
-        origin = Object.fromEntries(new FormData(e.target));
+        const originForm = Object.fromEntries(new FormData(e.target));
+
+        let originData = {
+            originAddr1: originForm.originAddr1,
+            originAddr2: originForm.originAddr2,
+            originCity: originForm.originCity
+        }
+
+        // Sets the origin state to the data from the form
+        setOrigin({ ...originData });
+
+        console.log(originData);
+
+        // Set step to 2 (destination mail)
         setstep(2);
 
     }
 
-    const handleSubmitDestination = async (e) => {
+    const handleSubmitDestination = (e) => {
         e.preventDefault();
 
         // Gets all the data from the form
-        destination = Object.fromEntries(new FormData(e.target));
-
-        // Append the destination data to orderData
-        orderData = { ...orderData, destination };
+        let destinationForm = Object.fromEntries(new FormData(e.target));
 
         // Send data to the server and get the cost of the order
-        const getCost = axios({
+        axios({
             method: "POST",
-            url: `${SERVER_URL}/getCost`,
+            url: `${SERVER_URL}/getOrderCost`,
             contentType: "application/json",
-            data: origin + destination,
+            data: {
+                origin: origin,
+                destination: {
+                    destinationAddr1: destinationForm.destAddr1,
+                    destinationAddr2: destinationForm.destAddr2,
+                    destinationCity: destinationForm.destCity
+                }
+            }
         }).then((response) => {
-            setCost(response.data.cost);
+            let res = {
+                cost: response.data.cost,
+                tier: response.data.tier,
+                distance: response.data.distance
+            }
+            setOrderData({ ...res });
             setstep(3);
         }).catch((error) => {
             console.log(error);
@@ -304,10 +323,15 @@ export function NewOrder() {
                                     <div className="bg-gray1 w-fit h-fit mt-5 rounded-lg font-main px-3 py-3 leading-6">
                                         <span className="text-3xl font-semibold">Total</span><br></br>
                                         <span className="text-3xl text-right w-full block">
-                                            {orderCost}€
+                                            {orderData.cost}€
                                         </span><br></br>
-                                        <span className="font-bold">Tier: </span>Ultra (&gt;20Km)<br></br>
-                                        <span className="font-bold">Distancia: </span>27.5Km (x0.81€/Km)
+                                        <span className="font-bold">
+                                            Tier: {orderData.tier}
+                                        </span>
+                                        <br></br>
+                                        <span className="font-bold">Distancia: </span>
+                                        {orderData.distance}Km
+                                        ({orderData.pricePerKm}€/Km)
                                     </div>
                                     <div className="w-full flex flex-row justify-center">
                                         <button className="w-40 mt-12 bg-purple1 h-12 rounded-full">
@@ -315,7 +339,9 @@ export function NewOrder() {
                                             <span className="text-white text-xl font-semibold ml-3 inline-block">Pagar</span>
                                         </button>
                                     </div>
-                                    <img src={Stripe} className="mt-4"></img>
+                                    <div className="flex flex-row w-full justify-center">
+                                        <img src={Stripe} className="mt-4"></img>
+                                    </div>
                                 </form>
                             </div>
                         </div>

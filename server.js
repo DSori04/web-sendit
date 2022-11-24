@@ -80,7 +80,7 @@ app.post('/user', async (req, res) => {
     catch (error) {
         res.status(500).send({ error: error.message });
     }
-    
+
 });
 
 //To create users
@@ -147,7 +147,7 @@ app.put('/user/:user_id', async (req, res) => {
         const hashedpw = await bcrypt.hash(password, salt); //! hashedpw isn't used anywhere
 
         // Query to get user data from the database
-        const sql1 = "SELECT * FROM USERS WHERE email = ? AND user_id != ?";
+        const sql1 = "SELECT * FROM USERS WHERE email = ? AND user_id <> ?";
 
         cnx.query(sql1, [email, req.params.user_id], async (err, rows) => {
 
@@ -544,16 +544,68 @@ app.get('/orders', (req, res) => {
     }
 })
 
-app.post('/getCost', (req, res) => {
+// To get the cost of the order 
+app.post('/getOrderCost', (req, res) => {
 
     try {
-        console.log(req.body);
-        res.send({ cost: 32.5 });
+        
+        
+
+        // TODO Get the distance in KM from the origin and destiny
+        
+        /* 
+        Format of the request body:
+        {
+            origin: {
+                originAddr1: "",
+                originAddr2: "",
+                originCity: ""
+            },
+            destination: {
+                destAddr1: "",
+                destAddr2: "",
+                destCity: ""
+            }
+        */
+
+        let distanceKm = 10;
+
+        try {
+            // Query to get the from the database with the correct distance
+            const sql = 'SELECT * FROM TIERS WHERE min_distance <= ? AND max_distance >= ?';
+
+            cnx.query(sql, [distanceKm], (err, rows) => {
+                // If there's an SQL error, throw it
+                if (err) throw err;
+
+                if (rows.length > 0) {
+                    let tier = rows[0];
+                    res.send({
+                        success: true,
+                        message: 'Tier found',
+                        data: {
+                            cost: tier.price * distanceKm,
+                            tier: tier.tier_id,
+                            distance: distanceKm,
+                            pricePerKm: tier.price
+                        }
+                    });
+
+                } else {
+                    // If there aren't tiers, return an error
+                    res.status(404).send({ success: false, message: "No tiers found" });
+                }
+            });
+
+
+        } catch (error) {
+            res.status(500).send({ error: error.message });
+        }
 
     } catch (error) {
         res.status(500).send({ error: error.message });
     }
-});
+})
 
 
 //To create a payment link
