@@ -80,11 +80,14 @@ export function NewOrder() {
             destCP: destinationForm.destCP,
             destCity: destinationForm.destCity,
             destAddr1: destinationForm.destAddr1,
-            destAddr2: destinationForm.destAddr2
+            destAddr2: destinationForm.destAddr2,
+            destName: destinationForm.destName,
+            destPhone: destinationForm.destPhone,
+            destEmail: destinationForm.destEmail
         }
         setDestination({...destination});
 
-        console.log(destination);
+        console.log(destination); // TODO Remove this, this onlyy for testing
 
         // Coordinates from the destination
         const addr = `${destinationForm.destAddr1}, ${destinationForm.destCity}`;
@@ -148,6 +151,26 @@ export function NewOrder() {
         });
 
         console.log(origin_info_id); // TODO Delete this after testing
+
+        // Step 4: Send the info from the person who receives the package
+        // Sends the data to the server
+        await axios.post(
+            `${SERVER_URL}/info`,
+            {
+                name: destination.destName,
+                phone: destination.destPhone,
+                email: destination.destEmail
+            }).then((res) => {
+            destination_info_id = res.data.info_id;
+            setDestinationInfoId(res.data.info_id);
+        }).catch((err) => {
+            console.log(err);
+        });
+
+        console.log(destination_info_id);
+
+        // Step 5: Calculate the distance
+        
 
         // Set the step to 3 (payment page)
         setStep(3);
