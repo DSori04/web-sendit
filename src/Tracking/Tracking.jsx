@@ -11,6 +11,7 @@ import { Helmet } from "react-helmet-async";
 //import Places from "./components/AutoCompleteMap";
 import Directions from "./components/MapsPos";
 import Completer from "./components/AutoComplete";
+import { StateMarker } from "./components/StateMarkers";
 
 export function Tracking() {
     const [inputting, setInput] = useState(false);
@@ -52,27 +53,32 @@ export function Tracking() {
                     </div></>}
                     {!inputting && 
                     <div className="flex flex-col font-main">
-                        <div className="flex flex-row w-full justify-between mb-20 flex-wrap">
-                            <h1 className=" font-bold text-purple1 text-5xl select-none">Tracking</h1>
-                            <div className="flex flex-col justify-center w-1/4">
-                            <span className="text-center text-xl">Pedido <span className="font-semibold text-purple1">#{orderId}</span></span>
-                                <div className="flex flex-row justify-between w-full mt-2 min-w-fit">
-                                    <div className="w-[75px] h-[75px] bg-purple1 rounded-full lg:mx-0 mr-4"></div>
-                                    <div className="w-[75px] h-[75px] bg-purple1 rounded-full lg:mx-0 mr-4"></div>
-                                    <div className="w-[75px] h-[75px] bg-purple1 rounded-full lg:mx-0 mr-4"></div>
-                                </div>
+                        <div className="flex lg:flex-row flex-col w-full justify-between sm:mb-20 mb-12 flex-wrap">
+                            <h1 className=" font-bold text-purple1 text-5xl select-none pt-4">Tracking</h1>
+                            <div className="flex flex-col justify-center w-1/3">
+                            <span className="text-center text-xl block min-w-fit sm:m-0 mt-8 pt-4 mb-4 px-2">Pedido <span className="font-semibold text-purple1">#{orderId}</span></span>
+                                <StateMarker state={3} />
                             </div>
-                            <div className="flex flex-col justify-center">
-                                <div className="w-full text-right"><span className="font-bold">Fecha pedido:</span> 01/01/1970</div>
-                                <div className="w-full text-right"><span className="font-bold text-purple1">Fecha entrega estimada:</span> 01/01/1970</div>
+                            <div className="flex flex-col justify-center min-w-fit">
+                                <div className="w-full lg:text-right"><span className="font-bold">Fecha pedido:</span> 01/01/1970</div>
+                                <div className="w-full lg:text-right"><span className="font-bold text-purple1">Fecha entrega estimada:</span> 01/01/1970</div>
                             </div>
                             
                         </div>
-                        <div className="flex flex-row w-full justify-end">
-                            <div className="flex flex-col w-1/2">
-                                <div id="origin" className="flex flex-col">
+                        <div className="flex flex-row w-full h-fit justify-center flex-wrap">
+                            <div className="flex flex-col lg:w-1/2 w-full min-w-fit">
+                                <div id="origin" className="flex flex-col border-b-2 border-gray2 w-3/4 lg:pb-12 pb-5 sm:leading-9 leading-6">
+                                    <span className="font-bold text-purple1 text-xl">Origen</span>
+                                    <span>Peccatum - Avda. Rambla Nova, 74</span>
+                                    <span>43004 - <b>Tarragona</b></span>
+                                    <span>877 06 36 68</span>
                                 </div>
-                                <div id="destiny"></div>
+                                <div id="destiny" className="flex flex-col lg:mt-12 mt-5 sm:leading-9 leading-6 lg:mb-0 mb-4">
+                                    <span className="font-bold text-purple1 text-xl">Destino</span>
+                                    <span>Peccatum - Avda. Rambla Nova, 74</span>
+                                    <span>43004 - <b>Tarragona</b></span>
+                                    <span>877 06 36 68</span>
+                                </div>
                             </div>
                             <Directions /> 
                         </div>
@@ -80,7 +86,7 @@ export function Tracking() {
                     }
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </>
     );
 }

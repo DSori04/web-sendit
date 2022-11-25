@@ -9,7 +9,7 @@ function Directions() {
     const [ libraries ] = useState(["places"]);
     const mapContainerStyle = {
         width: "100%",
-        height: "400px",
+        height: "100%",
         borderRadius: "10px"
     };
     const center = {
@@ -45,7 +45,7 @@ function Directions() {
     if (loadError) return "Error";
     if (!isLoaded) return "Loading...";
     return (
-        <div className="w-1/2">
+        <div className="lg:w-1/2 w-full h-full min-w-fit">
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
                 zoom={13}
