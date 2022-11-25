@@ -384,9 +384,12 @@ app.delete('/prices/:tier_id', (req, res) => {
 app.post('/address', (req, res) => {
     try {
         // Gets the address from the request body
-        const { CP, city, street, other } = req.body;
+        const {CP, city, street, other} = req.body;
+
+        console.log(req.body); // TODO Delete this after
+
         // Query to insert the address into the database
-        const sql = 'INSERT INTO ADDRESSES (CP, city, street, other) VALUES (?, ?, ?, ?)';
+        const sql = 'INSERT INTO ADDRESS (CP, city, street, other) VALUES (?, ?, ?, ?)';
         // Inserts the address into the db
         cnx.query(sql, [CP, city, street, other], (err, result) => {
 
@@ -583,27 +586,12 @@ app.get('/orders', (req, res) => {
 })
 
 // To get the cost of the order 
+/*
 app.post('/getOrderCost', async (req, res) => {
 
     try {
-        // Variables that are used to calculate the cost of the order
-        let origin_addressId, destination_addressId, origin_infoId, destination_infoId, distanceKm, tierData, orderId;
 
-        //* Step 1: Save origin (POST /addresses) ⇒ returns origin_addressId
-        await axios({
-            method: "POST",
-            url: `localhost:${PORT}/addresses`,
-            contentType: "application/json",
-            data: {
-                // TODO Add the data here
-            }
-        }).then((response) => {
-            origin_addressId = response.address_id; //
-        }).catch((error) => {
-            console.log(error);
-        });
-
-        //* Step 2: Save destination (POST /addresses) ⇒ returns destination_addressId
+        //!* Step 2: Save destination (POST /addresses) ⇒ returns destination_addressId
         await axios({
             method: "POST",
             url: `localhost:${PORT}/addresses`,
@@ -617,7 +605,7 @@ app.post('/getOrderCost', async (req, res) => {
             console.log(error);
         });
 
-        //* Step 3: Save origin_info (POST /info) ⇒ returns origin_infoId
+        //!* Step 3: Save origin_info (POST /info) ⇒ returns origin_infoId
         await axios({
             method: "POST",
             url: `localhost:${PORT}/info`,
@@ -631,7 +619,7 @@ app.post('/getOrderCost', async (req, res) => {
             console.log(error);
         });
 
-        //* Step 4: Save destination_info (POST /info) ⇒ returns destination_infoId
+        //!* Step 4: Save destination_info (POST /info) ⇒ returns destination_infoId
         await axios({
             method: "POST",
             url: `localhost:${PORT}/info`,
@@ -646,12 +634,12 @@ app.post('/getOrderCost', async (req, res) => {
         });
 
 
-        //* Step 5: Get distance between origin and dest ⇒ returns distanceKm
+        //!* Step 5: Get distance between origin and dest ⇒ returns distanceKm
         // TODO Create ENDPOINT
         distanceKm = 26; // TODO Delete this, this is just for testing
 
-        //*  Step 6: Get tier based on distance and calculate price ⇒ returns tierData
-        /**
+        //!*  Step 6: Get tier based on distance and calculate price ⇒ returns tierData
+        /!**
          * 1. Gets the tier with max_distance = null, which is the highest tier
          * 2. Once it has found it, checks if the distance is
          * higher than the min_distance of that top tier
@@ -661,7 +649,7 @@ app.post('/getOrderCost', async (req, res) => {
          *
          * tierData format:
          * { tier_id: num, tier_name: string, min_distance: num, max_distance: num, totalCost: num}
-         */
+         *!/
         try {
 
             // Query to get from the database the row with max_distance = null
@@ -723,7 +711,7 @@ app.post('/getOrderCost', async (req, res) => {
             res.status(500).send({error: error.message});
         }
 
-        //* Step 7: Save order and distance in db ⇒ return orderId
+        //!* Step 7: Save order and distance in db ⇒ return orderId
         await axios({
             method: 'PUT',
             url: 'localhost:${PORT}/orders',
@@ -739,7 +727,7 @@ app.post('/getOrderCost', async (req, res) => {
         });
 
 
-        //* Step 8: Send order_id, price, distance and tier to client
+        //!* Step 8: Send order_id, price, distance and tier to client
 
         res.status(200).send({
             success: true,
@@ -757,6 +745,7 @@ app.post('/getOrderCost', async (req, res) => {
         res.status(500).send({ error: error.message });
     }
 })
+*/
 
 
 /**

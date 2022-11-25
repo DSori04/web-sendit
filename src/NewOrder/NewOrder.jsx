@@ -1,86 +1,75 @@
-import React, { useState } from "react";
-import { Navbar } from "../SharedComponents/Navbar";
-import { Footer } from "../SharedComponents/Footer";
+import React, {useState} from "react";
+import {Navbar} from "../SharedComponents/Navbar";
+import {Footer} from "../SharedComponents/Footer";
 import neworder1 from "./assets/neworder1.svg"
 import neworder2 from "./assets/neworder2.svg"
 import neworder3 from "./assets/neworder3.svg"
 import payicon from "./assets/payicon.svg"
 import Stripe from "./assets/Stripe.svg";
-import { Helmet } from "react-helmet-async";
+import {Helmet} from "react-helmet-async";
 import axios from "axios";
-import { getGeolocation, getCity, getCP } from "./components/getGeolocation";
-import { TrackingImage } from "./components/NewTrackingImage";
-import { Steps } from "./components/Steps";
+import {getGeolocation, getCity, getCP} from "./components/getGeolocation";
+import {TrackingImage} from "./components/NewTrackingImage";
+import {Steps} from "./components/Steps";
 
-const SERVER_URL = "http://localhost:3170";
+const PORT = 3170;
+const SERVER_URL = `http://localhost:${PORT}`;
 
 export function NewOrder() {
 
     const [step, setstep] = useState(1);
-    const [orderData, setOrderData] = useState({ cost: 0 });
+    const [orderData, setOrderData] = useState({}); // Saves the cost, tier and distance
     const [originCity, setOriginCity] = useState("");
     const [destinationCity, setDestinationCity] = useState("");
     const [originPersonal, setOriginPersonal] = useState(false)
     const [destinationPersonal, setDestinationPersonal] = useState(false)
 
-    const [origin, setOrigin] = useState({});
+    const [origin, setOrigin] = useState({}); // All info from origin
+    const [originId, setOriginId] = useState(""); // ID of the origin
 
     const handleSubmitOrigin = async (e) => {
         e.preventDefault();
 
         // Gets all the data from the form
         const originForm = Object.fromEntries(new FormData(e.target));
+        setOrigin(originForm);
+        console.log(originForm);
 
-        let originData = {
-            originAddr1: originForm.originAddr1,
-            originAddr2: originForm.originAddr2,
-            originCity: originForm.originCity
-        }
-
-        // Sets the origin state to the data from the form
-        //setOrigin({ ...originData });
-        setOrigin(originForm)
         const addr = `${originForm.originAddr1}, ${originForm.originCity}`
-        const geolocation = await getGeolocation(addr);
+        const geolocation = await getGeolocation(addr); //! geolocation is only used in the console.log
         console.log(geolocation)
         console.log(origin)
+
         // Set step to 2 (destination mail)
         setstep(2);
 
     }
-    const usePersonalData = async () => {
-        setOriginPersonal(true)
-    }
 
-    const handleSubmitDestination = (e) => {
+    const handleSubmitDestination = async (e) => {
         e.preventDefault();
 
         // Gets all the data from the form
         let destinationForm = Object.fromEntries(new FormData(e.target));
 
-        // Send data to the server and get the cost of the order
-        axios({
-            method: "POST",
-            url: `${SERVER_URL}/getOrderCost`,
-            contentType: "application/json",
-            data: {
-                origin: origin,
-                destination: {
-                    destinationAddr1: destinationForm.destAddr1,
-                    destinationAddr2: destinationForm.destAddr2,
-                    destinationCity: destinationForm.destCity
-                }
+        // Step 1: Send to the server the origin address and save the response
+        // Sends the data to the server
+        await axios.post(
+            `${SERVER_URL}/address`,
+            {
+                CP: origin.originCP,
+                city: origin.originCity,
+                street: origin.originAddr1,
+                other: origin.originAddr2,
             }
-        }).then((response) => {
-            let res = {
-                cost: response.data.cost,
-                tier: response.data.tier,
-                distance: response.data.distance
+        ).then((res) => {
+            console.log(res.data);
+            if (res.data.success === true) {
+                setOriginId(res.data.adress_id);
+            } else {
+                throw new Error("Error al guardar la dirección de origen");
             }
-            setOrderData({ ...res });
-            setstep(3);
-        }).catch((error) => {
-            console.log(error);
+        }).catch((err) => {
+            console.log(err);
         });
 
         setstep(3);
@@ -102,6 +91,10 @@ export function NewOrder() {
         } else {
             setOriginCity("");
         }
+    }
+
+    const usePersonalData = async () => {
+        setOriginPersonal(true)
     }
 
     const handleDestinationCP = async (e) => {
