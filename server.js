@@ -454,20 +454,48 @@ app.delete('/address/:address_id', (req, res) => {
 //To add personal info - Returns info id
 app.post('/info', (req, res) => {
     try {
-        const { name, surname, phone, email } = req.body;
-        const sql = 'INSERT INTO PERSONAL_INFO (name, surname, phone, email) VALUES (?, ?, ?, ?)';
-        cnx.query(sql, [name, surname, phone, email], (err, result) => {
-            if (err) throw err;
-            res.send({
-                info_id: result.insertId,
-                success: true,
-                message: 'Info created'
-            })
+        const { name, phone, email } = req.body;
+
+        // Check if that user info does already exist
+
+        // Query to select rows that have the same info that the user has put in the form
+        const sql1 = "SELECT * FROM INFO WHERE name = ? AND phone = ? AND email = ?";
+        // Gets the rows
+        cnx.query(sql1, [name, phone, email], (err, rows) => {
+            // If there's an SQL error, return it
+            if (err) throw (err);
+
+            // If any rows were found we insert the info to the database
+            if (rows.length === 0) {
+                // Query to insert the info into the database
+                const sql = 'INSERT INTO INFO (name, phone, email) VALUES (?, ?, ?)';
+                // Inserts the info into the db
+                cnx.query(sql, [name, phone, email], (err, result) => {
+                    // If there's an SQL error, return it
+                    if (err) throw err;
+
+                    // If the info is inserted, return a success message
+                    res.send({
+                        info_id: result.insertId,
+                        success: true,
+                        message: 'Info created'
+                    })
+                });
+            } else {
+                // If the info already exists, return the id of the existing info
+                res.send({
+                    info_id: rows[0].info_id,
+                    success: true,
+                    message: 'Info already exists'
+                });
+            }
+
         });
+
     } catch (error) {
         res.status(500).send({ error: error.message });
     }
-})
+});
 
 //To get info 
 app.get('/info', (req, res) => {

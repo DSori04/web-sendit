@@ -13,6 +13,8 @@ import Directions from "./components/MapsPos";
 import Completer from "./components/AutoComplete";
 import { StateMarker } from "./components/StateMarkers";
 
+// TODO Why the icon doesn't show up in the browser tab?
+
 export function Tracking() {
     const [inputting, setInput] = useState(true);
     const [orderId, setOrder] = useState();
