@@ -62,8 +62,8 @@ app.post('/user', async (req, res) => {
         cnx.query(sql, [email], async (err, rows) => {
             // If an user does exist
             if (rows.length > 0) { //? It should be rows.length == 1; thre can't be more than one user with the same email
-                password = await bcrypt.hash(password, salt);
-
+                //password = await bcrypt.hash(password, salt);
+                console.log(password, await bcrypt.compare(password, rows[0].password))
                 // If the password from user matches the databese password
                 if (await bcrypt.compare(password, rows[0].password)) {
 
