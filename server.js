@@ -134,7 +134,7 @@ app.put('/user', async (req, res) => {
 
             // If an user does already exist with the same email, return an error
             if (rows.length > 0) {
-                res.status(400).send({ success: false, message: "User already exists" });
+                res.status(400).send({ success: false, message: "Este usuario ya existe" });
 
             } else {
                 // If the user doesn't exist, create it

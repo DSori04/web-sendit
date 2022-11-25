@@ -26,31 +26,36 @@ export function LogIn() {
     async function handleSubmitLogin(e){
         e.preventDefault();
         const formdata = Object.fromEntries(new FormData(e.target))
-        const response = await axios({
-            method: "post",
-            url: "http://192.168.86.242:3170/user",
-            data: formdata,
-        }).then(
-            (res) => {
-                console.log(res.data.success)
-                if (res.data.success) {
-                    console.log("in")
-                    setLogged(true);
-                    sessionStorage.setItem('email', formdata.email)
-                    sessionStorage.setItem('logged', true)
-                    sessionStorage.setItem('name', res.data.name)
-                    sessionStorage.setItem('surname', res.data.surname)
-                    sessionStorage.setItem('user_id', res.data.user_id)
-                    setError({state: false, message: ""})
-                    navigate('/')
-                    console.log(res)
+        if(formdata.email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)){
+            const response = await axios({
+                method: "post",
+                url: "http://localhost:3170/user",
+                data: formdata,
+            }).then(
+                (res) => {
+                    console.log(res.data.success)
+                    if (res.data.success) {
+                        console.log("in")
+                        setLogged(true);
+                        sessionStorage.setItem('email', formdata.email)
+                        sessionStorage.setItem('logged', true)
+                        sessionStorage.setItem('name', res.data.name)
+                        sessionStorage.setItem('surname', res.data.surname)
+                        sessionStorage.setItem('user_id', res.data.user_id)
+                        setError({state: false, message: ""})
+                        navigate('/')
+                        console.log(res)
+                    }
                 }
-            }
-        ).catch(
-            (err) => {
-                setError({state: true, message: err.response?.data?.message})
-            }
-        )
+            ).catch(
+                (err) => {
+                    setError({state: true, message: err.response?.data?.message})
+                }
+            )
+        } else{
+            setError({state: true, message: "Email no válido"})
+        }
+        
     }
 
     useEffect(() => {

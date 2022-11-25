@@ -40,7 +40,7 @@ export function SignUp(){
                 console.log(user)
                 await axios({
                     method: "put",
-                    url: "http://192.168.86.242:3170/user",
+                    url: "http://localhost:3170/user",
                     data: user,
                 })
                 .then((res) => {
