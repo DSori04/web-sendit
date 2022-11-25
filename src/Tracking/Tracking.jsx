@@ -98,13 +98,13 @@ export function Tracking() {
                                     <span className="font-bold text-purple1 text-xl">Origen</span>
                                     <span>{origin.name} - {origin.Addr1}</span>
                                     <span>{origin.CP} - <b>{origin.City}</b></span>
-                                    <span>{origin.Phone}</span>
+                                    <span>{origin.Phone.slice(0, 3)} {origin.Phone.slice(3, 5)} {origin.Phone.slice(5, 7)} {origin.Phone.slice(7, 9)}</span>
                                 </div>
                                 <div id="destiny" className="flex flex-col lg:mt-12 mt-5 sm:leading-9 leading-6 lg:mb-0 mb-4">
                                     <span className="font-bold text-purple1 text-xl">Destino</span>
                                     <span>{destination.name} - {destination.Addr1}</span>
                                     <span>{destination.CP} - <b>{destination.City}</b></span>
-                                    <span>{destination.Phone}</span>
+                                    <span>{destination.Phone.slice(0, 3)} {destination.Phone.slice(3, 5)} {destination.Phone.slice(5, 7)} {destination.Phone.slice(7, 9)} </span>
                                 </div>
                             </div>
                             <Directions origin={origin} destination={destination} /> 
