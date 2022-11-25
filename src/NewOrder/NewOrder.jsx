@@ -135,9 +135,9 @@ export function NewOrder() {
                         <Steps step={1} setStep={setstep} />
                         <div className="lg:w-auto w-full flex flex-row justify-center">
                             <div id="originform" className="lg:block flex-row justify-center min-w-min">
-                                {(localStorage.getItem('logged') && !originPersonal) && <button className="w-fit border-2 rounded-full block font-main border-purple1 text-purple1 text-sm mt-4 px-1 shadow-xl bg-white hover:scale-105 active:scale-95" onClick={() => usePersonalData()}>Utiliza tus datos personales</button>}
+                                {(localStorage.getItem('logged') && !originPersonal) && <button className="w-fit mx-auto py-1 border-2 rounded-full block font-main border-purple1 text-purple1 text-sm mt-4 px-2 shadow-xl bg-white hover:scale-105 active:scale-95" onClick={() => usePersonalData()}>Utiliza tus datos personales</button>}
                                 <form onSubmit={(e) => handleSubmitOrigin(e)} className="lg:block flex flex-col lg:w-full w-64">
-                                    <label htmlFor="name" className="text-main block mt-8">Nombre completo <span className="text-main text-red1">*</span></label>
+                                    <label htmlFor="name" className="text-main block mt-6">Nombre completo <span className="text-main text-red1">*</span></label>
                                     {!originPersonal && <input type="text" name="originName" id="origin_name" defaultValue={origin.originName} className="border-b-2 inline-block" required />}
                                     {originPersonal && <span>{`${localStorage.getItem('name')} ${localStorage.getItem('surname')}`}</span>}
 
@@ -146,8 +146,8 @@ export function NewOrder() {
                                     {originPersonal && <span>{localStorage.getItem('email')}</span>}
 
                                     <label htmlFor="origin_tlf" className="text-main block mt-8">Teléfono  <span className="text-main text-red1">*</span></label>
-                                    {!originPersonal && <input type="tel" name="originPhone" id="origin_tlf" defaultValue={origin.originPhone} className="border-b-2 inline-block" required />}
-                                    {originPersonal && <span>{localStorage.getItem('phone')}</span>}
+                                    <input type="tel" name="originPhone" id="origin_tlf" defaultValue={origin.originPhone} className="border-b-2 inline-block" required />
+                                    
 
                                     <label htmlFor="origin_addr1name" className="text-main block mt-8">Dirección 1 <span className="text-main text-red1">*</span></label>
                                     <input type="text" name="originAddr1" id="origin_addr1" defaultValue={origin.originAddr1} className="border-b-2 inline-block" required />
@@ -163,7 +163,7 @@ export function NewOrder() {
 
                                     
                                     
-                                    <input type="submit" value="Continuar" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl max-w-fit lg:hover:hue-rotate-15 mx-auto"  />
+                                    <input type="submit" value="Continuar" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl max-w-fit lg:hover:hue-rotate-15 mx-auto hover:scale-105 active:scale-95"  />
                                     
                                 </form>
                                 
@@ -177,7 +177,7 @@ export function NewOrder() {
                         <Steps step={2} setStep={setstep} />
                         <div className="lg:w-auto w-full flex flex-row justify-center">
                             <div id="destform" className="lg:block flex-row justify-center min-w-min">
-                                {(localStorage.getItem('logged') && !destinationPersonal && !originPersonal) && <button className="w-fit border-2 rounded-full block font-main border-purple1 text-purple1 text-sm mt-4 px-1 shadow-xl bg-white hover:scale-105 active:scale-95" onClick={() => setDestinationPersonal(true)}>Utiliza tus datos personales</button>}
+                                {(localStorage.getItem('logged') && !destinationPersonal && !originPersonal) && <button className="w-fit mx-auto py-1 border-2 rounded-full block font-main border-purple1 text-purple1 text-sm mt-4 px-2 shadow-xl bg-white hover:scale-105 active:scale-95" onClick={() => setDestinationPersonal(true)}>Utiliza tus datos personales</button>}
                                 <form onSubmit={(e) => handleSubmitDestination(e)} className="lg:block flex flex-col lg:w-full w-64">
                                     <label htmlFor="name" className="text-main block mt-8">Nombre completo <span className="text-main text-red1">*</span></label>
                                     {!destinationPersonal && <input type="text" name="destName" id="dest_name" className="border-b-2 inline-block" required />}
@@ -188,22 +188,21 @@ export function NewOrder() {
                                     {destinationPersonal && <span>{localStorage.getItem('email')}</span>}
                                     
                                     <label htmlFor="dest_tlf" className="text-main block mt-8">Teléfono  <span className="text-main text-red1">*</span></label>
-                                    {!destinationPersonal && <input type="tel" name="destPhone" id="dest_tlf" className="border-b-2 inline-block" required />}
-                                    {destinationPersonal && <span>{localStorage.getItem('phone')}</span>}
+                                    <input type="tel" name="destPhone" id="dest_tlf" className="border-b-2 inline-block" required />
 
                                     <label htmlFor="dest_addr1name" className="text-main block mt-8">Dirección 1 <span className="text-main text-red1">*</span></label>
-                                    {!destinationPersonal && <input type="text" name="destAddr1" id="dest_addr1" className="border-b-2 inline-block" required />}
+                                    <input type="text" name="destAddr1" id="dest_addr1" className="border-b-2 inline-block" required />
                                     
                                     <label htmlFor="dest_addr_2" className="text-main block mt-8">Dirección 2</label>
-                                    {!destinationPersonal && <input type="text" name="destAddr2" id="dest_addr2" className="border-b-2 inline-block" />}
+                                    <input type="text" name="destAddr2" id="dest_addr2" className="border-b-2 inline-block" />
                                     
                                     <label htmlFor="dest_cp" className="text-main block mt-8">CP <span className="text-main text-red1">*</span></label>
-                                    {!destinationPersonal && <input type="text" name="destCP" id="dest_cp" className="border-b-2 inline-block w-2/3" required onBlur={(e) => handleDestinationCP(e)} />}
+                                    <input type="text" name="destCP" id="dest_cp" className="border-b-2 inline-block w-2/3" required onBlur={(e) => handleDestinationCP(e)} />
                                     
                                     <label htmlFor="city" className="text-main block mt-8">Ciudad <span className="text-main text-red1">*</span></label>
-                                    {!destinationPersonal && <input type="text" name="destCity" id="dest_city" value={destinationCity} className="border-b-2 inline-block" required onChange={(e) => setDestinationCity(e.target.value)} />}
+                                    <input type="text" name="destCity" id="dest_city" value={destinationCity} className="border-b-2 inline-block" required onChange={(e) => setDestinationCity(e.target.value)} />
                                     
-                                    <input type="submit" value="Continuar" className="mx-auto block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl max-w-fit lg:hover:hue-rotate-15" />
+                                    <input type="submit" value="Continuar" className="mx-auto block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl max-w-fit lg:hover:hue-rotate-15 hover:scale-105 active:scale-95" />
 
                                 </form>
                             </div>
