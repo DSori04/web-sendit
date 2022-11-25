@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from 'axios'
 
 
 export function TrackingForm({setInput, setOrder}) {
@@ -9,7 +10,7 @@ export function TrackingForm({setInput, setOrder}) {
     const [validOrder, setValidOrder] = useState(true)
     const [validMail, setValidmail] = useState(true)
 
-    function handleForm(e){
+    async function handleForm(e){
         e.preventDefault();
         const formdata = Object.fromEntries(new FormData(e.target))
         // console.log(formdata.orderid.match(/([0-9])\d+$/g))
@@ -18,6 +19,24 @@ export function TrackingForm({setInput, setOrder}) {
         setValidmail(formdata.email.split("@").length == 2 && formdata.email.split("@")[1].split(".").length == 2)
         setInput(false)
         setOrder(formdata.orderid)
+        /*
+        axios({
+            method: "get",
+            url: "http://localhost:3170/order/",
+            data: formdata,
+        })
+        .then(
+            (res) => {
+                console.log(res)
+            }
+        )
+        .catch(
+            (err) => {
+                console.log(err)
+            }
+        )
+        )
+        */
         navigate('/tracking/' + formdata.orderid)
         
     }
