@@ -37,12 +37,13 @@ export function NewOrder() {
 
         // Gets all the data from the form and saves it to origin object
         const originForm = Object.fromEntries(new FormData(e.target));
-        setOrigin({
+        let origin = {
             originCP: originForm.originCP,
             originCity: originForm.originCity,
             originAddr1: originForm.originAddr1,
             originAddr2: originForm.originAddr2
-        });
+        }
+        setOrigin({...origin});
 
         // Coordinates from the origin
         const addr = `${originForm.originAddr1}, ${originForm.originCity}`;
@@ -61,12 +62,15 @@ export function NewOrder() {
 
         // Gets all the data from the form and saves it to destination object
         const destinationForm = Object.fromEntries(new FormData(e.target));
-        setDestination({
+        let destination = {
             destCP: destinationForm.destCP,
             destCity: destinationForm.destCity,
             destAddr1: destinationForm.destAddr1,
             destAddr2: destinationForm.destAddr2
-        });
+        }
+        setDestination({...destination});
+
+        console.log(destination);
 
         // Coordinates from the destination
         const addr = `${destinationForm.destAddr1}, ${destinationForm.destCity}`;
@@ -120,6 +124,8 @@ export function NewOrder() {
             console.log(err);
         });
 
+        console.log(originId);
+        console.log(destinationId);
 
         setStep(3);
 

@@ -382,7 +382,6 @@ app.delete('/prices/:tier_id', (req, res) => {
 //To add an address - Returns address id
 app.post('/address', (req, res) => {
     try {
-        // Gets the address from the request body
         const {CP, city, street, other, lat, lng} = req.body;
 
         // Query to insert the address into the database
