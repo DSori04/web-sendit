@@ -24,13 +24,17 @@ export function NewOrder() {
     const [originPersonal, setOriginPersonal] = useState(false);
     const [destinationPersonal, setDestinationPersonal] = useState(false);
 
+
     const [origin, setOrigin] = useState({}); // All info from origin
     const [originCoords, setOriginCoords] = useState({}); // Coordinates from the origin place
     const [originId, setOriginId] = useState(""); // ID of the origin
 
     const [destination, setDestination] = useState({}) // All info from destination
     const [destinationCoords, setDestinationCoords] = useState({}); // Coordinates from the destination place
-    const [destinationId, setDestinationId] = useState(""); // ID of the destination
+    const [destinationId, setDestinationId] = useState(0); // ID of the destination
+
+    const [originInfoId, setOriginInfoId] = useState(0); // ID of the origin info
+    const [destinationInfoId, setDestinationInfoId] = useState(0); // ID of the destination info
 
     const handleSubmitOrigin = async (e) => {
         e.preventDefault();
@@ -41,7 +45,10 @@ export function NewOrder() {
             originCP: originForm.originCP,
             originCity: originForm.originCity,
             originAddr1: originForm.originAddr1,
-            originAddr2: originForm.originAddr2
+            originAddr2: originForm.originAddr2,
+            originName: originForm.originName,
+            originPhone: originForm.originPhone,
+            originEmail: originForm.originEmail
         }
         setOrigin({...origin});
 
@@ -59,6 +66,14 @@ export function NewOrder() {
 
     const handleSubmitDestination = async (e) => {
         e.preventDefault();
+
+        // IDs from steps 1 and 2
+        let origin_address_id;
+        let destination_address_id;
+
+        // IDs from steps 3 and 4
+        let origin_info_id;
+        let destination_info_id;
 
         // Gets all the data from the form and saves it to destination object
         const destinationForm = Object.fromEntries(new FormData(e.target));
@@ -81,7 +96,6 @@ export function NewOrder() {
         });
 
         // Step 1: Send to the server the origin address and save the response
-
         // Sends the data to the server
         await axios.post(
             `${SERVER_URL}/address`,
@@ -93,17 +107,13 @@ export function NewOrder() {
                 lat: originCoords.lat,
                 lng: originCoords.lng
             }).then((res) => {
-            if (res.data.success === true) {
-                setOriginId(res.data.address_id);
-            } else {
-                throw new Error("Error al guardar la dirección de origen");
-            }
+            origin_address_id = res.data.address_id;
+            setOriginId(origin_address_id);
         }).catch((err) => {
             console.log(err);
         });
 
         // Step 2: Send to the server the destination address and save the response
-
         // Sends the data to the server
         await axios.post(
             `${SERVER_URL}/address`,
@@ -115,20 +125,33 @@ export function NewOrder() {
                 lat: destinationCoords.lat,
                 lng: destinationCoords.lng
             }).then((res) => {
-            if (res.data.success === true) {
-                setDestinationId(res.data.address_id);
-            } else {
-                throw new Error("Error al guardar la dirección de destination");
-            }
+            destination_address_id = res.data.address_id;
+            setDestinationId(destination_address_id);
         }).catch((err) => {
             console.log(err);
         });
 
-        console.log(originId);
-        console.log(destinationId);
+        console.log(origin_address_id, destination_address_id); // TODO Delete this after testing
 
+        // Step 3: Send the info from the person who sends the package
+        // Sends the data to the server
+        await axios.post(
+            `${SERVER_URL}/info`,
+            {
+                name: origin.originName,
+                phone: origin.originPhone,
+                email: origin.originEmail
+            }).then((res) => {
+            origin_info_id = res.data.info_id;
+            setOriginInfoId(res.data.info_id);
+        }).catch((err) => {
+            console.log(err);
+        });
+
+        console.log(origin_info_id); // TODO Delete this after testing
+
+        // Set the step to 3 (payment page)
         setStep(3);
-
     }
 
     const handleSubmitPayment = (e) => {
@@ -168,7 +191,6 @@ export function NewOrder() {
             <Helmet>
                 <title>New Order</title>
                 <meta name="description" content="New Order"/>
-
             </Helmet>
             <Navbar/>
             <div className="flex flex-row w-full justify-center min-h-[90vh]">
