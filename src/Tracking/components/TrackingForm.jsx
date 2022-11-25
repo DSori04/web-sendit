@@ -28,6 +28,7 @@ export function TrackingForm({setInput, setOrder}) {
         .then(
             (res) => {
                 console.log(res)
+                setOrder(res.data.order_id)
             }
         )
         .catch(
