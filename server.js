@@ -51,6 +51,7 @@ try {
 app.post('/user', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
 
+
     try {
         // Gets the mail and password from the request body
         let { email, password } = req.body;
@@ -60,9 +61,9 @@ app.post('/user', async (req, res) => {
         const sql = 'SELECT * FROM USERS WHERE email = ?';
         cnx.query(sql, [email], async (err, rows) => {
             // If an user does exist
-            if (rows.length > 0) {
-                password = await bcrypt.hash(password, salt);
-
+            if (rows.length > 0) { //? It should be rows.length == 1; thre can't be more than one user with the same email
+                //password = await bcrypt.hash(password, salt);
+                console.log(password, await bcrypt.compare(password, rows[0].password))
                 // If the password from user matches the databese password
                 if (await bcrypt.compare(password, rows[0].password)) {
 
@@ -173,7 +174,6 @@ app.put('/user/:user_id', async (req, res) => {
     try {
         // Gets the mail, surname, mail and password from the request body
         let {name, surname, email, password} = req.body;
-        // TODO Check this
         const hashedPasswd = await bcrypt.hash(password, salt); //! hashedPasswd isn't used anywhere
 
         // Query to get user data from the database
