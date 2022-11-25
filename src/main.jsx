@@ -2,8 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
-  RouterProvider,
-  Route,
+  RouterProvider
 } from "react-router-dom";
 import "./index.css";
 import { Home } from "./Home/Home.jsx";
@@ -15,7 +14,6 @@ import { Prices } from './Prices/Prices'
 import { Tracking } from './Tracking/Tracking'
 import { NotFound } from "./NotFound/NotFound";
 import { SignUp } from "./LogIn/SignUp";
-import AppContextProvider from "./GlobalStates";
 import { Profile } from "./Profile/Profile";
 import { HelmetProvider } from "react-helmet-async";
 
@@ -28,38 +26,47 @@ const router = createBrowserRouter([
   {
     path: "/about-us",
     element: <AboutUs/>,
+    errorElement: <NotFound/>,
   },
   {
     path: "/contact",
     element: <Contact/>,
+    errorElement: <NotFound/>,
   },
   {
     path: "/login",
-    element: <AppContextProvider><LogIn/></AppContextProvider>,
+    element: <LogIn/>,
+    errorElement: <NotFound/>,
   },
   {
     path: "/signup",
-    element: <SignUp/>
+    element: <SignUp/>,
+    errorElement: <NotFound/>,
   },
   {
     path: "/new",
     element: <NewOrder/>,
+    errorElement: <NotFound/>,
   },
   {
     path: "/prices",
     element: <Prices/>,
+    errorElement: <NotFound/>,
   },
   {
     path: "/tracking",
     element: <Tracking/>,
+    errorElement: <NotFound/>,
   },
   {
     path: "/tracking/:id",
     element: <Tracking />,
+    errorElement: <NotFound/>,
   },
   {
     path: "/profile",
-    element: <Profile />
+    element: <Profile />,
+    errorElement: <NotFound/>,
   }
 
 ]);
