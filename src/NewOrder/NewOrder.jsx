@@ -59,7 +59,6 @@ export function NewOrder() {
             lat: geolocation.lat,
             lng: geolocation.lng
         });
-
         // Set step to 2 (destination mail)
         setStep(2);
     }

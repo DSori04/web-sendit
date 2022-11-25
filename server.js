@@ -55,7 +55,6 @@ app.post('/user', async (req, res) => {
     try {
         // Gets the mail and password from the request body
         let { email, password } = req.body;
-        console.log(email, password)
 
         // Gets from db all users with the same email from the request
         const sql = 'SELECT * FROM USERS WHERE email = ?';
@@ -608,8 +607,9 @@ app.get('/orders', (req, res) => {
     }
 })
 
-app.get('/order', async (req, res) => {
+app.post('/order', async (req, res) => {
     const { orderid, email, cp } = req.body;
+    console.log(orderid)
     try{
         const sql = `
         SELECT 
@@ -623,14 +623,14 @@ app.get('/order', async (req, res) => {
             ADDRESS AS A2 
                 ON (A2.address_id = O.origin_address_id)
         INNER JOIN
-            PERSONAL_INFO AS P1
+            INFO AS P1
                 ON (P1.info_id = O.origin_info_id)
         INNER JOIN
-            PERSONAL_INFO AS P2
+            INFO AS P2
                 ON (P2.info_id = O.destiny_info_id)
         WHERE
             O.order_id = ?
-            AND (P1.email = ? AND P1.cp = ?) OR (P2.email = ? AND P2.cp = ?)`
+            AND (P1.email = ? AND A1.cp = ?) OR (P2.email = ? AND A2.cp = ?)`
         cnx.query(sql, [orderid, email, cp, email, cp], (err, rows) => {
             if (err) throw err;
             if (rows.length > 0) {
