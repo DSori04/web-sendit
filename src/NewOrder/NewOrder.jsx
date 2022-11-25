@@ -60,8 +60,29 @@ export function NewOrder() {
                 city: origin.originCity,
                 street: origin.originAddr1,
                 other: origin.originAddr2,
+                // TODO Add here long and lat
+            }).then((res) => {
+            console.log(res.data);
+            if (res.data.success === true) {
+                setOriginId(res.data.adress_id);
+            } else {
+                throw new Error("Error al guardar la dirección de origen");
             }
-        ).then((res) => {
+        }).catch((err) => {
+            console.log(err);
+        });
+
+        // Step 2: Send to the server the destination address and save the response
+        // Sends the data to the server
+        await axios.post(
+            `${SERVER_URL}/address`,
+            {
+                CP: origin.originCP,
+                city: origin.originCity,
+                street: origin.originAddr1,
+                other: origin.originAddr2,
+                // TODO Add here long and lat
+            }).then((res) => {
             console.log(res.data);
             if (res.data.success === true) {
                 setOriginId(res.data.adress_id);

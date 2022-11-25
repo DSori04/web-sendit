@@ -3,7 +3,6 @@ import mysql from 'mysql'
 import bcrypt from 'bcrypt'
 import * as dotenv from 'dotenv'
 import cors from 'cors'
-import axios from 'axios'
 
 dotenv.config()
 
@@ -384,14 +383,12 @@ app.delete('/prices/:tier_id', (req, res) => {
 app.post('/address', (req, res) => {
     try {
         // Gets the address from the request body
-        const {CP, city, street, other} = req.body;
-
-        console.log(req.body); // TODO Delete this after
+        const {CP, city, street, other, lat, lng} = req.body;
 
         // Query to insert the address into the database
-        const sql = 'INSERT INTO ADDRESS (CP, city, street, other) VALUES (?, ?, ?, ?)';
+        const sql = 'INSERT INTO ADDRESS (CP, city, street, other, lat, lng) VALUES (?, ?, ?, ?, ?, ?)';
         // Inserts the address into the db
-        cnx.query(sql, [CP, city, street, other], (err, result) => {
+        cnx.query(sql, [CP, city, street, other, lat, lng], (err, result) => {
 
             // If there's an SQL error, throw it
             if (err) throw err;
@@ -483,7 +480,7 @@ app.get('/info', (req, res) => {
         let i = 0;
         let valid_params = []
         params.forEach(param => {
-            if (req.body[param] != undefined) {
+            if (req.body[param] !== undefined) {
                 valid_params.push(req.body[param]);
                 if (i === 0) {
                     sql += param + ' = ?';
@@ -571,7 +568,7 @@ app.get('/orders', (req, res) => {
         params.forEach(param => {
             if (req.body[param] !== undefined) {
                 valid_params.push(req.body[param]);
-                if (i == 0) {
+                if (i === 0) {
                     sql += param + ' = ?';
                 } else {
                     sql += ' AND ' + param + ' = ?';
