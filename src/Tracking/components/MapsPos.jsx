@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const libraries = ["places"];
 
-function Directions() {
+function Directions({origin, destination}) {
     const [ libraries ] = useState(["places"]);
     const mapContainerStyle = {
         width: "100%",
@@ -13,10 +13,10 @@ function Directions() {
         borderRadius: "10px"
     };
     const center = {
-        lat: 41.112543321888104, lng: 1.2565044470474362
+        lat: origin.lat, lng: origin.lng
     };
     const target = {
-        lat: 41.120441227561926, lng: 1.2435490857768052
+        lat: destination.lat, lng: destination.lng
     }
     const options = {
         disableDefaultUI: true,
