@@ -32,23 +32,29 @@ export function LogIn() {
             data: formdata,
         }).then(
             (res) => {
-                console.log(res)
-                if (res.status == 200 && res.success == true) {
+                console.log(res.data.success)
+                if (res.data.success) {
+                    console.log("in")
                     setLogged(true);
-                    localStorage.setItem('email', formdata.get('email'))
-                    localStorage.setItem('logged', true)
+                    sessionStorage.setItem('email', formdata.email)
+                    sessionStorage.setItem('logged', true)
+                    sessionStorage.setItem('name', res.data.name)
+                    sessionStorage.setItem('surname', res.data.surname)
+                    sessionStorage.setItem('user_id', res.data.user_id)
+                    setError({state: false, message: ""})
                     navigate('/')
+                    console.log(res)
                 }
             }
         ).catch(
             (err) => {
-                setError({state: true, message: err.response.data?.message})
+                setError({state: true, message: err.response?.data?.message})
             }
         )
     }
 
     useEffect(() => {
-        if (localStorage.getItem('logged') == 'true') {
+        if (sessionStorage.getItem('logged') == 'true') {
             setLogged(true)
             navigate('/')
         }

@@ -7,9 +7,9 @@ import { useNavigate } from "react-router";
 export function Options({selected ,setSelected}){
     const navigate = useNavigate()
     function disconnect(){
-        localStorage.setItem('logged', false)
-        localStorage.removeItem('logged')
-        localStorage.removeItem('email')
+        sessionStorage.setItem('logged', false)
+        sessionStorage.removeItem('logged')
+        sessionStorage.removeItem('email')
         navigate("/")
     }
     return(

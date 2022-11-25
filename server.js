@@ -1,7 +1,7 @@
-import express from 'express' 
+import express from 'express'
 import mysql from 'mysql'
 import bcrypt from 'bcrypt'
-import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+import * as dotenv from 'dotenv'
 import cors from 'cors'
 
 dotenv.config()
@@ -62,8 +62,8 @@ app.post('/user', async (req, res) => {
         cnx.query(sql, [email], async (err, rows) => {
             // If an user does exist
             if (rows.length > 0) { //? It should be rows.length == 1; thre can't be more than one user with the same email
-                password = await bcrypt.hash(password, salt);
-
+                //password = await bcrypt.hash(password, salt);
+                console.log(password, await bcrypt.compare(password, rows[0].password))
                 // If the password from user matches the databese password
                 if (await bcrypt.compare(password, rows[0].password)) {
 
@@ -143,7 +143,7 @@ app.put('/user', async (req, res) => {
                 const sql2 = 'INSERT INTO USERS (name, surname, email, password) VALUES (?, ?, ?, ?)';
 
                 // Inserts the user in the db
-                cnx.query(sql2, [name, surname, mail, hashedpw], (err, result) => {
+                cnx.query(sql2, [name, surname, mail, hashedpw], (err, rows) => {
 
                     // If there's an SQL error, return it
                     if (err) throw err;
@@ -173,8 +173,8 @@ app.put('/user/:user_id', async (req, res) => {
 
     try {
         // Gets the mail, surname, mail and password from the request body
-        let { name, surname, email, password } = req.body;
-        const hashedpw = await bcrypt.hash(password, salt); //! hashedpw isn't used anywhere
+        let {name, surname, email, password} = req.body;
+        const hashedPasswd = await bcrypt.hash(password, salt); //! hashedPasswd isn't used anywhere
 
         // Query to get user data from the database
         const sql1 = "SELECT * FROM USERS WHERE email = ? AND user_id <> ?";
@@ -201,7 +201,7 @@ app.put('/user/:user_id', async (req, res) => {
                         const sql2 = 'UPDATE USERS SET name = ?, surname = ?, email = ? WHERE user_id = ?';
 
                         // Updates the user in the db
-                        cnx.query(sql2, [name, surname, email, req.params.user_id], (err, result) => {
+                        cnx.query(sql2, [name, surname, email, req.params.user_id], (err, rows) => {
 
                             // If there's an SQL error, return it
                             if (err) throw err;
@@ -256,7 +256,7 @@ app.delete('/user/:user_id', (req, res) => {
                     const sql = 'DELETE FROM USERS WHERE user_id = ?';
 
                     // Deletes the user from the db
-                    cnx.query(sql, [req.params.user_id], (err, result) => {
+                    cnx.query(sql, [req.params.user_id], (err, rows) => {
 
                         // If there's an SQL error, throw it
                         if (err) throw err;
@@ -315,23 +315,23 @@ app.put('/prices', (req, res) => {
             if (err) throw (err);
             if (rows.length > 0) {
                 const sql = 'UPDATE TIERS SET min_distance = ?, max_distance = ?, price = ? WHERE tier_id = ?';
-                cnx.query(sql, [min_distance, max_distance, price, tier_id], (err, result) => {
-                    if (err) throw err;
-                    res.send({
-                        success: true,
-                        message: 'Price updated'
-                    })
-                }
+                cnx.query(sql, [min_distance, max_distance, price, tier_id], (err, rows) => {
+                        if (err) throw err;
+                        res.send({
+                            success: true,
+                            message: 'Price updated'
+                        })
+                    }
                 );
             } else {
                 const sql2 = 'INSERT INTO TIERS (tier_id, min_distance, max_distance, price) VALUES (?, ?, ?, ?)';
-                cnx.query(sql2, [tier_id, min_distance, max_distance, price], (err, result) => {
-                    if (err) throw err;
-                    res.send({
-                        success: true,
-                        message: 'Price created'
-                    })
-                }
+                cnx.query(sql2, [tier_id, min_distance, max_distance, price], (err, rows) => {
+                        if (err) throw err;
+                        res.send({
+                            success: true,
+                            message: 'Price created'
+                        })
+                    }
                 );
             }
         });
@@ -357,7 +357,7 @@ app.delete('/prices/:tier_id', (req, res) => {
                 // Query to delete the tier from the datsqlabase
                 const sql2 = 'DELETE FROM TIERS WHERE tier_id = ?';
                 // Deletes the tier from the db
-                cnx.query(sql2, [req.params.tier_id], (err, result) => {
+                cnx.query(sql2, [req.params.tier_id], (err, rows) => {
 
                     // If there's an SQL error, throw it
                     if (err) throw err;
@@ -382,17 +382,17 @@ app.delete('/prices/:tier_id', (req, res) => {
 //To add an address - Returns address id
 app.post('/address', (req, res) => {
     try {
-        // Gets the address from the request body
-        const { CP, city, street, other } = req.body;
+        const {CP, city, street, other, lat, lng} = req.body;
+
         // Query to insert the address into the database
-        const sql = 'INSERT INTO ADDRESSES (CP, city, street, other) VALUES (?, ?, ?, ?)';
+        const sql = 'INSERT INTO ADDRESS (CP, city, street, other, lat, lng) VALUES (?, ?, ?, ?, ?, ?)';
         // Inserts the address into the db
-        cnx.query(sql, [CP, city, street, other], (err, result) => {
+        cnx.query(sql, [CP, city, street, other, lat, lng], (err, result) => {
 
             // If there's an SQL error, throw it
             if (err) throw err;
 
-            // If the address is inserted, return a sucess message
+            // If the address is inserted, return a success message
             res.send({
                 address_id: result.insertId,
                 success: true,
@@ -414,9 +414,9 @@ app.get('/address', (req, res) => {
         let i = 0;
         let valid_params = []
         params.forEach(param => {
-            if (req.body[param] != undefined) {
+            if (req.body[param] !== undefined) {
                 valid_params.push(req.body[param]);
-                if (i == 0) {
+                if (i === 0) {
                     sql += param + ' = ?';
                 } else {
                     sql += ' AND ' + param + ' = ?';
@@ -479,9 +479,9 @@ app.get('/info', (req, res) => {
         let i = 0;
         let valid_params = []
         params.forEach(param => {
-            if (req.body[param] != undefined) {
+            if (req.body[param] !== undefined) {
                 valid_params.push(req.body[param]);
-                if (i == 0) {
+                if (i === 0) {
                     sql += param + ' = ?';
                 } else {
                     sql += ' AND ' + param + ' = ?';
@@ -565,9 +565,9 @@ app.get('/orders', (req, res) => {
         let i = 0;
         let valid_params = []
         params.forEach(param => {
-            if (req.body[param] != undefined) {
+            if (req.body[param] !== undefined) {
                 valid_params.push(req.body[param]);
-                if (i == 0) {
+                if (i === 0) {
                     sql += param + ' = ?';
                 } else {
                     sql += ' AND ' + param + ' = ?';
@@ -582,33 +582,73 @@ app.get('/orders', (req, res) => {
 })
 
 // To get the cost of the order 
-app.post('/getOrderCost', (req, res) => {
+/*
+app.post('/getOrderCost', async (req, res) => {
 
     try {
 
-
-        /* 
-        Format of the request body:
-        {
-            origin: {
-                originAddr1: "",
-                originAddr2: "",
-                originCity: ""
-            },
-            destination: {
-                destAddr1: "",
-                destAddr2: "",
-                destCity: ""
+        //!* Step 2: Save destination (POST /addresses) ⇒ returns destination_addressId
+        await axios({
+            method: "POST",
+            url: `localhost:${PORT}/addresses`,
+            contentType: "application/json",
+            data: {
+                // TODO Add the data here
             }
-        */
+        }).then((response) => {
+            destination_addressId = response.address_id;
+        }).catch((error) => {
+            console.log(error);
+        });
 
-        // TODO Get the distance in KM from the origin and destiny
+        //!* Step 3: Save origin_info (POST /info) ⇒ returns origin_infoId
+        await axios({
+            method: "POST",
+            url: `localhost:${PORT}/info`,
+            contentType: "application/json",
+            data: {
+                // TODO Add the data here
+            }
+        }).then((response) => {
+            origin_infoId = response.info_id;
+        }).catch((error) => {
+            console.log(error);
+        });
+
+        //!* Step 4: Save destination_info (POST /info) ⇒ returns destination_infoId
+        await axios({
+            method: "POST",
+            url: `localhost:${PORT}/info`,
+            contentType: "application/json",
+            data: {
+                // TODO Add the data here
+            }
+        }).then((response) => {
+            destination_infoId = response.info_id;
+        }).catch((error) => {
+            console.log(error);
+        });
 
 
-        let distanceKm = 26;
+        //!* Step 5: Get distance between origin and dest ⇒ returns distanceKm
+        // TODO Create ENDPOINT
+        distanceKm = 26; // TODO Delete this, this is just for testing
 
+        //!*  Step 6: Get tier based on distance and calculate price ⇒ returns tierData
+        /!**
+         * 1. Gets the tier with max_distance = null, which is the highest tier
+         * 2. Once it has found it, checks if the distance is
+         * higher than the min_distance of that top tier
+         * 3. If it is, returns tierData with the info from that tier
+         * 4. If it isn't, it searches for the right tier
+         * 5. Once it has found it, returns tierData with the info from that tier
+         *
+         * tierData format:
+         * { tier_id: num, tier_name: string, min_distance: num, max_distance: num, totalCost: num}
+         *!/
         try {
-            // Query to get the from the database with the correct distance
+
+            // Query to get from the database the row with max_distance = null
             const sql = 'SELECT * FROM TIERS WHERE ISNULL(max_distance)';
 
             cnx.query(sql, (err, rows) => {
@@ -620,21 +660,17 @@ app.post('/getOrderCost', (req, res) => {
 
                     // If there is a tier with no max distance, then we just return the one where max is null
                     if (distanceKm > rows[0].min_distance) {
-                        res.send({
-                            success: true,
-                            message: 'Tier found',
-                            data: {
-                                // TODO: Add the data to be sent
-                                tier_id: rows[0].tier_id,
-                                tier_name: rows[0].tier_name,
-                                min_distance: rows[0].min_distance,
-                            }
-                        })
+                        tierData = {
+                            tier_id: rows[0].tier_id,
+                            min_distance: rows[0].min_distance,
+                            max_distance: rows[0].max_distance,
+                            totalCost: rows[0].price * distanceKm
+                        }
 
                     } else {
                         // If the distance is not greater than the highest min distance do this
 
-                        // Query to get the from the database with the correct distance
+                        // Query to get from the database with the correct distance
                         const sql2 = 'SELECT * FROM TIERS WHERE ? BETWEEN min_distance AND max_distance';
                         // Gets the tier with the correct distance
                         cnx.query(sql2, [distanceKm], (err, rows) => {
@@ -644,18 +680,12 @@ app.post('/getOrderCost', (req, res) => {
 
                             // If there's no tier found, throw an error
                             if (rows.length > 0) {
-                                // If there's a tier found, send the data
-                                res.send({
-                                    success: true,
-                                    message: 'Tier found',
-                                    data: {
-                                        // TODO: Add the data to be sent
-                                        tier_id: rows[0].tier_id,
-                                        tier_name: rows[0].tier_name,
-                                        min_distance: rows[0].min_distance,
-                                        max_distance: rows[0].max_distance,
-                                    }
-                                })
+                                tierData = {
+                                    tier_id: rows[0].tier_id,
+                                    min_distance: rows[0].min_distance,
+                                    max_distance: rows[0].max_distance,
+                                    totalCost: rows[0].price * distanceKm
+                                }
                             } else {
                                 res.status(500).send({
                                     success: false,
@@ -674,13 +704,44 @@ app.post('/getOrderCost', (req, res) => {
             });
 
         } catch (error) {
-            res.status(500).send({ error: error.message });
+            res.status(500).send({error: error.message});
         }
+
+        //!* Step 7: Save order and distance in db ⇒ return orderId
+        await axios({
+            method: 'PUT',
+            url: 'localhost:${PORT}/orders',
+            contentType: "application/json",
+            data: {
+                // TODO Add the data here
+            }
+        }).then((response) => {
+            console.log(response);
+            orderId = response.data.order_id;
+        }).catch((error) => {
+            console.log(error);
+        });
+
+
+        //!* Step 8: Send order_id, price, distance and tier to client
+
+        res.status(200).send({
+            success: true,
+            message: 'Order created successfully',
+            data: {
+                order_id: orderId,
+                price: tierData.totalCost,
+                distance: distanceKm,
+                tier: tierData.tier_name
+            }
+        });
+
 
     } catch (error) {
         res.status(500).send({ error: error.message });
     }
 })
+*/
 
 
 /**
@@ -696,7 +757,7 @@ app.post('/pay', async (req, res) => {
 
     try {
         // Gets the price from the request body
-        const clientPrice = req.body.price;
+        let clientPrice = req.body.price;
         const tier = req.body.tier;
 
         // If there isn't a price, return an error

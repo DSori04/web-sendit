@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 
-export function TrackingForm() {
+export function TrackingForm({setInput, setOrder}) {
     const navigate = useNavigate();
 
     const [validOrder, setValidOrder] = useState(true)
@@ -16,6 +16,9 @@ export function TrackingForm() {
         const validorder = formdata.orderid.match(/([0-9])\d+$/g) == null
         setValidOrder(!validorder)
         setValidmail(formdata.email.split("@").length == 2 && formdata.email.split("@")[1].split(".").length == 2)
+        setInput(false)
+        setOrder(formdata.orderid)
+        navigate('/tracking/' + formdata.orderid)
         
     }
     return (
@@ -26,7 +29,7 @@ export function TrackingForm() {
                 {!validOrder && <span className="text-red1 mt-2 block">El número de pedido consultado no existe</span>}
                 
                 <label htmlFor="email" className="text-main block mt-8">Correo Electrónico <span className="text-main text-red1">*</span></label>
-                <input type="email" name="email" id="email" onChange={(e) => setMail(e.target.value)} className="border-b-2 block" required/>
+                <input type="email" name="email" id="email" className="border-b-2 block" required/>
                 {!validMail && <span className="text-red1 mt-2 block">El correo electrónico no es válido</span>}
 
                 <label htmlFor="cp" className="text-main block mt-8">Código Postal <span className="text-main text-red1">*</span></label>
