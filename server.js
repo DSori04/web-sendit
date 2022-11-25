@@ -609,6 +609,44 @@ app.get('/orders', (req, res) => {
     }
 })
 
+app.get('/order', async (req, res) => {
+    const { orderid, email, cp } = req.body;
+    try{
+        const sql = `
+        SELECT 
+            O.* 
+        FROM 
+            ORDERS AS O 
+        INNER JOIN 
+            ADDRESS AS A1 
+                ON (A1.address_id = O.origin_address_id) 
+        INNER JOIN 
+            ADDRESS AS A2 
+                ON (A2.address_id = O.origin_address_id)
+        INNER JOIN
+            PERSONAL_INFO AS P1
+                ON (P1.info_id = O.origin_info_id)
+        INNER JOIN
+            PERSONAL_INFO AS P2
+                ON (P2.info_id = O.destiny_info_id)
+        WHERE
+            O.order_id = ?
+            AND (P1.email = ? AND P1.cp = ?) OR (P2.email = ? AND P2.cp = ?)`
+        cnx.query(sql, [orderid, email, cp, email, cp], (err, rows) => {
+            if (err) throw err;
+            if (rows.length > 0) {
+                res.send({...rows[0], success: true});
+            } else {
+                res.status(404).send({error: "No order found", success: false});
+            }
+        }
+        );
+    } catch {
+        res.status(500).send({error: "Internal server error", success: false});
+    }
+    
+})
+
 // To get the cost of the order 
 /*
 app.post('/getOrderCost', async (req, res) => {

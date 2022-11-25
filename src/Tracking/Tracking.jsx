@@ -7,10 +7,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import AppContextProvider from "../GlobalStates";
 import { Helmet } from "react-helmet-async";
-// import MapComponent from "./components/MapComponent";
-//import Places from "./components/AutoCompleteMap";
 import Directions from "./components/MapsPos";
-import Completer from "./components/AutoComplete";
 import { StateMarker } from "./components/StateMarkers";
 
 // TODO Why the icon doesn't show up in the browser tab?
