@@ -43,26 +43,38 @@ export function Tracking() {
             </AppContextProvider>
             <div className="flex justify-center w-full">
                 <div className="xl:top-[20%] lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 bg-white w-3/4  flex flex-col md:px-20 px-6 font-main">
-                    <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Tracking</h1>
-                    {inputting && <div className="flex flex-row w-full">
+                    
+                    {inputting && <><h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Tracking</h1><div className="flex flex-row w-full">
                         <TrackingForm />
                         <div className="text-right text-main sm:flex hidden flex-row justify-center">
                             <img src={TrackIcon} alt="Imagen de About Us" className=" xl:max-h-96 lg:max-h-80 sm:max-h-80 xl:mt-0 lg:mt-10 mt-10 min-h-fit" />
                         </div>
-                    </div>}
+                    </div></>}
                     {!inputting && 
-                    <div className="flex flex-col">
-                        <div className="flex flex-row w-full">
-                            <span>#{orderId}</span>
+                    <div className="flex flex-col font-main">
+                        <div className="flex flex-row w-full justify-between mb-20 flex-wrap">
+                            <h1 className=" font-bold text-purple1 text-5xl select-none">Tracking</h1>
+                            <div className="flex flex-col justify-center w-1/4">
+                            <span className="text-center text-xl">Pedido <span className="font-semibold text-purple1">#{orderId}</span></span>
+                                <div className="flex flex-row justify-between w-full mt-2 min-w-fit">
+                                    <div className="w-[75px] h-[75px] bg-purple1 rounded-full lg:mx-0 mr-4"></div>
+                                    <div className="w-[75px] h-[75px] bg-purple1 rounded-full lg:mx-0 mr-4"></div>
+                                    <div className="w-[75px] h-[75px] bg-purple1 rounded-full lg:mx-0 mr-4"></div>
+                                </div>
+                            </div>
+                            <div className="flex flex-col justify-center">
+                                <div className="w-full text-right"><span className="font-bold">Fecha pedido:</span> 01/01/1970</div>
+                                <div className="w-full text-right"><span className="font-bold text-purple1">Fecha entrega estimada:</span> 01/01/1970</div>
+                            </div>
+                            
                         </div>
                         <div className="flex flex-row w-full justify-end">
                             <div className="flex flex-col w-1/2">
-                                <div id="origin">
-                                    <Completer />
+                                <div id="origin" className="flex flex-col">
                                 </div>
                                 <div id="destiny"></div>
                             </div>
-                            {/* <Directions /> */}
+                            <Directions /> 
                         </div>
                     </div>
                     }
