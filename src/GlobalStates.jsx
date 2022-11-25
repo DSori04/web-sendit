@@ -7,7 +7,7 @@ const AppContextProvider = ({ children }) => {
     const [logged, setLogged] = useState(false);
 
     // useEffect(() => {
-    //     const user = localStorage.getItem("user");
+    //     const user = sessionStorage.getItem("user");
     //     if (user) {
     //         setUser(user);
     //         setLogged(true);

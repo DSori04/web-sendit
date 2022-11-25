@@ -184,7 +184,7 @@ export function NewOrder() {
                         <Steps step={1} setStep={setStep}/>
                         <div className="lg:w-auto w-full flex flex-row justify-center">
                             <div id="originform" className="lg:block flex-row justify-center min-w-min">
-                                {(localStorage.getItem('logged') && !originPersonal) && <button
+                                {(sessionStorage.getItem('logged') && !originPersonal) && <button
                                     className="w-fit mx-auto py-1 border-2 rounded-full block font-main border-purple1 text-purple1 text-sm mt-4 px-2 shadow-xl bg-white hover:scale-105 active:scale-95"
                                     onClick={() => usePersonalData()}>Utiliza tus datos personales</button>}
                                 <form onSubmit={(e) => handleSubmitOrigin(e)}
@@ -195,14 +195,14 @@ export function NewOrder() {
                                                                defaultValue={origin.originName}
                                                                className="border-b-2 inline-block" required/>}
                                     {originPersonal &&
-                                        <span>{`${localStorage.getItem('name')} ${localStorage.getItem('surname')}`}</span>}
+                                        <span>{`${sessionStorage.getItem('name')} ${sessionStorage.getItem('surname')}`}</span>}
 
                                     <label htmlFor="origin_email" className="text-main block mt-8">Correo
                                         Electrónico <span className="text-main text-red1">*</span></label>
                                     {!originPersonal && <input type="email" name="originEmail" id="origin_email"
                                                                defaultValue={origin.originEmail}
                                                                className="border-b-2 inline-block" required></input>}
-                                    {originPersonal && <span>{localStorage.getItem('email')}</span>}
+                                    {originPersonal && <span>{sessionStorage.getItem('email')}</span>}
 
                                     <label htmlFor="origin_tlf" className="text-main block mt-8">Teléfono <span
                                         className="text-main text-red1">*</span></label>
@@ -249,9 +249,11 @@ export function NewOrder() {
                         <Steps step={2} setStep={setStep}/>
                         <div className="lg:w-auto w-full flex flex-row justify-center">
                             <div id="destform" className="lg:block flex-row justify-center min-w-min">
-                                {(localStorage.getItem('logged') && !destinationPersonal && !originPersonal) && <button
-                                    className="w-fit mx-auto py-1 border-2 rounded-full block font-main border-purple1 text-purple1 text-sm mt-4 px-2 shadow-xl bg-white hover:scale-105 active:scale-95"
-                                    onClick={() => setDestinationPersonal(true)}>Utiliza tus datos personales</button>}
+                                {(sessionStorage.getItem('logged') && !destinationPersonal && !originPersonal) &&
+                                    <button
+                                        className="w-fit mx-auto py-1 border-2 rounded-full block font-main border-purple1 text-purple1 text-sm mt-4 px-2 shadow-xl bg-white hover:scale-105 active:scale-95"
+                                        onClick={() => setDestinationPersonal(true)}>Utiliza tus datos
+                                        personales</button>}
                                 <form onSubmit={(e) => handleSubmitDestination(e)}
                                       className="lg:block flex flex-col lg:w-full w-64">
                                     <label htmlFor="name" className="text-main block mt-8">Nombre completo <span
@@ -259,14 +261,14 @@ export function NewOrder() {
                                     {!destinationPersonal && <input type="text" name="destName" id="dest_name"
                                                                     className="border-b-2 inline-block" required/>}
                                     {destinationPersonal &&
-                                        <span>{`${localStorage.getItem('name')} ${localStorage.getItem('surname')}`}</span>}
+                                        <span>{`${sessionStorage.getItem('name')} ${sessionStorage.getItem('surname')}`}</span>}
 
                                     <label htmlFor="dest_email" className="text-main block mt-8">Correo
                                         Electrónico <span className="text-main text-red1">*</span></label>
                                     {!destinationPersonal && <input type="email" name="destEmail" id="dest_email"
                                                                     className="border-b-2 inline-block"
                                                                     required></input>}
-                                    {destinationPersonal && <span>{localStorage.getItem('email')}</span>}
+                                    {destinationPersonal && <span>{sessionStorage.getItem('email')}</span>}
 
                                     <label htmlFor="dest_tlf" className="text-main block mt-8">Teléfono <span
                                         className="text-main text-red1">*</span></label>

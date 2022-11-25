@@ -36,9 +36,9 @@ export function Profile() {
     }
     useEffect(() => {    
       return () => {
-        if(!localStorage.getItem('logged')){
-        navigate('/login')
-    }
+        if (!sessionStorage.getItem('logged')) {
+            navigate('/login')
+        }
       }
     }, [])
     

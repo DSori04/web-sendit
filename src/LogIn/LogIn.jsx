@@ -36,11 +36,11 @@ export function LogIn() {
                 if (res.data.success) {
                     console.log("in")
                     setLogged(true);
-                    localStorage.setItem('email', formdata.email)
-                    localStorage.setItem('logged', true)
-                    localStorage.setItem('name', res.data.name)
-                    localStorage.setItem('surname', res.data.surname)
-                    localStorage.setItem('user_id', res.data.user_id)
+                    sessionStorage.setItem('email', formdata.email)
+                    sessionStorage.setItem('logged', true)
+                    sessionStorage.setItem('name', res.data.name)
+                    sessionStorage.setItem('surname', res.data.surname)
+                    sessionStorage.setItem('user_id', res.data.user_id)
                     setError({state: false, message: ""})
                     navigate('/')
                     console.log(res)
@@ -54,7 +54,7 @@ export function LogIn() {
     }
 
     useEffect(() => {
-        if (localStorage.getItem('logged') == 'true') {
+        if (sessionStorage.getItem('logged') == 'true') {
             setLogged(true)
             navigate('/')
         }

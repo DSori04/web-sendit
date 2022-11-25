@@ -44,12 +44,12 @@ export function SignUp(){
                     data: user,
                 })
                 .then((res) => {
-                    localStorage.setItem('email', user.email)
-                    localStorage.setItem('logged', true)
-                    localStorage.setItem('expires', Date.now() + 3600000)
-                    localStorage.setItem('user_id', res.data.user_id)
-                    localStorage.setItem('name', res.data.name)
-                    localStorage.setItem('surname', res.data.surname)
+                    sessionStorage.setItem('email', user.email)
+                    sessionStorage.setItem('logged', true)
+                    sessionStorage.setItem('expires', Date.now() + 3600000)
+                    sessionStorage.setItem('user_id', res.data.user_id)
+                    sessionStorage.setItem('name', res.data.name)
+                    sessionStorage.setItem('surname', res.data.surname)
                     navigate('/')
                 })
                 .catch((err) => {

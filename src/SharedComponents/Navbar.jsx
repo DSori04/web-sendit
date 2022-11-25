@@ -11,16 +11,16 @@ import {UserContext} from '../GlobalStates';
 
 export function Navbar() {
     const [sideMenu, setVis] = useState(false);
-    const [logged, setLogged] = useState(localStorage.getItem('logged'))
-    const [email, setEmail] = useState(localStorage.getItem('email'))
-    
-    useEffect(() => {    
-      return () => {
-        setInterval(() => {
-                setLogged(localStorage.getItem('logged'))
-                setEmail(localStorage.getItem('email'))
-        }, 1000);
-      }
+    const [logged, setLogged] = useState(sessionStorage.getItem('logged'))
+    const [email, setEmail] = useState(sessionStorage.getItem('email'))
+
+    useEffect(() => {
+        return () => {
+            setInterval(() => {
+                setLogged(sessionStorage.getItem('logged'))
+                setEmail(sessionStorage.getItem('email'))
+            }, 1000);
+        }
     }, [])
     
     return (
