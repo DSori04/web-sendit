@@ -15,12 +15,8 @@ export function Prices() {
         await axios(
             {
                 method: "get",
-                url: 'http://192.168.86.242:3170/prices',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-            }}
+                url: 'http://localhost:3170/prices',
+            }
             )
         .then((res) => {
             let response = [];

@@ -107,8 +107,6 @@ export function SignUp(){
                                 <input type="checkbox" name="checkTerms" className="inline-block mt-8" required onInvalid={(e) => e.target.setCustomValidity('Este campo es obligatorio')} onInput={(e) => e.target.setCustomValidity('')}></input>                                
                                 <label htmlFor="checkTerms"> Acepto los <span className="text-purple1 font-main underline cursor-pointer">términos de servicio</span> <span className="text-main text-red1">*</span></label>
                                 
-                                
-
                                 <input type="submit" value="Sign Up" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl hover:hue-rotate-15"/>
                             </form>
                         </div>
