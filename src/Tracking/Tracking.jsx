@@ -4,11 +4,12 @@ import { Footer } from "../SharedComponents/Footer";
 import TrackIcon from "./assets/tracking.svg"
 import { TrackingForm } from "./components/TrackingForm";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import AppContextProvider from "../GlobalStates";
 import { Helmet } from "react-helmet-async";
 import Directions from "./components/MapsPos";
 import { StateMarker } from "./components/StateMarkers";
+import axios from 'axios';
 
 // TODO Why the icon doesn't show up in the browser tab?
 
@@ -16,6 +17,30 @@ export function Tracking() {
     const [inputting, setInput] = useState(true);
     const [orderId, setOrder] = useState();
     const [data, setData] = useState();
+
+    const { user_id, order_id } = useParams();
+
+    useEffect( () => {
+        console.log(user_id, order_id);
+        if (user_id && order_id) {
+            setOrder(order_id);
+            setInput(false);
+            console.log("user_id: " + user_id);
+            console.log("order_id: " + order_id);
+            axios({
+                method: "get",
+                url: `http://localhost:3170/orders/${user_id}/${order_id}`,
+            })
+            .then((res) => {
+                console.log(res)
+                setData(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            }
+            );
+        }
+    }, [])
 
     const origin = {
         name: "Peccatum",

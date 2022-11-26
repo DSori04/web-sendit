@@ -562,12 +562,17 @@ app.put('/orders/:order_id', (req, res) => {
 })
 
 //To get orders from user -- Replace user_id with param + create new one with order_id
-app.get('/orders/:user_id', (req, res) => {
+app.get('/orders/:user_id/:order_id', (req, res) => {
     try {
-        const sql = 'SELECT * FROM ORDERS WHERE user_id = ?';
-        cnx.query(sql, [req.params.user_id], (err, rows) => {
+        const sql = 'SELECT * FROM ORDERS WHERE user_id = ? AND order_id = ?';
+        cnx.query(sql, [req.params.user_id, req.params.order_id], (err, rows) => {
             if (err) throw err;
-            res.send(rows);
+            if (rows){ 
+                res.send({...rows, success: true});
+            } else{
+                res.status(404).send({success: false, message: 'Order not found'});
+            }
+            
         }
         );
     } catch (error) {
