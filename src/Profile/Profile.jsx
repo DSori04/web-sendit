@@ -51,12 +51,12 @@ export function Profile() {
             </Helmet>
             <Navbar />
             <div className="flex flex-row w-full justify-center">
-                <div className="flex flex-row lg:justify-around justify-around xl:w-3/4 w-full relative lg:pt-0 lg:top-16 top-4 sm:bottom-14 bottom-28 lg:h-5/6 h-auto md:px-20 px-6 font-main flex-wrap"> 
+                <div className={`flex flex-row lg:justify-around justify-around xl:w-3/4 w-full relative lg:pt-0 lg:top-16 top-4 sm:bottom-14 bottom-28 lg:h-5/6 h-auto md:px-20 px-6 font-main sm:flex-nowrap flex-wrap`}> 
                     <div className="w-1/3 lg:h-5/6 min-h-fit lg:mt-16 lg:border-r-4 border-gray2 flex flex-col lg:justify-around justify-center pt-8 min-w-fit">
                         <div id="icon" className="xl:w-64 xl:h-64 lg:w-48 lg:h-48 h-36 w-36 rounded-full bg-purple2 xl:text-7xl lg:text-5xl text-6xl font-bold text-main xl:leading-[16rem] lg:leading-[12rem] leading-[9rem] text-center mx-auto">{sessionStorage.getItem('name').charAt(0).toUpperCase()}</div>
                         <Options selected={selected} setSelected={setSelected}/>
                     </div>
-                    {selected == 1 && <div className="lg:w-2/3 max-w-fit h-5/6 lg:mt-16 flex flex-col lg:pt-24 pt-8 sm:pl-32 min-w-fit">
+                    {selected == 1 && <div className="lg:w-2/3 max-w-fit h-5/6 mt-16 flex flex-col lg:pt-24 pt-8 sm:pl-32 min-w-fit">
                         <form>
                         <b className="block">Nombre</b>
                         {!editting ? <span className="block mt-2">{name}</span> : <input type="text" defaultValue={name} name="name" className="border-b-2 w-1/3" onChange={(e) => setName(e.target.value) } ></input>}
