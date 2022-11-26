@@ -12,7 +12,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 const PORT = 3170
 
-// Express + cors (All data is sent as json)
+// Express + cors (allows connections from localhost)
 const app = express()
 app.use(express.json())
 app.use(cors(

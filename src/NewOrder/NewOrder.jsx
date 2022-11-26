@@ -8,9 +8,10 @@ import payicon from "./assets/payicon.svg"
 import Stripe from "./assets/Stripe.svg";
 import {Helmet} from "react-helmet-async";
 import axios from "axios";
-import {getGeolocation, getCity, getCP} from "./components/getGeolocation";
+import {getGeolocation, getCity, getCP} from "./components/getGeolocation"; //! getCP is not used
 import {TrackingImage} from "./components/NewTrackingImage";
 import {Steps} from "./components/Steps";
+import getDistance from "../GetDistance.js";
 
 const PORT = 3170;
 const SERVER_URL = `http://localhost:${PORT}`;
@@ -33,8 +34,10 @@ export function NewOrder() {
     const [destinationCoords, setDestinationCoords] = useState({}); // Coordinates from the destination place
     const [destinationId, setDestinationId] = useState(0); // ID of the destination
 
-    const [originInfoId, setOriginInfoId] = useState(0); // ID of the origin info
+    const [originInfoId, setOriginInfoId] = useState(0); // ID of the destination info
     const [destinationInfoId, setDestinationInfoId] = useState(0); // ID of the destination info
+
+    const [distance, setDistance] = useState({}) // Distance between origin and destination
 
     const handleSubmitOrigin = async (e) => {
         e.preventDefault();
@@ -171,7 +174,23 @@ export function NewOrder() {
         console.log(destination_info_id);
 
         // Step 5: Calculate the distance
-        
+        let distance = getDistance(
+            {
+                lat: originCoords.lat,
+                lng: originCoords.lng
+            },
+            {
+                lat: destinationCoords.lat,
+                lng: destinationCoords.lng
+            }
+        );
+
+        setDistance(distance);
+
+        console.log(distance); // TODO Delete this after, this is only for testing
+
+        // Step 6
+
 
         // Set the step to 3 (payment page)
         setStep(3);
@@ -225,7 +244,7 @@ export function NewOrder() {
                             <span className=" text-black">pedido</span>
                         </h1>
                     </div>
-                    {step == 1 && <div className="w-full h-max flex lg:flex-row flex-col justify-center">
+                    {step === 1 && <div className="w-full h-max flex lg:flex-row flex-col justify-center">
                         <Steps step={1} setStep={setStep}/>
                         <div className="lg:w-auto w-full flex flex-row justify-center">
                             <div id="originform" className="lg:block flex-row justify-center min-w-min">
@@ -290,7 +309,7 @@ export function NewOrder() {
                             <TrackingImage step={step}/>
                         </div>
                     </div>}
-                    {step == 2 && <div className="w-full h-max flex lg:flex-row flex-col justify-center">
+                    {step === 2 && <div className="w-full h-max flex lg:flex-row flex-col justify-center">
                         <Steps step={2} setStep={setStep}/>
                         <div className="lg:w-auto w-full flex flex-row justify-center">
                             <div id="destform" className="lg:block flex-row justify-center min-w-min">
@@ -350,17 +369,16 @@ export function NewOrder() {
                         <div id="image" className="sm:block hidden min-h-fit">
                             <div className="flex flex-col h-full justify-center">
                                 <div className="h-max">
-                                    {step === 1 && <img src={neworder1}></img>}
-                                    {step === 2 && <img src={neworder2}></img>}
-                                    {step === 3 && <img src={neworder3}></img>}
+                                    {step === 1 && <img src={neworder1} alt="Imagen por defecto"></img>}
+                                    {step === 2 && <img src={neworder2} alt="Imagen por defecto"></img>}
+                                    {step === 3 && <img src={neworder3} alt="Imagen por defecto"></img>}
                                 </div>
                             </div>
                         </div>
                     </div>}
-                    {step == 3 && <div className="w-full h-max flex lg:flex-row flex-col justify-center">
+                    {step === 3 && <div className="w-full h-max flex lg:flex-row flex-col justify-center">
                         <Steps step={3} setStep={setStep}/>
                         <div className="lg:w-auto w-full flex flex-row justify-center">
-
                             <div id="newform" className="lg:block flex-row justify-center min-w-min">
                                 <form onSubmit={(e) => handleSubmitPayment(e)}
                                       className="lg:block flex flex-col lg:w-full w-64">
@@ -382,13 +400,13 @@ export function NewOrder() {
                                     </div>
                                     <div className="w-full flex flex-row justify-center">
                                         <button className="w-40 mt-12 bg-purple1 h-12 rounded-full">
-                                            <img src={payicon} className="inline-block h-7"></img>
+                                            <img src={payicon} className="inline-block h-7" alt="Imagen por defecto"></img>
                                             <span
                                                 className="text-white text-xl font-semibold ml-3 inline-block">Pagar</span>
                                         </button>
                                     </div>
                                     <div className="flex flex-row w-full justify-center">
-                                        <img src={Stripe} className="mt-4"></img>
+                                        <img src={Stripe} className="mt-4" alt="Imagen por defecto"></img>
                                     </div>
                                 </form>
                             </div>
