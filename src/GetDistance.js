@@ -1,4 +1,4 @@
-function distance(origin, destiny) {
+function getDistance(origin, destiny) {
 
     // The math module contains a function
     // named toRadians which converts from
@@ -30,4 +30,4 @@ function distance(origin, destiny) {
     return (c * r);
 }
 
-export default distance;
+export default getDistance;

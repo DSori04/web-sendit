@@ -279,7 +279,7 @@ app.delete('/user/:user_id', (req, res) => {
     }
 })
 
-//To get all tiers
+// To get all tiers
 app.get('/prices', async (req, res) => {
     try {
         // Query to get all tiers from the database
@@ -304,7 +304,7 @@ app.get('/prices', async (req, res) => {
     }
 })
 
-//Update prices
+// Update prices
 app.put('/prices', (req, res) => {
     try {
         const { tier_id, min_distance, max_distance, price } = req.body;
@@ -603,7 +603,7 @@ app.get('/orders', (req, res) => {
                 } else {
                     sql += ' AND ' + param + ' = ?';
                 }
-                // TODO TERMINAR ESTO carlos
+                // TODO Terminar esto carlos
                 i++;
             }
         });
