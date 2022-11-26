@@ -5,6 +5,8 @@ import { Options } from "./components/Options";
 import { useNavigate } from "react-router";
 import { Helmet } from "react-helmet-async";
 import { Userorders } from "./components/UserOrders";
+import axios from "axios";
+import { appendErrors } from "react-hook-form";
 
 export function Profile() {
     const navigate = useNavigate()
@@ -12,28 +14,52 @@ export function Profile() {
     const [deleting, setDelete] = useState(false)
     const [selected, setSelected] = useState(1)
 
-    const [name, setName] = useState("Lorem ipsum dolor")
-    const [surname, setSurname] = useState("Lorem, ipsum dolor.")
-    const [email, setEmail] = useState("lorem@ipsum.dolor")
+    const [name, setName] = useState(sessionStorage.getItem('name'))
+    const [surname, setSurname] = useState(sessionStorage.getItem('surname'))
+    const [email, setEmail] = useState(sessionStorage.getItem('email'))
     const [pw, setPw] = useState("")
-
-    const firstName = name;
-    const firstSurname = surname;
-    const firstemail = email;
+    const user_id = sessionStorage.getItem('user_id')
+    const [error, setError] = useState({
+        state: false,
+        message: ""
+    })
 
     function discard(e){
-        console.log(firstName, firstSurname, firstemail);
         e.preventDefault()
-        setName(firstName)
-        setSurname(firstSurname)
-        setEmail(firstemail)
+        setName(sessionStorage.getItem('name'))
+        setSurname(sessionStorage.getItem('surname'))
+        setEmail(sessionStorage.getItem('email'))
         setEdit(false)
     }
 
-    function submitChanges(e) {
+    async function submitChanges(e) {
         e.preventDefault()
-        setEdit(false)
+        console.log(e.target)
+        const formdata = Object.fromEntries(new FormData(e.target))
+        console.log(formdata)
+        await axios({
+            method: 'put',
+            url: `http://localhost:3170/user/${user_id}`,
+            data: formdata
+        })
+        .then(res => {
+            sessionStorage.setItem('name', res.data.name)
+            sessionStorage.setItem('surname', res.data.surname)
+            sessionStorage.setItem('email', res.data.email)
+            setName(res.data.name)
+            setSurname(res.data.surname)
+            setEmail(res.data.email)
+            setEdit(false)
+        })
+        .catch(err => {
+            console.log(err)
+            setError({
+                state: true,
+                message: err.response.data.message
+            })
+        })
     }
+
     useEffect(() => {    
       return () => {
         if (!sessionStorage.getItem('logged')) {
@@ -41,9 +67,8 @@ export function Profile() {
         }
       }
     }, [])
-    
-    
 
+    
     return (
         <>
             <Helmet>
@@ -56,24 +81,27 @@ export function Profile() {
                         <div id="icon" className="xl:w-64 xl:h-64 lg:w-48 lg:h-48 h-36 w-36 rounded-full bg-purple2 xl:text-7xl lg:text-5xl text-6xl font-bold text-main xl:leading-[16rem] lg:leading-[12rem] leading-[9rem] text-center mx-auto">{sessionStorage.getItem('name').charAt(0).toUpperCase()}</div>
                         <Options selected={selected} setSelected={setSelected}/>
                     </div>
-                    {selected == 1 && <div className="lg:w-2/3 max-w-fit h-5/6 mt-16 flex flex-col lg:pt-24 pt-8 sm:pl-32 min-w-fit">
-                        <form>
-                        <b className="block">Nombre</b>
-                        {!editting ? <span className="block mt-2">{name}</span> : <input type="text" defaultValue={name} name="name" className="border-b-2 w-1/3" onChange={(e) => setName(e.target.value) } ></input>}
-                        <b className="block mt-10">Apellidos</b>
-                        {!editting ? <span className="mt-2">{surname}</span> : <input type="text" defaultValue={surname} name="surname" className="border-b-2 w-1/3" onChange={(e) => setSurname(e.target.value)}></input>}
-                        <b className="block mt-10">Email</b>
-                        {!editting ? <span className="mt-2">{email}</span> : <input type="text" defaultValue={email} name="email" className="border-b-2 w-1/3" onChange={(e) => setPw(e.target.value)}></input>}
-                        <b className="block mt-10">Contraseña</b>
-                        {!editting ? <span className="mt-2">***********</span> : <input type="password" name="password" className="border-b-2 w-1/3"></input>}
+                    {selected == 1 && <div className="lg:w-2/3 max-w-fit h-5/6 mt-16 flex flex-col lg:pt-24 pt-8 min-w-fit">
+                        <form onSubmit={(e) => submitChanges(e)}>
+                        <label htmlFor="name" className="block">Nombre</label>
+                        {!editting ? <span className="block mt-2">{name}</span> : <input type="text" defaultValue={name} name="name" className="border-b-2 w-1/3" required></input>}
+                        <label htmlFor="surname" className="block mt-10">Apellidos</label>
+                        {!editting ? <span className="mt-2">{surname}</span> : <input type="text" defaultValue={surname} name="surname" className="border-b-2 w-1/3" required></input>}
+                        <label htmlFor="email" className="block mt-10">Email</label>
+                        {!editting ? <span className="mt-2">{email}</span> : <input type="text" defaultValue={email} name="email" className="border-b-2 w-1/3" required></input>}
+                        <label htmlFor="password" className="block mt-10">Contraseña</label>
+                        {!editting ? <span className="mt-2">***********</span> : <input type="password" name="password" className="border-b-2 w-1/3" required></input>}
+                        
                         {(!editting && !deleting) && <div className="flex lg:flex-row lg:justify-start mt-10 lg:text-lg text-sm flex-wrap`">
                             <button className="w-fit rounded-full bg-purple1 px-4 text-white font-bold py-2 shadow-xl hover:hue-rotate-15" onClick={() => setEdit(true)}>Editar Perfil</button>
                             <button className="w-fit rounded-full bg-red1 px-4 text-white font-bold py-2 ml-6 shadow-xl hover:hue-rotate-15" onClick={() => setDelete(true)}>Eliminar Perfil</button>
                         </div>}
+                        
                         {(editting && !deleting) && <div className="flex flex-row justify-start mt-10 flex-wrap">
-                            <button className="w-fit rounded-full bg-purple1 px-4 text-white font-bold py-2 shadow-xl hover:hue-rotate-15" onClick={() => setEdit(false)}>Guardar</button>
+                            <input type="submit" value="Guardar" className="w-fit rounded-full bg-purple1 px-4 text-white font-bold py-2 shadow-xl hover:hue-rotate-15"></input>
                             <button className="w-fit rounded-full bg-red1 px-4 text-white font-bold py-2 ml-6 shadow-xl hover:hue-rotate-15" onClick={(e) => discard(e)}>Descartar</button>
                         </div>}
+                        
                         {deleting && <div className="mt-10">
                             <span className="font-bold">¿Seguro que desea eliminar la cuenta?</span>
                             <button className="border-2 border-red1 font-bold text-red1 px-6 py-1 ml-4 rounded-full shadow-xl hover:bg-red1 hover:text-white" onClick={() => setDelete(false)}>Sí</button>

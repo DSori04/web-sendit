@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect, useContext } from 'react';
 import MenuIcon from './assets/menu-outline.svg'
 import LogIcon from './assets/logIcon.svg'
-import {UserContext} from '../GlobalStates';
+import { UserContext } from '../GlobalStates';
 
 export function Navbar() {
     const [sideMenu, setVis] = useState(false);
@@ -22,7 +22,7 @@ export function Navbar() {
             }, 1000);
         }
     }, [])
-    
+
     return (
         <>
             <nav className="bg-gray1 w-full h-16 flex lg:justify-between z-40 justify-between lg:px-24 select-none fixed">
@@ -95,7 +95,7 @@ export function Navbar() {
                         </Link>
                     </div>}
                     {logged && <Link to="/profile"><div className={`w-11 h-11 mt-3 rounded-full bg-purple1 text-white ml-2`}>
-                        <span className="leading-[2.8rem] align-middle text-2xl font-bold text-main">{email.charAt(0).toUpperCase()}</span>
+                        <span className="leading-[2.8rem] align-middle text-2xl font-bold text-main">{sessionStorage.getItem('name').charAt(0).toUpperCase()}</span>
 
                     </div></Link>}
                 </div>
@@ -107,7 +107,11 @@ export function Navbar() {
                 <Link to="/tracking"><img src={Tracking} className="w-full py-4 border-b-2"></img></Link>
                 <Link to="/new"><img src={New} className="w-full py-4 border-b-2"></img></Link>
                 <Link to="/prices"><img src={Prices} className="w-full py-4 border-b-2"></img></Link>
-                <Link to="/signup"><img src={LogIcon} className="w-full py-4"></img></Link>
+                {!sessionStorage.getItem('logged') && <Link to="/signup"><img src={LogIcon} className="w-full py-4"></img></Link>}
+                {sessionStorage.getItem('logged') && <Link to="/profile"><div className={`w-9 h-9 mt-2 rounded-full bg-purple1 text-white text-center`}>
+                    <span className="leading-[2.25rem] align-middle text-2xl font-bold text-main">{sessionStorage.getItem('name').charAt(0).toUpperCase()}</span>
+
+                </div></Link>}
             </nav>}
         </>
     );
