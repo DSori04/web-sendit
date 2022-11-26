@@ -91,7 +91,7 @@ export function Profile() {
                         {!editting ? <span className="mt-2">{email}</span> : <input type="text" defaultValue={email} name="email" className="border-b-2 w-1/3" required></input>}
                         <label htmlFor="password" className="block mt-10">Contraseña</label>
                         {!editting ? <span className="mt-2">***********</span> : <input type="password" name="password" className="border-b-2 w-1/3" required></input>}
-                        {error.state && <span className="block text-red1 mt-2">{error.message}</span>}
+                        {(error.state && editting) && <span className="block text-red1 mt-2">{error.message}</span>}
 
                         {(!editting && !deleting) && <div className="flex lg:flex-row lg:justify-start mt-10 lg:text-lg text-sm flex-wrap`">
                             <button className="w-fit rounded-full bg-purple1 px-4 text-white font-bold py-2 shadow-xl hover:hue-rotate-15" onClick={() => setEdit(true)}>Editar Perfil</button>
