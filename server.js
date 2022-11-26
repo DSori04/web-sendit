@@ -216,7 +216,7 @@ app.put('/user/:user_id', async (req, res) => {
 
                     } else {
                         // If the password from the db is different from the one from the request body, return an error
-                        res.status(400).send({ success: false, message: "Password is different" });
+                        res.status(400).send({ success: false, message: "Contraseña incorrecta" });
 
                     }
 
