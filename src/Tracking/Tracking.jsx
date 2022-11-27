@@ -10,15 +10,41 @@ import { Helmet } from "react-helmet-async";
 import Directions from "./components/MapsPos";
 import { StateMarker } from "./components/StateMarkers";
 import axios from 'axios';
+import arrowBack from "./assets/arrow-back.svg"
 
 // TODO Why the icon doesn't show up in the browser tab?
 
 export function Tracking() {
+    const { user_id, order_id } = useParams();
+
     const [inputting, setInput] = useState(true);
     const [orderId, setOrder] = useState();
-    const [data, setData] = useState();
+    const [origin, setOrigin] = useState({
+        name: "Peccatum",
+        Addr1: "Av. 5 de Mayo 123",
+        Phone: "1234567890",
+        City: "Guadalajara",
+        CP: "44100", 
+        lat: 41.112543321888104,
+        lng: 1.2565044470474362
+    });
+    const [destination, setDestination] = useState({
+        name: "Peccatum",
+        Addr1: "Calle Inventada 123",
+        Phone: "1234567890",
+        City: "City",
+        CP: "44100",
+        lat: 41.120441227561926,
+        lng: 1.2435490857768052
+    });
+    const [data, setData] = useState({
+        order_id: orderId,
+        state: 1,
+        order_date: "2021-08-01",
+        delivery_date: "2021-08-02",
+    })
 
-    const { user_id, order_id } = useParams();
+   
 
     useEffect( () => {
         console.log(user_id, order_id);
@@ -32,42 +58,40 @@ export function Tracking() {
                 url: `http://localhost:3170/orders/${user_id}/${order_id}`,
             })
             .then((res) => {
-                console.log(res)
-                setData(res.data);
+                setOrigin({
+                    name: res.data.origin_name,
+                    Addr1: res.data.origin_addr1,
+                    Phone: String(res.data.origin_phone),
+                    City: res.data.origin_city,
+                    CP: res.data.origin_cp,
+                    lat: res.data.origin_lat,
+                    lng: res.data.origin_lng
+                })
+                setDestination({
+                    name: res.data.dest_name,
+                    Addr1: res.data.dest_addr1,
+                    Phone: String(res.data.dest_phone),
+                    City: res.data.dest_city,
+                    CP: res.data.dest_cp,
+                    lat: res.data.dest_lat,
+                    lng: res.data.dest_lng
+                })
+                setData({
+                    order_id: res.data.order_id,
+                    state: res.data.order_status,
+                    order_date: res.data.date_creation.split("T")[0],
+                    delivery_date: res.data.date_arrival.split("T")[0],
+                })
+                // setData(res.data);
             })
             .catch((err) => {
                 console.log(err);
             }
             );
         }
-    }, [])
+    }, []);
 
-    const origin = {
-        name: "Peccatum",
-        Addr1: "Av. 5 de Mayo 123",
-        Phone: "1234567890",
-        City: "Guadalajara",
-        CP: "44100", 
-        lat: 41.112543321888104,
-        lng: 1.2565044470474362
-    }
-
-    const destination = {
-        name: "Peccatum",
-        Addr1: "Calle Inventada 123",
-        Phone: "1234567890",
-        City: "City",
-        CP: "44100",
-        lat: 41.120441227561926,
-        lng: 1.2435490857768052
-    }
-
-    const order = {
-        order_id: orderId,
-        state: 1,
-        order_date: "2021-08-01",
-        delivery_date: "2021-08-02",
-    }
+    
 
     return (
         <>
@@ -82,7 +106,7 @@ export function Tracking() {
                 <div className="xl:top-[20%] lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 bg-white w-3/4  flex flex-col md:px-20 px-6 font-main">
                     
                     {inputting && <><h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Tracking</h1><div className="flex flex-row w-full">
-                        <TrackingForm setInput={setInput} setOrder={setOrder} setData={setData} />
+                        <TrackingForm setInput={setInput} setOrder={setOrder} setData={setData} setOrigin={setOrigin} setDestination={setDestination} />
                         <div className="text-right text-main sm:flex hidden flex-row justify-center">
                             <img src={TrackIcon} alt="Imagen de About Us" className=" xl:max-h-96 lg:max-h-80 sm:max-h-80 xl:mt-0 lg:mt-10 mt-10 min-h-fit" />
                         </div>
@@ -90,14 +114,19 @@ export function Tracking() {
                     {!inputting && 
                     <div className="flex flex-col font-main">
                         <div className="flex lg:flex-row flex-col w-full justify-between sm:mb-20 mb-12 flex-wrap">
+                            <div>
+                                <button className="mt-6 border-2 border-purple1 rounded-full p-2 w-10 h-10 bg-white shadow-xl hover:scale-105 active:scale-95" onClick={() => setInput(true)}>
+                                    <img src={arrowBack}></img>
+                                </button>
+                            </div>
                             <h1 className=" font-bold text-purple1 text-5xl select-none pt-4">Tracking</h1>
                             <div className="flex flex-col justify-center w-1/3">
                             <span className="text-center text-xl block min-w-fit sm:m-0 mt-8 pt-4 mb-4 px-2">Pedido <span className="font-semibold text-purple1">#{orderId}</span></span>
-                                <StateMarker state={order.state} />
+                                <StateMarker state={data.state} />
                             </div>
                             <div className="flex flex-col justify-center min-w-fit">
-                                <div className="w-full lg:text-right"><span className="font-bold">Fecha pedido:</span> {order.order_date}</div>
-                                <div className="w-full lg:text-right"><span className="font-bold text-purple1">Fecha entrega estimada:</span> {order.delivery_date}</div>
+                                <div className="w-full lg:text-right"><span className="font-bold">Fecha pedido:</span> {data.order_date}</div>
+                                <div className="w-full lg:text-right"><span className="font-bold text-purple1">Fecha entrega estimada:</span> {data.delivery_date}</div>
                             </div>
                             
                         </div>

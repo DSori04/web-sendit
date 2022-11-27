@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from 'axios'
 
 
-export function TrackingForm({setInput, setOrder, setData}) {
+export function TrackingForm({setInput, setOrder, setData, setOrigin, setDestination}) {
     const navigate = useNavigate();
 
     const [validOrder, setValidOrder] = useState(true)
@@ -24,11 +24,32 @@ export function TrackingForm({setInput, setOrder, setData}) {
         })
         .then(
             (res) => {
-                console.log(res)
-                setOrder(res.data.order_id)
-                console.log(res.data)
-                setData(res.data)
-                setInput(false)
+                setOrigin({
+                    name: res.data.origin_name,
+                    Addr1: res.data.origin_addr1,
+                    Phone: String(res.data.origin_phone),
+                    City: res.data.origin_city,
+                    CP: res.data.origin_cp,
+                    lat: res.data.origin_lat,
+                    lng: res.data.origin_lng
+                })
+                setDestination({
+                    name: res.data.dest_name,
+                    Addr1: res.data.dest_addr1,
+                    Phone: String(res.data.dest_phone),
+                    City: res.data.dest_city,
+                    CP: res.data.dest_cp,
+                    lat: res.data.dest_lat,
+                    lng: res.data.dest_lng
+                })
+                setData({
+                    order_id: res.data.order_id,
+                    state: res.data.order_status,
+                    order_date: res.data.date_creation.split("T")[0],
+                    delivery_date: res.data.date_arrival.split("T")[0],
+                })
+                setInput(false);
+                setOrder(formdata.orderid)
             }
         )
         .catch(

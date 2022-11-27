@@ -44,7 +44,7 @@ export function SignUp(){
                     data: user,
                 })
                 .then((res) => {
-                    sessionStorage.setItem('email', user.email)
+                    sessionStorage.setItem('email', user.mail)
                     sessionStorage.setItem('logged', true)
                     sessionStorage.setItem('expires', Date.now() + 3600000)
                     sessionStorage.setItem('user_id', res.data.user_id)

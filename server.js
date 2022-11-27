@@ -283,7 +283,7 @@ app.delete('/user/:user_id', (req, res) => {
 app.get('/prices', async (req, res) => {
     try {
         // Query to get all tiers from the database
-        const sql = 'SELECT * FROM TIERS';
+        const sql = 'SELECT * FROM TIERS ORDER BY price DESC';
         // Gets all tiers from the db
         cnx.query(sql, (err, rows) => {
 
@@ -587,11 +587,47 @@ app.put('/orders/:order_id', (req, res) => {
 //To get orders from user -- Replace user_id with param + create new one with order_id
 app.get('/orders/:user_id/:order_id', (req, res) => {
     try {
-        const sql = 'SELECT * FROM ORDERS WHERE user_id = ? AND order_id = ?';
+        const sql = `
+            SELECT
+                O.*,
+                A1.city AS origin_city,
+                A1.CP AS origin_cp,
+                A1.street AS origin_addr1,
+                A1.lat AS origin_lat,
+                A1.lng AS origin_lng,
+                I1.name AS origin_name,
+                I1.phone AS origin_phone,
+
+                A2.city AS dest_city,
+                A2.CP AS dest_cp,
+                A2.street AS dest_addr1,
+                A2.lat AS dest_lat,
+                A2.lng AS dest_lng,
+                I2.name AS dest_name,
+                I2.phone AS dest_phone
+            FROM 
+                ORDERS AS O
+            INNER JOIN
+                INFO AS I1
+                    ON (O.origin_info_id = I1.info_id)
+            INNER JOIN
+                INFO AS I2
+                    ON (O.destiny_info_id = I2.info_id)
+            INNER JOIN
+                ADDRESS AS A1
+                    ON (O.origin_address_id = A1.address_id)
+            INNER JOIN
+                ADDRESS AS A2
+                    ON (O.destiny_address_id = A2.address_id)
+            
+            WHERE 
+                user_id = ? AND 
+                order_id = ?`;
         cnx.query(sql, [req.params.user_id, req.params.order_id], (err, rows) => {
             if (err) throw err;
             if (rows){ 
-                res.send({...rows, success: true});
+                console.log(rows[0])
+                res.send(rows[0]);
             } else{
                 res.status(404).send({success: false, message: 'Order not found'});
             }
@@ -641,7 +677,22 @@ app.post('/order', async (req, res) => {
     try{
         const sql = `
         SELECT 
-            O.* 
+            O.*,
+            A1.city AS origin_city,
+            A1.CP AS origin_cp,
+            A1.street AS origin_addr1,
+            A1.lat AS origin_lat,
+            A1.lng AS origin_lng,
+            I1.name AS origin_name,
+            I1.phone AS origin_phone,
+
+            A2.city AS dest_city,
+            A2.CP AS dest_cp,
+            A2.street AS dest_addr1,
+            A2.lat AS dest_lat,
+            A2.lng AS dest_lng,
+            I2.name AS dest_name,
+            I2.phone AS dest_phone
         FROM 
             ORDERS AS O 
         INNER JOIN 
@@ -651,14 +702,14 @@ app.post('/order', async (req, res) => {
             ADDRESS AS A2 
                 ON (A2.address_id = O.origin_address_id)
         INNER JOIN
-            INFO AS P1
-                ON (P1.info_id = O.origin_info_id)
+            INFO AS I1
+                ON (I1.info_id = O.origin_info_id)
         INNER JOIN
-            INFO AS P2
-                ON (P2.info_id = O.destiny_info_id)
+            INFO AS I2
+                ON (I2.info_id = O.destiny_info_id)
         WHERE
             O.order_id = ?
-            AND (P1.email = ? AND A1.cp = ?) OR (P2.email = ? AND A2.cp = ?)`
+            AND (I1.email = ? AND A1.cp = ?) OR (I2.email = ? AND A2.cp = ?)`
         cnx.query(sql, [orderid, email, cp, email, cp], (err, rows) => {
             if (err) throw err;
             if (rows.length > 0) {

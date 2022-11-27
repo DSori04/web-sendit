@@ -84,13 +84,13 @@ export function Profile() {
                     {selected == 1 && <div className="lg:w-2/3 max-w-fit h-5/6 mt-16 flex flex-col lg:pt-24 pt-8 min-w-fit">
                         <form onSubmit={(e) => submitChanges(e)}>
                         <label htmlFor="name" className="block">Nombre</label>
-                        {!editting ? <span className="block mt-2">{name}</span> : <input type="text" defaultValue={name} name="name" className="border-b-2 w-1/3" required></input>}
+                        {!editting ? <span className="block mt-2">{name}</span> : <input type="text" defaultValue={name} name="name" className="border-b-2 w-1/3 min-w-fit" required></input>}
                         <label htmlFor="surname" className="block mt-10">Apellidos</label>
-                        {!editting ? <span className="mt-2">{surname}</span> : <input type="text" defaultValue={surname} name="surname" className="border-b-2 w-1/3" required></input>}
+                        {!editting ? <span className="mt-2">{surname}</span> : <input type="text" defaultValue={surname} name="surname" className="border-b-2 w-1/3 min-w-fit" required></input>}
                         <label htmlFor="email" className="block mt-10">Email</label>
-                        {!editting ? <span className="mt-2">{email}</span> : <input type="text" defaultValue={email} name="email" className="border-b-2 w-1/3" required></input>}
+                        {!editting ? <span className="mt-2">{email}</span> : <input type="text" defaultValue={email} name="email" className="border-b-2 w-1/3 min-w-fit" required></input>}
                         <label htmlFor="password" className="block mt-10">Contraseña</label>
-                        {!editting ? <span className="mt-2">***********</span> : <input type="password" name="password" className="border-b-2 w-1/3" required></input>}
+                        {!editting ? <span className="mt-2">***********</span> : <input type="password" name="password" className="border-b-2 w-1/3 min-w-fit" required></input>}
                         {(error.state && editting) && <span className="block text-red1 mt-2">{error.message}</span>}
 
                         {(!editting && !deleting) && <div className="flex lg:flex-row lg:justify-start mt-10 lg:text-lg text-sm flex-wrap`">
