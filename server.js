@@ -525,6 +525,29 @@ app.get('/info', (req, res) => {
     }
 })
 
+app.get('/orders/user/:user_id', (req, res) => {
+    try {
+        const sql = `
+            SELECT 
+                O.*, D.distance 
+            FROM 
+                ORDERS AS O
+            INNER JOIN 
+                DISTANCES AS D 
+                    ON (D.origin_address_id = O.origin_address_id AND D.destiny_address_id = O.destiny_address_id)
+            WHERE 
+                user_id = ?`;
+        cnx.query(sql, [req.params.user_id], (err, rows) => {
+            if (err) throw err;
+            res.send(rows);
+            console.log(rows)
+        }
+        );
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+})
+
 //To add orders
 app.put('/orders', (req, res) => {
     try {
