@@ -283,7 +283,7 @@ app.delete('/user/:user_id', (req, res) => {
 app.get('/prices', async (req, res) => {
     try {
         // Query to get all tiers from the database
-        const sql = 'SELECT * FROM TIERS ORDER BY price DESC';
+        const sql = 'SELECT * FROM TIERS ORDER BY min_distance DESC';
         // Gets all tiers from the db
         cnx.query(sql, (err, rows) => {
 
@@ -525,6 +525,7 @@ app.get('/info', (req, res) => {
     }
 })
 
+// To get all the orders of a user
 app.get('/orders/user/:user_id', (req, res) => {
     try {
         const sql = `
@@ -541,8 +542,7 @@ app.get('/orders/user/:user_id', (req, res) => {
             if (err) throw err;
             res.send(rows);
             console.log(rows)
-        }
-        );
+        });
     } catch (error) {
         res.status(500).send({ error: error.message });
     }
@@ -551,9 +551,20 @@ app.get('/orders/user/:user_id', (req, res) => {
 //To add orders
 app.put('/orders', (req, res) => {
     try {
-        const { user_id, origin_info_id, destiny_info_id, tier_id, date_creation, date_arrival, order_status, comments } = req.body;
-        const sql = 'INSERT INTO ORDERS (user_id, origin_info_id, destiny_info_id, tier_id, date_creation, date_arrival, order_status, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-        cnx.query(sql, [user_id, origin_info_id, destiny_info_id, tier_id, date_creation, date_arrival, order_status, comments], (err, result) => {
+        const {
+            user_id,
+            origin_info_id,
+            destiny_info_id,
+            tier_id,
+            date_creation,
+            date_arrival,
+            order_status,
+            comments,
+            origin_address_id,
+            destiny_address_id
+        } = req.body;
+        const sql = 'INSERT INTO ORDERS (user_id, origin_info_id, destiny_info_id, origin_address_id, destiny_address_id, tier_id, date_creation, date_arrival, order_status, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        cnx.query(sql, [user_id, origin_info_id, destiny_info_id, origin_address_id, destiny_address_id, tier_id, date_creation, date_arrival, order_status, comments], (err, result) => {
             if (err) throw err;
             res.send({
                 order_id: result.insertId,

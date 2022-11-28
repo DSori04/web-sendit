@@ -39,6 +39,8 @@ export function NewOrder() {
 
     const [distance, setDistance] = useState({}) // Distance between origin and destination
 
+    const [tier, setTier] = useState({}); // Tier of the order
+
     const handleSubmitOrigin = async (e) => {
         e.preventDefault();
 
@@ -174,6 +176,8 @@ export function NewOrder() {
         console.log(destination_info_id);
 
         // Step 5: Calculate the distance
+        // TODO Delete this after testing
+        console.log(originCoords, destinationCoords);
         let distance = getDistance(
             {
                 lat: originCoords.lat,
@@ -189,8 +193,72 @@ export function NewOrder() {
 
         console.log(distance); // TODO Delete this after, this is only for testing
 
-        // Step 6
+        // Step 6: Get tier based on distance
+        let tier;
+        // Get all the tiers from server
+        await axios.get(
+            `${SERVER_URL}/prices`
+        ).then((res) => {
+            console.log(res.data); // TODO Delete this after testing
+            for (let i = res.data.length; i > 0; i--) {
+                console.log("In")
+                if (distance > res.data[i - 1].min_distance) {
+                    tier = res.data[i - 1];
+                    setTier({...tier});
+                    console.log(tier); // TODO Delete this after testing
+                    break;
+                }
+            }
 
+        }).catch((err) => {
+            console.log(err);
+        })
+
+        // Step 7: Calculate the price
+        let price = (tier.price * distance).toFixed(2);
+        let orderData = {
+            price: price,
+            distance: distance,
+            tier: tier.tier_id
+        }
+        setOrderData({...orderData});
+
+        console.log(orderData); // TODO Delete this after testing
+
+        // Step 8: Send the order to the server
+
+        let today = new Date();
+        let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
+        let threeDays = new Date();
+        let arrivalDate = threeDays.setDate(threeDays.getFullYear() + '-' + (threeDays.getMonth() + 1) + '-' + (threeDays.getDate() + 3));
+
+        axios.put(
+            `${SERVER_URL}/orders`,
+            {
+                user_id: sessionStorage.getItem('user_id'),
+                origin_info_id: origin_info_id,
+                destiny_info_id: destination_info_id,
+                tier_id: tier.name,
+                date_creation: date,
+                date_arrival: arrivalDate,
+                order_status: Math.floor(Math.random() * 3) + 1,
+                origin_address_id: origin_address_id,
+                destiny_address_id: destination_address_id,
+                comments: ""
+            }
+        ).then((res) => {
+            console.log(res); // TODO Delete this after testing
+            orderData = {
+                price: price,
+                distance: distance,
+                pricePerKm: tier.price,
+                order_id: res.data.order_id
+            }
+            console.log(orderData); // TODO Delete this after testing
+        }).catch((err) => {
+            console.log(err);
+        });
 
         // Set the step to 3 (payment page)
         setStep(3);
@@ -235,7 +303,7 @@ export function NewOrder() {
                 <meta name="description" content="New Order"/>
             </Helmet>
             <Navbar/>
-            <div className="flex flex-row w-full justify-center min-h-[90vh]">
+            <div className="flex flex-row w-full justify-center min-h-[calc(100vh-3.5rem)]">
                 <div
                     className="xl:w-3/4 lg:absolute lg:pt-0 pt-16 pb-10 top-16 sm:bottom-14 bottom-28 w-full flex flex-col h-max lg:px-20 px-6 font-main">
                     <div>
@@ -388,19 +456,23 @@ export function NewOrder() {
                                     <div className="bg-gray1 w-fit h-fit mt-5 rounded-lg font-main px-3 py-3 leading-6">
                                         <span className="text-3xl font-semibold">Total</span><br></br>
                                         <span className="text-3xl text-right w-full block">
-                                            {orderData.cost}€
+                                            {orderData.price}€
                                         </span><br></br>
                                         <span className="font-bold">
                                             Tier: {orderData.tier}
                                         </span>
                                         <br></br>
                                         <span className="font-bold">Distancia: </span>
-                                        {orderData.distance}Km
-                                        ({orderData.pricePerKm}€/Km)
+                                        {
+                                            // Make distance have 2 decimals
+                                            orderData.distance.toFixed(2)
+                                        }Km
+                                        ({tier.price}€/Km)
                                     </div>
                                     <div className="w-full flex flex-row justify-center">
-                                        <button className="w-40 mt-12 bg-purple1 h-12 rounded-full">
-                                            <img src={payicon} className="inline-block h-7" alt="Imagen por defecto"></img>
+                                        <button className="w-40 mt-12 bg-purple1 h-12 rounded-full shadow-lg">
+                                            <img src={payicon} className="inline-block h-7"
+                                                 alt="Imagen por defecto"></img>
                                             <span
                                                 className="text-white text-xl font-semibold ml-3 inline-block">Pagar</span>
                                         </button>
