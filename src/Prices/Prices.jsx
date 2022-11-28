@@ -60,7 +60,7 @@ export function Prices() {
         <AppContextProvider>
                 <Navbar />
             </AppContextProvider>
-            <div className="flex justify-center w-full">
+            <div className="flex justify-center w-full min-h-[calc(100vh-3.5rem)]">
             <div className="lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 bg-white w-3/4 flex flex-col font-main">
                 <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8">Precios</h1>
                 <p className=" py-10 text-2xl">

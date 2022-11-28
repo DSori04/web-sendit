@@ -13,11 +13,9 @@ export function AboutUs() {
             <title>About Us</title>
             <meta name="description" content="About Us" />
         </Helmet>
-        <AppContextProvider>
-                <Navbar />
-            </AppContextProvider>
+            <Navbar />
             <div className="flex justify-center w-full">
-            <div className="xl:w-3/4 lg:w-full lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 flex flex-col md:px-20 px-8 font-main">
+            <div className="xl:w-3/4 lg:w-full lg:absolute lg:pt-0 pt-16 pb-14 top-16 sm:bottom-14 sm:mb-14 bottom-28 flex flex-col md:px-20 px-8 font-main -mb-14">
                 <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8">¿Quiénes somos?</h1>
                 <div className="flex lg:flex-row flex-col w-full">
                     <div className="flex flex-col lg:w-1/2 w-full h-auto">

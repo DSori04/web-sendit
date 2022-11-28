@@ -103,7 +103,7 @@ export function Navbar() {
                     <img src={MenuIcon}></img>
                 </div>
             </nav>
-            {sideMenu && <nav className="absolute top-16 w-16 right-0 bg-gray1 h-fit rounded-bl-3xl grid grid-cols-1 items-center px-4 lg:hidden drop-shadow-xl z-40" onScroll={() => setVis(false)}>
+            {sideMenu && <nav className="fixed top-16 w-16 right-0 bg-gray1 h-fit rounded-bl-3xl grid grid-cols-1 items-center px-4 lg:hidden drop-shadow-xl z-40" onScroll={() => setVis(false)}>
                 <Link to="/tracking"><img src={Tracking} className="w-full py-4 border-b-2"></img></Link>
                 <Link to="/new"><img src={New} className="w-full py-4 border-b-2"></img></Link>
                 <Link to="/prices"><img src={Prices} className="w-full py-4 border-b-2"></img></Link>

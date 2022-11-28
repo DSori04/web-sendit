@@ -102,7 +102,7 @@ export function Tracking() {
             <AppContextProvider>
                 <Navbar />
             </AppContextProvider>
-            <div className="flex justify-center w-full">
+            <div className="flex justify-center w-full min-h-[calc(100vh-3.5rem)]">
                 <div className="xl:top-[20%] lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 bg-white w-3/4  flex flex-col md:px-20 px-6 font-main">
                     
                     {inputting && <><h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Tracking</h1><div className="flex flex-row w-full">
@@ -151,7 +151,7 @@ export function Tracking() {
                     }
                 </div>
             </div>
-            {/* <Footer /> */}
+            <Footer />
         </>
     );
 }
