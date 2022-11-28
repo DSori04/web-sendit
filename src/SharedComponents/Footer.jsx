@@ -15,9 +15,9 @@ export function Footer() {
                 <a href="instagram.com"><img src={Instagram} alt="Instagram" className="lg:w-8 lg:h-8 w-6 h-6"/></a>
             </div>
             <div className="w-1/3 flex flex-row leading-[3.5rem] sm:pt-5 font-main sm:text-sm max-[408px]:text-sm text-xs">
-                <Link to="/about-us" className="mr-6 min-w-fit">About Us</Link>
-                <Link to="/not-found" className="mr-6">LOPD</Link>
-                <Link to="/contact">Contacto</Link>
+                <Link to="/about-us" className="mr-6 min-w-fit hover:font-semibold hover:underline">About Us</Link>
+                <Link to="/not-found" className="mr-6 hover:font-semibold hover:underline">LOPD</Link>
+                <Link to="/contact" className="hover:font-semibold hover:underline">Contacto</Link>
             </div>
         </footer>
 
