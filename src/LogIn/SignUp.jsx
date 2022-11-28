@@ -74,8 +74,8 @@ export function SignUp(){
             <AppContextProvider>
                 <Navbar />
             </AppContextProvider>
-            <div className="w-full flex shrink-0 justify-center">
-            <div className="w-3/4 lg:absolute lg:pt-20 pt-16 top-16 sm:bottom-14 bottom-28 flex flex-col md:px-20 px-6 font-main lg:min-h-0 min-h-screen select-none">
+            <div className="w-full flex shrink-0 justify-center min-h-[calc(100vh-3.5rem)]">
+            <div className="w-3/4 lg:absolute lg:pt-20 pt-16 top-16 sm:bottom-14 bottom-28 flex flex-col md:px-20 px-6 font-main select-none">
                 <div className="flex lg:flex-row flex-col w-full">
                     <div className="flex flex-col lg:w-1/2 w-full h-auto">
                         <div className="flex flex-row justify-start pt-3 font-main">

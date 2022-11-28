@@ -68,8 +68,8 @@ export function Home() {
             <AppContextProvider>
                 <Navbar />
             </AppContextProvider>
-            <div className="flex justify-center w-full min-h-[90vh]">
-                <div className="pt-16 bg-white w-3/4 xl:absolute h-max flex flex-col md:px-20 px-6">
+            <div className="flex justify-center w-full min-h-[calc(100vh-3.5rem)] pb-14">
+                <div className="pt-16 pb-16 bg-white w-3/4 xl:absolute flex flex-col md:px-20 px-6">
                     <div id="text-main" className="flex flex-row justify-around mt-12 flex-wrap-reverse w-full">
                         <div id="text-content" className="flex flex-col lg:w-4/12 w-full lg:mt-32 mt-10">
                             <div id="text" className="flex flex-col w-full h-max lg:tracking-wider tracking-wide font-bold lg:text-right text-center xl:test-9xl lg:text-4xl sm:text-3xl text-2xl font-main lg min-w-fit">
