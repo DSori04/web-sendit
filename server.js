@@ -742,8 +742,7 @@ app.post('/order', async (req, res) => {
  * Body format: {price: num, tier: "String"}
  * 
  * Response: {sucess: true, url: String}
- * 
- * ! This endpoint MUST NOT be used by the client, only by the server
+ *
  */
 app.post('/pay', async (req, res) => {
 
@@ -781,7 +780,7 @@ app.post('/pay', async (req, res) => {
         // Creates a new price with the product
         const price = await stripe.prices.create({
             product: product.id,
-            unit_amount: clientPrice,
+            unit_amount: clientPrice * 100,
             currency: 'eur',
         });
 
@@ -806,7 +805,8 @@ app.post('/pay', async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500).send({ error: error.message });
+        res.status(500).send({error: error.message});
+        console.log(error);
     }
 
 });

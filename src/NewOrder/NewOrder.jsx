@@ -8,7 +8,7 @@ import payicon from "./assets/payicon.svg"
 import Stripe from "./assets/Stripe.svg";
 import {Helmet} from "react-helmet-async";
 import axios from "axios";
-import {getGeolocation, getCity} from "./components/getGeolocation"; //! getCP is not used
+import {getCity, getGeolocation} from "./components/getGeolocation"; //! getCP is not used
 import {TrackingImage} from "./components/NewTrackingImage";
 import {Steps} from "./components/Steps";
 import getDistance from "../GetDistance.js";
@@ -28,7 +28,7 @@ export function NewOrder() {
     const [origin, setOrigin] = useState({}); // All info from origin
     const [originCoords, setOriginCoords] = useState({}); // Coordinates from the origin place
 
-    const [destinationCoords, setDestinationCoords] = useState({}); // Coordinates from the destination place
+    const [wait, setWait] = useState(false); // Wait for the API to respond
 
     const [tier, setTier] = useState({}); // Tier of the order
 
@@ -58,23 +58,15 @@ export function NewOrder() {
             lng: geolocation.lng
         });
 
-        // Set step to 2 (destination mail)
-        setStep(2);
+        if (geolocation) {
+            setStep(2);
+        }
     }
-
-    const [handleExecs, setHandleExecs] = useState(0);
 
     const handleSubmitDestination = async (e) => {
         e.preventDefault();
 
-        let handleExecsLet = 0;
-
-        if (handleExecs === 0) {
-            setHandleExecs(1);
-            handleExecsLet = 1;
-        }
-
-        console.log(handleExecsLet); // TODO Delete this after testing
+        setWait(true);
 
         // IDs from steps 1 and 2
         let origin_address_id;
@@ -101,10 +93,12 @@ export function NewOrder() {
         // Coordinates from the destination
         const addr = `${destinationForm.destAddr1}, ${destinationForm.destCity}`;
         const geolocation = await getGeolocation(addr);
-        setDestinationCoords({
+        let destinationCoords = {
             lat: geolocation.lat,
             lng: geolocation.lng
-        });
+        }
+
+        console.log(geolocation); // TODO Remove this, this only for testing
 
         // Step 1: Send to the server the origin address and save the response
         // Sends the data to the server
@@ -270,10 +264,8 @@ export function NewOrder() {
             console.log(err);
         });
 
-        if (handleExecsLet === 1) {
-            setHandleExecs(2);
-            handleSubmitDestination(e);
-        } else {
+        // If the location is valid set step to 3
+        if (geolocation) {
             setStep(3);
         }
     }
@@ -371,7 +363,8 @@ export function NewOrder() {
                                         className="text-main text-red1">*</span></label>
                                     <input type="text" name="originCP" id="origin_cp" defaultValue={origin.originCP}
                                            className="border-b-2 inline-block w-full" required
-                                           onChange={(e) => handleOriginCP(e)}/>
+                                           onChange={(e) => handleOriginCP(e)}
+                                           onSubmit={(e) => handleOriginCP(e)}/>
 
                                     <label htmlFor="city" className="text-main block mt-8">Ciudad <span
                                         className="text-main text-red1">*</span></label>
@@ -434,7 +427,8 @@ export function NewOrder() {
                                         className="text-main text-red1">*</span></label>
                                     <input type="text" name="destCP" id="dest_cp"
                                            className="border-b-2 inline-block w-2/3" required
-                                           onBlur={(e) => handleDestinationCP(e)}/>
+                                           onBlur={(e) => handleDestinationCP(e)}
+                                           onSubmit={(e) => handleDestinationCP(e)}/>
 
                                     <label htmlFor="city" className="text-main block mt-8">Ciudad <span
                                         className="text-main text-red1">*</span></label>
@@ -443,7 +437,7 @@ export function NewOrder() {
                                            onChange={(e) => setDestinationCity(e.target.value)}/>
 
                                     <input type="submit" value={
-                                        handleExecs === 0 ? "Continuar" : "Espere.."
+                                        wait ? "Espere..." : "Continuar"
                                     }
                                            className="mx-auto block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl max-w-fit lg:hover:hue-rotate-15 hover:scale-105 active:scale-95"/>
 
@@ -486,7 +480,9 @@ export function NewOrder() {
                                         ({tier.price}€/Km)
                                     </div>
                                     <div className="w-full flex flex-row justify-center">
-                                        <button className="w-40 mt-12 bg-purple1 h-12 rounded-full shadow-lg">
+                                        <button className="w-40 mt-12 bg-purple1 h-12 rounded-full shadow-lg"
+                                                onClick={() => window.location.href = `${paymentLink}`}>
+                                            >
                                             <img src={payicon} className="inline-block h-7"
                                                  alt="Pay icon"></img>
                                             <span
