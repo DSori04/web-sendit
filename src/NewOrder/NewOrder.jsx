@@ -251,6 +251,11 @@ export function NewOrder() {
             console.log(err);
         });
 
+        // If the location is valid set step to 3
+        if (geolocation) {
+            setStep(3);
+        }
+
         // Step 9 create payment link
         await axios.post(
             `${SERVER_URL}/pay`,
@@ -260,14 +265,11 @@ export function NewOrder() {
             }).then((res) => {
             console.log(res.data.url); // TODO Delete this after testing
             setPaymentLink(res.data.url);
+            setWait(false);
         }).catch((err) => {
             console.log(err);
         });
 
-        // If the location is valid set step to 3
-        if (geolocation) {
-            setStep(3);
-        }
     }
 
     const handleSubmitPayment = (e) => {
@@ -486,11 +488,15 @@ export function NewOrder() {
                                     </div>
                                     <div className="w-full flex flex-row justify-center">
                                         <button className="w-40 mt-12 bg-purple1 h-12 rounded-full shadow-lg"
-                                                onClick={() => window.location.href = `${paymentLink}`}>
+                                                onClick={() => window.location.href = `${paymentLink}`}
+                                                disabled={wait}
+                                        >
                                             <img src={payicon} className="inline-block h-7"
                                                  alt="Pay icon"></img>
                                             <span
-                                                className="text-white text-xl font-semibold ml-3 inline-block">Pagar</span>
+                                                className="text-white text-xl font-semibold ml-3 inline-block">{
+                                                wait ? "Espere" : "Pagar"
+                                            }</span>
                                         </button>
                                     </div>
                                     <div className="flex flex-row w-full justify-center">
