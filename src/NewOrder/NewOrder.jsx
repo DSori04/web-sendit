@@ -188,8 +188,6 @@ export function NewOrder() {
             }
         );
 
-        setDistance(distance);
-
         console.log(distance); // TODO Delete this after, this is only for testing
 
         // Step 6: Get tier based on distance
