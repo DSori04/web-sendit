@@ -8,7 +8,7 @@ import payicon from "./assets/payicon.svg"
 import Stripe from "./assets/Stripe.svg";
 import {Helmet} from "react-helmet-async";
 import axios from "axios";
-import {getGeolocation, getCity, getCP} from "./components/getGeolocation"; //! getCP is not used
+import {getGeolocation, getCity} from "./components/getGeolocation"; //! getCP is not used
 import {TrackingImage} from "./components/NewTrackingImage";
 import {Steps} from "./components/Steps";
 import getDistance from "../GetDistance.js";
@@ -25,21 +25,14 @@ export function NewOrder() {
     const [originPersonal, setOriginPersonal] = useState(false);
     const [destinationPersonal, setDestinationPersonal] = useState(false);
 
-
     const [origin, setOrigin] = useState({}); // All info from origin
     const [originCoords, setOriginCoords] = useState({}); // Coordinates from the origin place
-    const [originId, setOriginId] = useState(""); // ID of the origin
 
-    const [destination, setDestination] = useState({}) // All info from destination
     const [destinationCoords, setDestinationCoords] = useState({}); // Coordinates from the destination place
-    const [destinationId, setDestinationId] = useState(0); // ID of the destination
-
-    const [originInfoId, setOriginInfoId] = useState(0); // ID of the destination info
-    const [destinationInfoId, setDestinationInfoId] = useState(0); // ID of the destination info
-
-    const [distance, setDistance] = useState({}) // Distance between origin and destination
 
     const [tier, setTier] = useState({}); // Tier of the order
+
+    const [paymentLink, setPaymentLink] = useState(""); // Link to the payment page
 
     const handleSubmitOrigin = async (e) => {
         e.preventDefault();
@@ -69,8 +62,19 @@ export function NewOrder() {
         setStep(2);
     }
 
+    const [handleExecs, setHandleExecs] = useState(0);
+
     const handleSubmitDestination = async (e) => {
         e.preventDefault();
+
+        let handleExecsLet = 0;
+
+        if (handleExecs === 0) {
+            setHandleExecs(1);
+            handleExecsLet = 1;
+        }
+
+        console.log(handleExecsLet); // TODO Delete this after testing
 
         // IDs from steps 1 and 2
         let origin_address_id;
@@ -91,9 +95,8 @@ export function NewOrder() {
             destPhone: destinationForm.destPhone,
             destEmail: destinationForm.destEmail
         }
-        setDestination({...destination});
 
-        console.log(destination); // TODO Remove this, this onlyy for testing
+        console.log(destination); // TODO Remove this, this only for testing
 
         // Coordinates from the destination
         const addr = `${destinationForm.destAddr1}, ${destinationForm.destCity}`;
@@ -116,7 +119,6 @@ export function NewOrder() {
                 lng: originCoords.lng
             }).then((res) => {
             origin_address_id = res.data.address_id;
-            setOriginId(origin_address_id);
         }).catch((err) => {
             console.log(err);
         });
@@ -134,7 +136,6 @@ export function NewOrder() {
                 lng: destinationCoords.lng
             }).then((res) => {
             destination_address_id = res.data.address_id;
-            setDestinationId(destination_address_id);
         }).catch((err) => {
             console.log(err);
         });
@@ -151,7 +152,6 @@ export function NewOrder() {
                 email: origin.originEmail
             }).then((res) => {
             origin_info_id = res.data.info_id;
-            setOriginInfoId(res.data.info_id);
         }).catch((err) => {
             console.log(err);
         });
@@ -168,7 +168,6 @@ export function NewOrder() {
                 email: destination.destEmail
             }).then((res) => {
             destination_info_id = res.data.info_id;
-            setDestinationInfoId(res.data.info_id);
         }).catch((err) => {
             console.log(err);
         });
@@ -260,8 +259,25 @@ export function NewOrder() {
             console.log(err);
         });
 
-        // Set the step to 3 (payment page)
-        setStep(3);
+        // Step 9 create payment link
+        await axios.post(
+            `${SERVER_URL}/pay`,
+            {
+                price: orderData.price,
+                tier: tier.tier_id
+            }).then((res) => {
+            console.log(res.data.url); // TODO Delete this after testing
+            setPaymentLink(res.data.url);
+        }).catch((err) => {
+            console.log(err);
+        });
+
+        if (handleExecsLet === 1) {
+            setHandleExecs(2);
+            handleSubmitDestination(e);
+        } else {
+            setStep(3);
+        }
     }
 
     const handleSubmitPayment = (e) => {
@@ -428,7 +444,9 @@ export function NewOrder() {
                                            className="border-b-2 inline-block" required
                                            onChange={(e) => setDestinationCity(e.target.value)}/>
 
-                                    <input type="submit" value="Continuar"
+                                    <input type="submit" value={
+                                        handleExecs === 0 ? "Continuar" : "Espere.."
+                                    }
                                            className="mx-auto block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl max-w-fit lg:hover:hue-rotate-15 hover:scale-105 active:scale-95"/>
 
                                 </form>
