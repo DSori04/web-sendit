@@ -77,11 +77,11 @@ export function Profile() {
             <Navbar />
             <div className="flex flex-row w-full justify-center min-h-[calc(100vh-3.5rem)]">
                 <div className={`flex flex-row lg:justify-around justify-around xl:w-3/4 w-full relative lg:pt-0 lg:top-16 top-4 sm:bottom-14 bottom-28 lg:h-5/6 h-auto md:px-20 px-6 font-main sm:flex-nowrap flex-wrap`}> 
-                    <div className="w-1/3 lg:h-5/6 min-h-fit lg:mt-16 lg:border-r-4 border-gray2 flex flex-col lg:justify-around justify-center pt-8 min-w-fit">
+                    <aside className="w-1/3 lg:h-5/6 min-h-fit lg:mt-16 lg:border-r-4 border-gray2 flex flex-col lg:justify-around justify-center pt-8 min-w-fit">
                         <div id="icon" className="xl:w-64 xl:h-64 lg:w-48 lg:h-48 h-36 w-36 rounded-full bg-purple2 xl:text-7xl lg:text-5xl text-6xl font-bold text-main xl:leading-[16rem] lg:leading-[12rem] leading-[9rem] text-center mx-auto">{sessionStorage.getItem('name').charAt(0).toUpperCase()}</div>
                         <Options selected={selected} setSelected={setSelected}/>
-                    </div>
-                    {selected == 1 && <div className="lg:w-2/3 max-w-fit h-5/6 mt-16 flex flex-col lg:pt-24 pt-8 min-w-fit">
+                    </aside>
+                    {selected == 1 && <main className="lg:w-2/3 max-w-fit h-5/6 mt-16 flex flex-col lg:pt-24 pt-8 min-w-fit">
                         <form onSubmit={(e) => submitChanges(e)}>
                         <label htmlFor="name" className="block">Nombre</label>
                         {!editting ? <span className="block mt-2">{name}</span> : <input type="text" defaultValue={name} name="name" className="border-b-2 w-1/3 min-w-fit" required></input>}
@@ -109,7 +109,7 @@ export function Profile() {
                             <button className="border-2 border-purple1 font-bold text-white bg-purple1 px-6 py-1 ml-4 rounded-full shadow-xl hover:hue-rotate-30" onClick={() => setDelete(false)}>No</button>
                             </div>}
                         </form>    
-                    </div>}
+                    </main>}
                     {selected == 2 && <Userorders />}
                     
                 </div>

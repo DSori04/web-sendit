@@ -14,7 +14,7 @@ export function AboutUs() {
             <meta name="description" content="About Us" />
         </Helmet>
             <Navbar />
-            <div className="flex justify-center w-full min-h-[calc(100vh-3.5rem)]">
+            <main className="flex justify-center w-full min-h-[calc(100vh-3.5rem)]">
             <div className="xl:w-3/4 lg:w-full lg:absolute lg:pt-0 pt-16 pb-14 top-16 sm:bottom-14 sm:mb-14 bottom-28 flex flex-col md:px-20 px-8 font-main -mb-14">
                 <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8">¿Quiénes somos?</h1>
                 <div className="flex lg:flex-row flex-col w-full">
@@ -35,13 +35,13 @@ export function AboutUs() {
                                 <p>SendIT es una empresa comprometida con los <span className="text-purple1 font-bold ">Objetivos de Desarrollo Sostenible</span></p>
                             </div>
                             <div className="flex flex-col justify-center max-h-max">
-                                <img src={ods}></img>
+                                <img src={ods} alt="aboutus_image"></img>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
+            </main>
             <Footer />
         </>
     );

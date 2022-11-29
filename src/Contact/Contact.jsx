@@ -15,7 +15,7 @@ export function Contact() {
             <AppContextProvider>
                 <Navbar />
             </AppContextProvider>
-            <div className="flex justify-center w-full min-h-[calc(100vh-3.5rem)]">
+            <main className="flex justify-center w-full min-h-[calc(100vh-3.5rem)]">
             <div className="xl:w-3/4 xl:ml-[15%] lg:absolute lg:pt-0 pt-16 top-16 sm:bottom-14 bottom-28 bg-white w-full flex flex-col md:px-20 px-6 font-main lg:min-h-max min-h-[90vh]">
                 <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Contacto</h1>
                 <div className="flex flex-row w-full">
@@ -54,7 +54,7 @@ export function Contact() {
                 </div>
 
             </div>
-            </div>
+            </main>
             <Footer />
         </>
     );

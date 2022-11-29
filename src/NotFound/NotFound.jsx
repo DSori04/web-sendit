@@ -17,7 +17,7 @@ export function NotFound() {
                     <title>Not Found</title>
                 </Helmet>
                 <Navbar />
-                <div className="min-h-[calc(100vh-3.5rem)]">
+                <main className="min-h-[calc(100vh-3.5rem)]">
 
                     <div className="w-full bg-white flex justify-center items-center p-10 lg:pt-32">
                         <img src={imagen404} alt="404" className=" max-h-96 lg:pt-0 pt-32 " />
@@ -36,7 +36,7 @@ export function NotFound() {
                         </div>
                     </div>
 
-                </div>
+                </main>
                 <Footer />
             </>
         </AppContextProvider>
