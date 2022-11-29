@@ -346,6 +346,7 @@ export function NewOrder() {
                                         className="text-main text-red1">*</span></label>
                                     <input type="tel" name="originPhone" id="origin_tlf"
                                            defaultValue={origin.originPhone} className="border-b-2 inline-block"
+                                           pattern="[0-9]{9}"
                                            required/>
 
 
@@ -363,6 +364,8 @@ export function NewOrder() {
                                         className="text-main text-red1">*</span></label>
                                     <input type="text" name="originCP" id="origin_cp" defaultValue={origin.originCP}
                                            className="border-b-2 inline-block w-full" required
+                                           inputMode="numeric"
+                                           pattern="[0-9]{5}"
                                            onChange={(e) => handleOriginCP(e)}
                                            onSubmit={(e) => handleOriginCP(e)}/>
 
@@ -427,6 +430,8 @@ export function NewOrder() {
                                         className="text-main text-red1">*</span></label>
                                     <input type="text" name="destCP" id="dest_cp"
                                            className="border-b-2 inline-block w-2/3" required
+                                           inputMode="numeric"
+                                           pattern="[0-9]{5}"
                                            onBlur={(e) => handleDestinationCP(e)}
                                            onSubmit={(e) => handleDestinationCP(e)}/>
 
@@ -482,7 +487,6 @@ export function NewOrder() {
                                     <div className="w-full flex flex-row justify-center">
                                         <button className="w-40 mt-12 bg-purple1 h-12 rounded-full shadow-lg"
                                                 onClick={() => window.location.href = `${paymentLink}`}>
-                                            >
                                             <img src={payicon} className="inline-block h-7"
                                                  alt="Pay icon"></img>
                                             <span
