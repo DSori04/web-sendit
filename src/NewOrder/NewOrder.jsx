@@ -453,9 +453,9 @@ export function NewOrder() {
                         <div id="image" className="sm:block hidden min-h-fit">
                             <div className="flex flex-col h-full justify-center">
                                 <div className="h-max">
-                                    {step === 1 && <img src={neworder1} alt="Imagen por defecto"></img>}
-                                    {step === 2 && <img src={neworder2} alt="Imagen por defecto"></img>}
-                                    {step === 3 && <img src={neworder3} alt="Imagen por defecto"></img>}
+                                    {step === 1 && <img src={neworder1} alt="Step 1 image"></img>}
+                                    {step === 2 && <img src={neworder2} alt="Step 2 image"></img>}
+                                    {step === 3 && <img src={neworder3} alt="Step 3 image"></img>}
                                 </div>
                             </div>
                         </div>
@@ -488,13 +488,13 @@ export function NewOrder() {
                                     <div className="w-full flex flex-row justify-center">
                                         <button className="w-40 mt-12 bg-purple1 h-12 rounded-full shadow-lg">
                                             <img src={payicon} className="inline-block h-7"
-                                                 alt="Imagen por defecto"></img>
+                                                 alt="Pay icon"></img>
                                             <span
                                                 className="text-white text-xl font-semibold ml-3 inline-block">Pagar</span>
                                         </button>
                                     </div>
                                     <div className="flex flex-row w-full justify-center">
-                                        <img src={Stripe} className="mt-4" alt="Imagen por defecto"></img>
+                                        <img src={Stripe} className="mt-4" alt="Stripe image"></img>
                                     </div>
                                 </form>
                             </div>

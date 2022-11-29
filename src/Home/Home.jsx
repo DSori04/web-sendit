@@ -84,7 +84,7 @@ export function Home() {
 
                             </div>
                         </div>
-                        <div id="home-img" className="lg:-ml-44 min-w-fit"><img src={HomeImg} ></img></div>
+                        <div id="home-img" className="lg:-ml-44 min-w-fit"><img src={HomeImg} alt="home_image" ></img></div>
 
                     </div> <br />
                     <div id="counters" className="w-full h-max flex justify-around text-center lg:mt-36 md:mt-12 mt-5 lg:scale-100 scale-75">

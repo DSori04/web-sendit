@@ -28,7 +28,7 @@ export function Navbar() {
             <nav className="bg-gray1 w-full h-16 flex lg:justify-between z-40 justify-between lg:px-24 select-none fixed">
                 <div id="logo" className="flex-start h-14 w-48">
                     <Link to="/">
-                        <img src={Logo} className="object-contain">
+                        <img src={Logo} alt="sendit logo" className="object-contain">
                         </img>
                     </Link>
                 </div>
@@ -104,10 +104,10 @@ export function Navbar() {
                 </div>
             </nav>
             {sideMenu && <nav className="fixed top-16 w-16 right-0 bg-gray1 h-fit rounded-bl-3xl grid grid-cols-1 items-center px-4 lg:hidden drop-shadow-xl z-40" onScroll={() => setVis(false)}>
-                <Link to="/tracking"><img src={Tracking} className="w-full py-4 border-b-2"></img></Link>
-                <Link to="/new"><img src={New} className="w-full py-4 border-b-2"></img></Link>
-                <Link to="/prices"><img src={Prices} className="w-full py-4 border-b-2"></img></Link>
-                {!sessionStorage.getItem('logged') && <Link to="/signup"><img src={LogIcon} className="w-full py-4"></img></Link>}
+                <Link to="/tracking"><img src={Tracking} alt="tracking" className="w-full py-4 border-b-2"></img></Link>
+                <Link to="/new"><img src={New} alt="new order" className="w-full py-4 border-b-2"></img></Link>
+                <Link to="/prices"><img src={Prices} alt="prices" className="w-full py-4 border-b-2"></img></Link>
+                {!sessionStorage.getItem('logged') && <Link to="/signup"><img src={LogIcon} alt="login" className="w-full py-4"></img></Link>}
                 {sessionStorage.getItem('logged') && <Link to="/profile"><div className={`w-9 h-9 mt-2 rounded-full bg-purple1 text-white text-center`}>
                     <span className="leading-[2.25rem] align-middle text-2xl font-bold text-main">{sessionStorage.getItem('name').charAt(0).toUpperCase()}</span>
 

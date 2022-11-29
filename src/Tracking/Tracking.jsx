@@ -116,7 +116,7 @@ export function Tracking() {
                         <div className="flex lg:flex-row flex-col w-full justify-between sm:mb-20 mb-12 flex-wrap">
                             <div>
                                 <button className="mt-6 border-2 border-purple1 rounded-full p-2 w-10 h-10 bg-white shadow-xl hover:scale-105 active:scale-95" onClick={() => setInput(true)}>
-                                    <img src={arrowBack}></img>
+                                    <img src={arrowBack} alt="back"></img>
                                 </button>
                             </div>
                             <h1 className=" font-bold text-purple1 text-5xl select-none pt-4">Tracking</h1>
