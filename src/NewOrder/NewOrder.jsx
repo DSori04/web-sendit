@@ -8,7 +8,7 @@ import payicon from "./assets/payicon.svg"
 import Stripe from "./assets/Stripe.svg";
 import {Helmet} from "react-helmet-async";
 import axios from "axios";
-import {getCity, getGeolocation} from "./components/getGeolocation"; //! getCP is not used
+import {getCity, getGeolocation} from "./components/getGeolocation";
 import {TrackingImage} from "./components/NewTrackingImage";
 import {Steps} from "./components/Steps";
 import getDistance from "../GetDistance.js";
