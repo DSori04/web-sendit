@@ -149,6 +149,7 @@ app.put('/user', async (req, res) => {
 
                     // If the user is created, return the user data
                     res.send({
+                        user_id: rows.insertId,
                         name: name,
                         surname: surname,
                         mail: mail,
