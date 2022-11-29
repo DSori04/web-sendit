@@ -15,38 +15,15 @@ import arrowBack from "./assets/arrow-back.svg"
 // TODO Why the icon doesn't show up in the browser tab?
 
 export function Tracking() {
-    const { user_id, order_id } = useParams();
+    const {user_id, order_id} = useParams();
 
     const [inputting, setInput] = useState(true);
     const [orderId, setOrder] = useState();
-    const [origin, setOrigin] = useState({
-        name: "Peccatum",
-        Addr1: "Av. 5 de Mayo 123",
-        Phone: "1234567890",
-        City: "Guadalajara",
-        CP: "44100", 
-        lat: 41.112543321888104,
-        lng: 1.2565044470474362
-    });
-    const [destination, setDestination] = useState({
-        name: "Peccatum",
-        Addr1: "Calle Inventada 123",
-        Phone: "1234567890",
-        City: "City",
-        CP: "44100",
-        lat: 41.120441227561926,
-        lng: 1.2435490857768052
-    });
-    const [data, setData] = useState({
-        order_id: orderId,
-        state: 1,
-        order_date: "2021-08-01",
-        delivery_date: "2021-08-02",
-    })
-
-   
-
-    useEffect( () => {
+    const [origin, setOrigin] = useState({});
+    const [destination, setDestination] = useState({});
+    const [data, setData] = useState({});
+    
+    useEffect(() => {
         console.log(user_id, order_id);
         if (user_id && order_id) {
             setOrder(order_id);
