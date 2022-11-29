@@ -56,6 +56,7 @@ const router = createBrowserRouter([
   {
     path: "/tracking",
     element: <Tracking/>,
+    errorElement: <NotFound/>,
   },
   {
     path: "/tracking/:id",
@@ -65,10 +66,12 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <Profile />,
+    errorElement: <NotFound/>,
   },
   {
     path: "/tracking/order_id=:order_id&user_id=:user_id",
     element: <Tracking />,
+    errorElement: <NotFound/>,
   }
 
 ]);
