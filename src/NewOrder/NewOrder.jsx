@@ -191,13 +191,14 @@ export function NewOrder() {
             `${SERVER_URL}/prices`
         ).then((res) => {
             console.log(res.data); // TODO Delete this after testing
+
             for (let i = res.data.length; i > 0; i--) {
                 console.log("In")
+                console.log(res.data[i - 1]); // TODO Delete this after testing
                 if (distance > res.data[i - 1].min_distance) {
                     tier = res.data[i - 1];
                     setTier({...tier});
                     console.log(tier); // TODO Delete this after testing
-                    break;
                 }
             }
 
