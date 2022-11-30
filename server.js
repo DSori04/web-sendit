@@ -771,8 +771,8 @@ app.post('/pay', async (req, res) => {
         }
 
         // If price is lower than 50, make it 50 (minimum price required by stripe)
-        if (clientPrice < 50) {
-            clientPrice = 50;
+        if (clientPrice < 0.5) {
+            clientPrice = 0.5;
         }
 
 
