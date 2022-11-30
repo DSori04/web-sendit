@@ -755,6 +755,16 @@ app.post('/pay', async (req, res) => {
         // Gets the price from the request body
         let clientPrice = req.body.price;
         const tier = req.body.tier;
+        const user_id = req.body.user_id;
+        console.log("user_id", user_id);
+        let order_id;
+
+        // Get the last order id of that user id
+        const sql = 'SELECT order_id FROM ORDERS WHERE user_id = ? ORDER BY order_id DESC LIMIT 1';
+        cnx.query(sql, [user_id], (err, rows) => {
+            if (err) throw err;
+            order_id = rows[0].order_id;
+        })
 
         // If there isn't a price, return an error
         if (!clientPrice) {
@@ -799,7 +809,7 @@ app.post('/pay', async (req, res) => {
                 },
             ],
             mode: 'payment',
-            success_url: 'http://localhost:3000/tracking/',
+            success_url: `http://localhost:3000/tracking/order_id=${order_id}&user_id=${user_id}`,
             cancel_url: 'http://localhost:3000/new',
         });
 

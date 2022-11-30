@@ -195,7 +195,7 @@ export function NewOrder() {
             for (let i = res.data.length; i > 0; i--) {
                 console.log("In")
                 console.log(res.data[i - 1]); // TODO Delete this after testing
-                if (distance > res.data[i - 1].min_distance) {
+                if (distance >= res.data[i - 1].min_distance) {
                     tier = res.data[i - 1];
                     setTier({...tier});
                     console.log(tier); // TODO Delete this after testing
@@ -247,7 +247,6 @@ export function NewOrder() {
                 pricePerKm: tier.price,
                 order_id: res.data.order_id
             }
-            console.log(orderData); // TODO Delete this after testing
         }).catch((err) => {
             console.log(err);
         });
@@ -262,7 +261,8 @@ export function NewOrder() {
             `${SERVER_URL}/pay`,
             {
                 price: orderData.price,
-                tier: tier.tier_id
+                tier: tier.tier_id,
+                user_id: sessionStorage.getItem('user_id'),
             }).then((res) => {
             console.log(res.data.url); // TODO Delete this after testing
             setPaymentLink(res.data.url);
