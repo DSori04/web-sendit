@@ -121,7 +121,6 @@ app.put('/user', async (req, res) => {
         // Gets the mail, surname, mail and password from the request body
         let { name, surname, mail, password } = req.body;
         const sql1 = 'SELECT * FROM USERS WHERE email = ?';
-        console.log(name, surname, mail, password)
         // Encrypts the password with a salt
         const hashedpw = await bcrypt.hash(password, salt);
 
@@ -149,6 +148,7 @@ app.put('/user', async (req, res) => {
 
                     // If the user is created, return the user data
                     res.send({
+                        user_id: rows.insertId,
                         name: name,
                         surname: surname,
                         mail: mail,
@@ -173,6 +173,7 @@ app.put('/user/:user_id', async (req, res) => {
     try {
         // Gets the mail, surname, mail and password from the request body
         let {name, surname, email, password} = req.body;
+        console.log(name, surname, email, password);
 
         // Query to get user data from the database
         const sql1 = "SELECT * FROM USERS WHERE email = ? AND user_id <> ?";
@@ -191,6 +192,7 @@ app.put('/user/:user_id', async (req, res) => {
                 cnx.query(sql2, [req.params.user_id], async (err, rows2) => {
                     // If there's an SQL error, throw it
                     if (err) throw err;
+                    console.log(rows2[0]);
 
                     // If the password from the db is the same as the one from the request body, update the data
                     if (await bcrypt.compare(password, rows2[0].password)) {

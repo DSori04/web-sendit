@@ -24,7 +24,6 @@ export function SignUp(){
 
     function checkPw(e){
         const val = e.target.value
-        console.log(val.length, e.target.minLength);
         if (val.length < e.target.minLength){
             e.target.setCustomValidity("La contraseña es demasiado corta")
         } else{
@@ -37,7 +36,6 @@ export function SignUp(){
         const user = Object.fromEntries(new FormData(e.target))
         if (user.password == user.pwrepeat){
             if (user.mail.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)){
-                console.log(user)
                 await axios({
                     method: "put",
                     url: "http://localhost:3170/user",
@@ -53,9 +51,7 @@ export function SignUp(){
                     navigate('/')
                 })
                 .catch((err) => {
-                    setError({state: true, message: err.response?.data.message})
-                    console.log(err.response.data.message)
-                    console.log(error.state)
+                    setError({state: true, message: err?.response?.data.message})
                 })
             } else{
                 setError({state: true, message: "Inserte un email válido"})
