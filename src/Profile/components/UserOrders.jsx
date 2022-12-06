@@ -20,7 +20,6 @@ export function Userorders(){
             url: `https://server-sendit.onrender.com/orders/user/${sessionStorage.getItem('user_id')}`
         })
         .then(res => {   
-            console.log(res.data)
             setOrders(res.data)
         })
         .catch(err => {

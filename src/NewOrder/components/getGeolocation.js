@@ -23,9 +23,6 @@ export const getGeolocation =  async (address) => {
 export const getCity = async (zipcode) => {
     return Geocode.fromAddress(zipcode)
         .then(response => {
-            // const resp = response.results[0].address_components;
-            // console.log(resp)
-            console.log(response.results[0].address_components[1])
             const city = response.results[0].address_components[1]['long_name'];
             return city;
         })

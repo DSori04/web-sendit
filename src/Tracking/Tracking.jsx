@@ -24,12 +24,9 @@ export function Tracking() {
     const [data, setData] = useState({});
     
     useEffect(() => {
-        console.log(user_id, order_id);
         if (user_id && order_id) {
             setOrder(order_id);
             setInput(false);
-            console.log("user_id: " + user_id);
-            console.log("order_id: " + order_id);
             axios({
                 method: "get",
                 url: `https://server-sendit.onrender.com/orders/${user_id}/${order_id}`,

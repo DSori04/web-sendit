@@ -33,9 +33,7 @@ export function LogIn() {
                 data: formdata,
             }).then(
                 (res) => {
-                    console.log(res.data.success)
                     if (res.data.success) {
-                        console.log("in")
                         setLogged(true);
                         sessionStorage.setItem('email', formdata.email)
                         sessionStorage.setItem('logged', true)
@@ -44,7 +42,6 @@ export function LogIn() {
                         sessionStorage.setItem('user_id', res.data.user_id)
                         setError({state: false, message: ""})
                         navigate('/')
-                        console.log(res)
                     }
                 }
             ).catch(

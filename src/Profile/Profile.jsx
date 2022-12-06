@@ -34,9 +34,7 @@ export function Profile() {
 
     async function submitChanges(e) {
         e.preventDefault()
-        console.log(e.target)
         const formdata = Object.fromEntries(new FormData(e.target))
-        console.log(formdata)
         await axios({
             method: 'put',
             url: `https://server-sendit.onrender.com/user/${user_id}`,

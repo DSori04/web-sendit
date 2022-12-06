@@ -87,8 +87,6 @@ export function NewOrder() {
             destEmail: destinationForm.destEmail
         }
 
-        console.log(destination); // TODO Remove this, this only for testing
-
         // Coordinates from the destination
         const addr = `${destinationForm.destAddr1}, ${destinationForm.destCity}`;
         const geolocation = await getGeolocation(addr);
@@ -96,8 +94,6 @@ export function NewOrder() {
             lat: geolocation.lat,
             lng: geolocation.lng
         }
-
-        console.log(geolocation); // TODO Remove this, this only for testing
 
         // Step 1: Send to the server the origin address and save the response
         // Sends the data to the server
@@ -133,8 +129,6 @@ export function NewOrder() {
             console.log(err);
         });
 
-        console.log(origin_address_id, destination_address_id); // TODO Delete this after testing
-
         // Step 3: Send the info from the person who sends the package
         // Sends the data to the server
         await axios.post(
@@ -148,8 +142,6 @@ export function NewOrder() {
         }).catch((err) => {
             console.log(err);
         });
-
-        console.log(origin_info_id); // TODO Delete this after testing
 
         // Step 4: Send the info from the person who receives the package
         // Sends the data to the server
@@ -165,11 +157,8 @@ export function NewOrder() {
             console.log(err);
         });
 
-        console.log(destination_info_id);
-
         // Step 5: Calculate the distance
         // TODO Delete this after testing
-        console.log(originCoords, destinationCoords);
         let distance = getDistance(
             {
                 lat: originCoords.lat,
@@ -181,23 +170,16 @@ export function NewOrder() {
             }
         );
 
-        console.log(distance); // TODO Delete this after, this is only for testing
-
         // Step 6: Get tier based on distance
         let tier;
         // Get all the tiers from server
         await axios.get(
             `${SERVER_URL}/prices`
         ).then((res) => {
-            console.log(res.data); // TODO Delete this after testing
-
             for (let i = res.data.length; i > 0; i--) {
-                console.log("In")
-                console.log(res.data[i - 1]); // TODO Delete this after testing
                 if (distance >= res.data[i - 1].min_distance) {
                     tier = res.data[i - 1];
                     setTier({...tier});
-                    console.log(tier); // TODO Delete this after testing
                 }
             }
 
@@ -213,8 +195,6 @@ export function NewOrder() {
             tier: tier.tier_id
         }
         setOrderData({...orderData});
-
-        console.log(orderData); // TODO Delete this after testing
 
         // Step 8: Send the order to the server
 
@@ -239,7 +219,6 @@ export function NewOrder() {
                 comments: ""
             }
         ).then((res) => {
-            console.log(res); // TODO Delete this after testing
             orderData = {
                 price: price,
                 distance: distance,
@@ -263,7 +242,6 @@ export function NewOrder() {
                 tier: tier.tier_id,
                 user_id: sessionStorage.getItem('user_id'),
             }).then((res) => {
-            console.log(res.data.url); // TODO Delete this after testing
             setPaymentLink(res.data.url);
             setWait(false);
         }).catch((err) => {
@@ -275,14 +253,12 @@ export function NewOrder() {
     const handleSubmitPayment = (e) => {
         const payment = Object.fromEntries(new FormData(e.target));
         e.preventDefault();
-        console.log(payment);
     }
 
     const handleOriginCP = async (e) => {
         const cp = e.target.value;
         if (cp.match(/^[0-9]{5}$/)) {
             let city = await getCity(cp);
-            console.log(city);
             setOriginCity(city);
         } else {
             setOriginCity("");
@@ -297,7 +273,6 @@ export function NewOrder() {
         const cp = e.target.value;
         if (cp.length === 5) {
             let city = await getCity(cp);
-            console.log(city);
             setDestinationCity(city);
         } else {
             setDestinationCity("");
