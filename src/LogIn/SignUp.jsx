@@ -38,7 +38,7 @@ export function SignUp(){
             if (user.mail.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)){
                 await axios({
                     method: "put",
-                    url: "http://localhost:3170/user",
+                    url: "https://server-sendit.onrender.com/user",
                     data: user,
                 })
                 .then((res) => {

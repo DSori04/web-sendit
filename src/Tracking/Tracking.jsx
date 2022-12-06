@@ -32,7 +32,7 @@ export function Tracking() {
             console.log("order_id: " + order_id);
             axios({
                 method: "get",
-                url: `http://localhost:3170/orders/${user_id}/${order_id}`,
+                url: `https://server-sendit.onrender.com/orders/${user_id}/${order_id}`,
             })
             .then((res) => {
                 setOrigin({

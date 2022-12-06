@@ -39,7 +39,7 @@ export function Profile() {
         console.log(formdata)
         await axios({
             method: 'put',
-            url: `http://localhost:3170/user/${user_id}`,
+            url: `https://server-sendit.onrender.com/user/${user_id}`,
             data: formdata
         })
         .then(res => {

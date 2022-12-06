@@ -17,7 +17,7 @@ export function Userorders(){
     useEffect(() => {
         axios({
             method: 'get',
-            url: `http://localhost:3170/orders/user/${sessionStorage.getItem('user_id')}`
+            url: `https://server-sendit.onrender.com/orders/user/${sessionStorage.getItem('user_id')}`
         })
         .then(res => {   
             console.log(res.data)

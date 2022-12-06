@@ -19,7 +19,7 @@ export function TrackingForm({setInput, setOrder, setData, setOrigin, setDestina
         setValidmail(formdata.email.split("@").length == 2 && formdata.email.split("@")[1].split(".").length == 2)
         await axios({
             method: "post",
-            url: "http://localhost:3170/order",
+            url: "https://server-sendit.onrender.com/order",
             data: formdata,
         })
         .then(

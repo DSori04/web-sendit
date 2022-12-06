@@ -13,8 +13,7 @@ import {TrackingImage} from "./components/NewTrackingImage";
 import {Steps} from "./components/Steps";
 import getDistance from "../GetDistance.js";
 
-const PORT = 3170;
-const SERVER_URL = `http://localhost:${PORT}`;
+const SERVER_URL = `https://server-sendit.onrender.com`;
 
 export function NewOrder() {
 

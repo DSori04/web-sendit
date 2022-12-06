@@ -29,7 +29,7 @@ export function LogIn() {
         if(formdata.email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)){
             const response = await axios({
                 method: "post",
-                url: "http://localhost:3170/user",
+                url: "https://server-sendit.onrender.com/user",
                 data: formdata,
             }).then(
                 (res) => {

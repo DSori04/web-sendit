@@ -15,7 +15,7 @@ export function Prices() {
         await axios(
             {
                 method: "get",
-                url: 'http://localhost:3170/prices',
+                url: 'https://server-sendit.onrender.com/prices',
             }
             )
         .then((res) => {
