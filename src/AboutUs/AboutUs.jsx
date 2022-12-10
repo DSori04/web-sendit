@@ -15,11 +15,11 @@ export function AboutUs() {
         </Helmet>
             <Navbar />
             <main className="flex justify-center w-full min-h-[calc(100vh-3.5rem)]">
-            <div className="xl:w-3/4 lg:w-full lg:absolute lg:pt-0 pt-16 pb-14 top-16 sm:bottom-14 sm:mb-14 bottom-28 flex flex-col md:px-20 px-8 font-main -mb-14">
-                <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8">¿Quiénes somos?</h1>
+            <div className="xl:w-3/4 lg:w-full lg:pt-0 pt-16 pb-14 top-16 sm:bottom-14 sm:mb-14 bottom-28 flex flex-col md:px-20 px-8 font-main -mb-14">
+                <h1 className=" font-bold text-purple1 text-5xl lg:pt-24 pt-8">¿Quiénes somos?</h1>
                 <div className="flex lg:flex-row flex-col w-full">
                     <div className="flex flex-col lg:w-1/2 w-full h-auto">
-                        <p className="font-main text-black lg:text-2xl text-2xl lg:mt-28 xl:mt-36 mt-10 tracking-wide xl:leading-[3.5rem] lg:leading-[3rem] leading-10 lg:text-right">
+                        <p className="font-main text-black lg:text-2xl text-2xl lg:mt-28 xl:mt-10 mt-10 xl:leading-[3rem] lg:leading-[2.5rem] leading-10 lg:text-right">
                             <span className="text-purple1 font-bold">SendIT</span> es una empresa innovadora fundada en 2022 con el objetivo de fomentar el
                             <span className="text-purple1 font-bold"> pequeño comercio</span> y los envíos intraurbanos. Gracias a nuestra presencia online, podemos
                             <span className="text-purple1 font-bold"> ahorrar costos</span> para asegurarnos de tener

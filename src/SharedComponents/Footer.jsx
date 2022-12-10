@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 
 export function Footer() {
     return (
-        <footer className="w-full bottom-0 -mt-13 bg-gray1 h-14 flex flex-row sm:justify-around justify-start flex-wrap">
+        
+        <footer className="w-full sticky bottom-0 bg-gray1 h-14 flex flex-row sm:justify-around justify-start flex-wrap">
             <div className="w-1/3 flex flex-row justify-center sm:pt-3 pt-5 min-w-fit sm:mr-0 mr-10">
                 <a href="github.com/A1bert04/web-sendit"><img src={Github} alt="Github" className="lg:w-8 lg:h-8 w-6 h-6 mr-2"/></a>
                 <a href="twitter.com"><img src={Twitter} alt="Twitter" className="lg:w-8 lg:h-8 w-6 h-6 mr-2"/></a>

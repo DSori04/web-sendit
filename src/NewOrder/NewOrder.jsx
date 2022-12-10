@@ -280,7 +280,7 @@ export function NewOrder() {
     }
 
     return (
-        <>
+        <div className="w-full h-full relative">
             <Helmet>
                 <title>New Order</title>
                 <meta name="description" content="New Order"/>
@@ -288,7 +288,7 @@ export function NewOrder() {
             <Navbar/>
             <div className="flex flex-row w-full justify-center min-h-[calc(100vh-3.5rem)]">
                 <div
-                    className="xl:w-3/4 lg:absolute lg:pt-0 pt-16 pb-10 top-16 sm:bottom-14 bottom-28 w-full flex flex-col h-max lg:px-20 px-6 font-main">
+                    className="xl:w-3/4 lg:pt-0 mt-8 pb-10 w-full flex flex-col h-max lg:px-20 px-6 font-main">
                     <div>
                         <h1 className=" font-bold text-5xl lg:pt-14 pt-8 select-none lg:text-left text-center">
                             <span className="text-purple1">Nuevo </span>
@@ -487,6 +487,6 @@ export function NewOrder() {
                 </div>
             </div>
             <Footer/>
-        </>
+        </div>
     );
 }
