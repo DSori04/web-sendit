@@ -417,7 +417,7 @@ export function NewOrder() {
                                     <input type="text" name="destCity" id="dest_city" value={destinationCity}
                                            className="border-b-2 inline-block" required
                                            onChange={(e) => setDestinationCity(e.target.value)}/>
-
+                                    <br /><br /><span className="text-black text-sm font-extralight italic">Todos sus datos personales serán tratados acorde a la Ley Orgánica de Protección de Datos</span>
                                     <input type="submit" value={
                                         wait ? "Espere..." : "Continuar"
                                     }
