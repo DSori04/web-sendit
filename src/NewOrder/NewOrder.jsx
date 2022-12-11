@@ -406,7 +406,7 @@ export function NewOrder() {
                                     <label htmlFor="dest_cp" className="text-main block mt-8">CP <span
                                         className="text-main text-red1">*</span></label>
                                     <input type="text" name="destCP" id="dest_cp"
-                                           className="border-b-2 inline-block w-2/3" required
+                                           className="border-b-2 inline-block" required
                                            inputMode="numeric"
                                            pattern="[0-9]{5}"
                                            onBlur={(e) => handleDestinationCP(e)}
@@ -417,7 +417,7 @@ export function NewOrder() {
                                     <input type="text" name="destCity" id="dest_city" value={destinationCity}
                                            className="border-b-2 inline-block" required
                                            onChange={(e) => setDestinationCity(e.target.value)}/>
-                                    <br /><br /><span className="text-black text-sm font-extralight italic">Todos sus datos personales serán tratados acorde a la Ley Orgánica de Protección de Datos</span>
+                                    <br /><br /><span className="text-black text-sm text-justify italic">Todos sus datos personales serán tratados acorde a la <a href="https://www.boe.es/buscar/pdf/2018/BOE-A-2018-16673-consolidado.pdf" className="text-purple1 underline">Ley Orgánica 3/2018 de Protección de Datos</a></span>
                                     <input type="submit" value={
                                         wait ? "Espere..." : "Continuar"
                                     }
