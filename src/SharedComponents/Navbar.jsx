@@ -28,7 +28,7 @@ export function Navbar() {
             <nav className="bg-gray1 w-full h-16 flex lg:justify-between z-40 justify-between lg:px-24 select-none fixed">
                 <div id="logo" className="flex-start h-14 w-48">
                     <Link to="/">
-                        <img src={Logo} alt="sendit logo" className="object-contain">
+                        <img src={Logo} alt="sendit logo" className="">
                         </img>
                     </Link>
                 </div>

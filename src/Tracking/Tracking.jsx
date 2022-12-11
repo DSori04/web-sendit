@@ -12,8 +12,6 @@ import { StateMarker } from "./components/StateMarkers";
 import axios from 'axios';
 import arrowBack from "./assets/arrow-back.svg"
 
-// TODO Why the icon doesn't show up in the browser tab?
-
 export function Tracking() {
     const {user_id, order_id} = useParams();
 
@@ -79,7 +77,7 @@ export function Tracking() {
             <div className="flex justify-center w-full min-h-[calc(100vh-3.5rem)]">
                 <div className="lg:pt-0 pb-8 bg-white w-3/4 mt-16 flex flex-col md:px-20 px-6 font-main">
                     
-                    {inputting && <><h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Tracking</h1><div className="flex flex-row w-full">
+                    {inputting && <><h1 className=" font-bold text-purple1 text-5xl mt-28 select-none">Tracking</h1><div className="flex flex-row w-full">
                         <TrackingForm setInput={setInput} setOrder={setOrder} setData={setData} setOrigin={setOrigin} setDestination={setDestination} />
                         <div className="text-right text-main sm:flex hidden flex-row justify-center">
                             <img src={TrackIcon} alt="Imagen de About Us" className=" xl:max-h-96 lg:max-h-80 sm:max-h-80 xl:mt-0 lg:mt-10 mt-10 min-h-fit" />

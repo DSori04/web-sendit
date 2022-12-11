@@ -41,7 +41,7 @@ export function Contact() {
                             <label htmlFor="details" className="text-main block mt-8">Mensaje <span className="text-main text-red1">*</span></label>
                             <textarea name="details" id="" cols="30" rows="5" className="mt-2 sm:w-1/2 w-full rounded-xl border-2 p-2" required></textarea>
 
-                            <input type="submit" value="Enviar" className="block mt-6 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl hover:hue-rotate-15"/>
+                            <input type="submit" value="Enviar" className="block mt-6 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl hover:hue-rotate-15 hover:scale-105 active:scale-95"/>
                         </form>
                         
                     </div>

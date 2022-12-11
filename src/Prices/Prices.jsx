@@ -76,7 +76,7 @@ export function Prices() {
                                 })}
                             </table>
                             <div className=" lg:self-start self-center">
-                                <div id="makeOrder" className="bg-purple1 cursor-pointer text-white rounded-full w-52 h-14 mt-14 text-center drop-shadow-lg hover:scale-105 text-xl font-main font-semibold hover:hue-rotate-15">
+                                <div id="makeOrder" className="bg-purple1 cursor-pointer text-white rounded-full w-52 h-14 mt-14 text-center drop-shadow-lg hover:scale-105 text-xl font-main font-semibold hover:hue-rotate-15 active:scale-95 ">
                                     <span className=" leading-[3.5rem] align-middle">
                                         <Link to="/new">Nuevo pedido</Link>
                                     </span>

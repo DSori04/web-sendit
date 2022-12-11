@@ -69,16 +69,16 @@ export function LogIn() {
                 <meta name="description" content="Log In" />
             </Helmet>
             <Navbar />
-            <main className="w-full flex justify-center min-h-[calc(100vh-3.5rem)]">
-            <div className="w-3/4 lg:absolute lg:pt-20 pt-16 top-16 sm:bottom-14 bottom-28 flex flex-col md:px-20 px-6 font-main">
-                <div className="flex lg:flex-row flex-col w-full flex-nowrap">
+            <main className="w-full flex shrink-0 justify-center min-h-[calc(100vh-3.5rem)]">
+            <div className="w-3/4 mb-8 lg:pt-20 pt-16 mt-16 flex flex-col md:px-20 px-6 font-main select-none">
+                <div className="flex lg:flex-row flex-col w-full">
                     <div className="flex flex-col lg:w-1/2 w-full h-auto">
                         <div className="flex flex-row justify-start pt-3 font-main">
-                            <div className={`ml-8 font-bold text-purple1 text-lg cursor-pointer`}>Log In</div>
+                            <div className={`ml-6 font-bold text-purple1 text-lg cursor-pointer`}>Log In</div>
                             <Link to="/signup"><div className={`ml-8 text-lg cursor-pointer hover:text-purple1 hover:font-semibold`}>Sign Up</div></Link>
                         </div>
-                        <div className="lg:w-96 w-[40%] h-1.5 bg-gray2 absolute top-[8rem]">
-                            <div className="relative h-full w-28 ml-3 bg-purple2 "></div>
+                        <div className="lg:w-96 w-[60%] h-1.5 bg-gray2 absolute top-[12rem]">
+                            <div className="relative h-full w-[6.5rem] bg-purple2 "></div>
                         </div>
                         <div className="flex flex-col relative mt-12 lg:ml-24">
                             <form onSubmit={(e) => handleSubmitLogin(e)}>

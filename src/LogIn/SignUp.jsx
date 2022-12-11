@@ -71,15 +71,15 @@ export function SignUp(){
                 <Navbar />
             </AppContextProvider>
             <main className="w-full flex shrink-0 justify-center min-h-[calc(100vh-3.5rem)]">
-            <div className="w-3/4 mb-8 lg:pt-20 pt-16 top-16 sm:bottom-14 bottom-28 flex flex-col md:px-20 px-6 font-main select-none">
+            <div className="w-3/4 mb-8 lg:pt-20 pt-16 mt-16 flex flex-col md:px-20 px-6 font-main select-none">
                 <div className="flex lg:flex-row flex-col w-full">
                     <div className="flex flex-col lg:w-1/2 w-full h-auto">
                         <div className="flex flex-row justify-start pt-3 font-main">
                             <Link to="/login"><div className={`ml-8 text-black text-lg cursor-pointer hover:text-purple1 hover:font-semibold`}>Log In</div></Link>
                             <div className={`ml-8 font-bold text-purple1 text-lg cursor-pointer`}>Sign Up</div>
                         </div>
-                        <div className="lg:w-96 w-[40%] h-1.5 bg-gray2 absolute top-[8rem]">
-                            <div className="relative h-full w-28 ml-28 bg-purple2 "></div>
+                        <div className="lg:w-96 w-[60%] h-1.5 bg-gray2 absolute top-[12rem]">
+                            <div className="relative h-full w-28 ml-[6.5rem] bg-purple2 "></div>
                         </div>
                         <div className="flex flex-col relative mt-12 lg:ml-24">
                             <form autoComplete="off" onSubmit={e => addUser(e)}>

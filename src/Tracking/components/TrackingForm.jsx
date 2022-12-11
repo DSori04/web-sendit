@@ -63,7 +63,7 @@ export function TrackingForm({setInput, setOrder, setData, setOrigin, setDestina
         )
     }
     return (
-        <div className="flex flex-col lg:w-1/2 w-full ml-24">
+        <div className="flex flex-col lg:w-1/2 w-full lg:ml-24">
             <form onSubmit={(e) => handleForm(e)} target="_self">
                 <label htmlFor="orderid" className="text-main block mt-8">Número de pedido <span className="text-main text-red1">*</span></label>
                 <input type="text" name="orderid" id="orderid" className="border-b-2 block" required />
@@ -76,7 +76,7 @@ export function TrackingForm({setInput, setOrder, setData, setOrigin, setDestina
                 <label htmlFor="cp" className="text-main block mt-8">Código Postal <span className="text-main text-red1">*</span></label>
                 <input type="text" name="cp" id="cp" className="border-b-2 block" required></input>
 
-                <input type="submit" value="Consultar" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl hover:hue-rotate-15"/>
+                <input type="submit" value="Consultar" className="block mt-8 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl hover:hue-rotate-15 hover:scale-105 active:scale-95"/>
             </form>
         </div>
     )
