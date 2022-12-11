@@ -18,44 +18,38 @@ export function Home() {
 
     useEffect(() => {
         let i = 0;
-        return () => {
-            let x = setInterval(() => {
-                if (i === clientTarget) {
-                    clearInterval(x)
-                } else {
-                    setClients(i + 5)
-                    i += 5
-                }
-            }, 1)
-        }
+        let x = setInterval(() => {
+            if (i === clientTarget) {
+                clearInterval(x)
+            } else {
+                setClients(i + 5)
+                i += 5
+            }
+        }, 1)
     }, [])
 
     useEffect(() => {
         let i = 0;
-        return () => {
-            let x = setInterval(() => {
-                if (i === commerceTarget) {
-                    clearInterval(x)
-                } else {
-                    setCommerce(i + 1)
-                    i++
-                }
-            }, 1)
-        }
+        let x = setInterval(() => {
+            if (i === commerceTarget) {
+                clearInterval(x)
+            } else {
+                setCommerce(i + 1)
+                i++
+            }
+        }, 1)
     }, [])
 
     useEffect(() => {
         let i = 0;
-        return () => {
-            let x = setInterval(() => {
-                if (i === ordersTarget) {
-                    clearInterval(x)
-                } else {
-                    setOrders(i + 5)
-                    i += 5
-                }
-            }, 1)
-        }
+        let x = setInterval(() => {
+            if (i === ordersTarget) {
+                clearInterval(x)
+            } else {
+                setOrders(i + 5)
+                i += 5
+            }
+        }, 1)
     }, [])
 
     return (
@@ -68,9 +62,9 @@ export function Home() {
             <AppContextProvider>
                 <Navbar />
             </AppContextProvider>
-            <main className="flex justify-center w-full min-h-[calc(100vh-3.5rem)] pb-14">
+            <main className="flex justify-center w-full min-h-[calc(100vh-3.5rem)]">
                 <div className="pt-6 pb-16 bg-white w-3/4 flex flex-col md:px-20 px-6">
-                    <div id="text-main" className="flex flex-row justify-around mt-12 flex-wrap-reverse w-full">
+                    <div id="text-main" className="flex flex-row justify-around mt-20 flex-wrap-reverse w-full">
                         <div id="text-content" className="flex flex-col lg:w-4/12 w-full lg:mt-32 mt-10">
                             <div id="text" className="flex flex-col w-full h-max lg:tracking-wider tracking-wide font-bold lg:text-right text-center xl:test-9xl lg:text-4xl sm:text-3xl text-2xl font-main lg min-w-fit">
                                 Nunca hemos <br></br> estado tan <span className="text-purple1">cerca</span>
@@ -84,7 +78,7 @@ export function Home() {
 
                             </div>
                         </div>
-                        <div id="home-img" className="lg:-ml-44 min-w-fit"><img src={HomeImg} alt="home_image" ></img></div>
+                        <div id="home-img"><img src={HomeImg} alt="home_image" ></img></div>
 
                     </div> <br />
                     <div id="counters" className="w-full h-max flex justify-around text-center lg:mt-6 mt-5 lg:scale-100 scale-75">

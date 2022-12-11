@@ -4,8 +4,16 @@ import { Footer } from "../SharedComponents/Footer";
 import imagenContacto from "./assets/contact.svg";
 import AppContextProvider from "../GlobalStates";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router";
+
+
 
 export function Contact() {
+    const nav = useNavigate();
+    function handleSubmit(e){
+        e.preventDefault();
+        nav("/")
+    }
     return (
         <div className="w-full h-full relative">
             <Helmet>
@@ -20,7 +28,7 @@ export function Contact() {
                 <h1 className=" font-bold text-purple1 text-5xl lg:pt-14 pt-8 select-none">Contacto</h1>
                 <div className="flex flex-row w-full">
                     <div className="flex flex-col lg:w-1/2 w-full ml-24">
-                        <form className="select-none">
+                        <form className="select-none" onSubmit={e => handleSubmit(e)}>
                             <label htmlFor="name" className="text-main block mt-8">Nombre completo <span className="text-main text-red1">*</span></label>
                             <input type="text" name="name" id="name" className="border-b-2 block" required/>
 
@@ -30,8 +38,8 @@ export function Contact() {
                             <label htmlFor="email" className="text-main block mt-8">Correo Electrónico <span className="text-main text-red1">*</span></label>
                             <input type="email" name="email" id="email" className="border-b-2 block" required></input>
 
-                            <label for="details" className="text-main block mt-8">Mensaje</label>
-                            <textarea name="details" id="" cols="30" rows="5" className="mt-2 sm:w-1/2 w-full rounded-xl border-2 p-2"></textarea>
+                            <label htmlFor="details" className="text-main block mt-8">Mensaje <span className="text-main text-red1">*</span></label>
+                            <textarea name="details" id="" cols="30" rows="5" className="mt-2 sm:w-1/2 w-full rounded-xl border-2 p-2" required></textarea>
 
                             <input type="submit" value="Enviar" className="block mt-6 bg-purple1 font-main text-white px-4 py-1 rounded-full font-semibold drop-shadow-xl hover:hue-rotate-15"/>
                         </form>

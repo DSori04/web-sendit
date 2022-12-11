@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 export function Footer() {
     return (
         
-        <footer className="w-full sticky bottom-0 bg-gray1 h-14 flex flex-row sm:justify-around justify-start flex-wrap">
+        <footer className="w-full sticky bottom-0 bg-gray1 h-14 flex flex-row sm:justify-around justify-center flex-wrap">
             <div className="w-1/3 flex flex-row justify-center sm:pt-3 pt-5 min-w-fit sm:mr-0 mr-10">
                 <a href="github.com/A1bert04/web-sendit"><img src={Github} alt="Github" className="lg:w-8 lg:h-8 w-6 h-6 mr-2"/></a>
                 <a href="twitter.com"><img src={Twitter} alt="Twitter" className="lg:w-8 lg:h-8 w-6 h-6 mr-2"/></a>
@@ -17,7 +17,6 @@ export function Footer() {
             </div>
             <div className="w-1/3 flex flex-row leading-[3.5rem] sm:pt-5 font-main sm:text-sm max-[408px]:text-sm text-xs">
                 <Link to="/about-us" className="mr-6 min-w-fit hover:font-semibold hover:underline">About Us</Link>
-                <Link to="/not-found" className="mr-6 hover:font-semibold hover:underline">LOPD</Link>
                 <Link to="/contact" className="hover:font-semibold hover:underline">Contacto</Link>
             </div>
         </footer>
