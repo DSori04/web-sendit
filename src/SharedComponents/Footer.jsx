@@ -10,7 +10,7 @@ export function Footer() {
         
         <footer className="w-full sticky bottom-0 bg-gray1 h-14 flex flex-row sm:justify-around justify-center flex-wrap">
             <div className="w-1/3 flex flex-row justify-center sm:pt-3 pt-5 min-w-fit sm:mr-0 mr-10">
-                <a href="github.com/A1bert04/web-sendit"><img src={Github} alt="Github" className="lg:w-8 lg:h-8 w-6 h-6 mr-2"/></a>
+                <a href="https://github.com/AagieKLZ/web-sendit-clone"><img src={Github} alt="Github" className="lg:w-8 lg:h-8 w-6 h-6 mr-2"/></a>
                 <a href="https://twitter.com"><img src={Twitter} alt="Twitter" className="lg:w-8 lg:h-8 w-6 h-6 mr-2"/></a>
                 <a href="https://facebook.com"><img src={Facebook} alt="Facebook" className="lg:w-8 lg:h-8 w-6 h-6 mr-2"/></a>
                 <a href="https://instagram.com"><img src={Instagram} alt="Instagram" className="lg:w-8 lg:h-8 w-6 h-6"/></a>
