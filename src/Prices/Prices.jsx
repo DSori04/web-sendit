@@ -10,7 +10,6 @@ import { useState, useEffect } from "react";
 
 export function Prices() {
     const [prices, setPrices] = useState([]);
-    const [loading, setLoading] = useState(true);
     const fetchPrices = async () => {
         await axios(
             {
@@ -36,10 +35,7 @@ export function Prices() {
     }
 
     useEffect(() => {
-        return () => {
-            fetchPrices()
-            setLoading(false)
-        }
+        fetchPrices()
     }, [])
 
     return (
