@@ -7,7 +7,7 @@ import neworder3 from "./assets/neworder3.svg"
 import payicon from "./assets/payicon.svg"
 import Stripe from "./assets/Stripe.svg";
 import {Helmet} from "react-helmet-async";
-import axios from "axios";
+import axios, { AxiosHeaders } from "axios";
 import {getCity, getGeolocation} from "./components/getGeolocation";
 import {TrackingImage} from "./components/NewTrackingImage";
 import {Steps} from "./components/Steps";
@@ -66,7 +66,8 @@ export function NewOrder() {
         e.preventDefault();
 
         setWait(true);
-
+        
+        let order_id;
         // IDs from steps 1 and 2
         let origin_address_id;
         let destination_address_id;
@@ -224,7 +225,7 @@ export function NewOrder() {
                 pricePerKm: tier.price,
                 order_id: res.data.order_id
             })
-            const order_id = res.data.order_id
+            order_id = res.data.order_id
         }).catch((err) => {
             console.log(err);
         });
@@ -238,7 +239,7 @@ export function NewOrder() {
         await axios.post(
             `${SERVER_URL}/pay`,
             {
-                price: price,
+                clientPrice: price,
                 tier: tier.tier_id,
                 user_id: sessionStorage.getItem('user_id'),
                 order_id: order_id
