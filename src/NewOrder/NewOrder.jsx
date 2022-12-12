@@ -234,7 +234,6 @@ export function NewOrder() {
         if (geolocation) {
             setStep(3);
         }
-
         // Step 9 create payment link
         await axios.post(
             `${SERVER_URL}/pay`,
