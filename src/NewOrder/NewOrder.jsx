@@ -12,6 +12,7 @@ import {getCity, getGeolocation} from "./components/getGeolocation";
 import {TrackingImage} from "./components/NewTrackingImage";
 import {Steps} from "./components/Steps";
 import getDistance from "../GetDistance.js";
+import { Link } from "react-router-dom";
 
 const SERVER_URL = `https://server-sendit.onrender.com`;
 
@@ -419,7 +420,7 @@ export function NewOrder() {
                                     <input type="text" name="destCity" id="dest_city" value={destinationCity}
                                            className="border-b-2 inline-block" required
                                            onChange={(e) => setDestinationCity(e.target.value)}/>
-                                    <br /><br /><span className="text-black text-sm text-justify italic">Todos sus datos personales serán tratados acorde a la <a href="https://www.boe.es/buscar/pdf/2018/BOE-A-2018-16673-consolidado.pdf" className="text-purple1 underline">Ley Orgánica 3/2018 de Protección de Datos</a></span>
+                                    <br /><br /><span className="text-black text-sm text-justify italic">Todos sus datos personales serán tratados acorde a nuestra <Link to="/lopd" target="_blank" className="text-purple1 underline">Política de Privacidad</Link></span>
                                     <input type="submit" value={
                                         wait ? "Espere..." : "Continuar"
                                     }

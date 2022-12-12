@@ -16,6 +16,7 @@ import { NotFound } from "./NotFound/NotFound";
 import { SignUp } from "./LogIn/SignUp";
 import { Profile } from "./Profile/Profile";
 import { HelmetProvider } from "react-helmet-async";
+import {Law} from "./LOPD/lopd";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,11 @@ const router = createBrowserRouter([
     path: "/tracking/order_id=:order_id&user_id=:user_id",
     element: <Tracking />,
     errorElement: <NotFound/>,
+  },
+  {
+    path: "/lopd",
+    element: <Law />,
+    errorElement: <NotFound />
   }
 
 ]);
