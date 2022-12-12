@@ -189,12 +189,11 @@ export function NewOrder() {
 
         // Step 7: Calculate the price
         let price = (tier.price * distance).toFixed(2);
-        let orderData = {
+        setOrderData({
             price: price,
             distance: distance,
             tier: tier.tier_id
-        }
-        setOrderData({...orderData});
+        });
 
         // Step 8: Send the order to the server
 
@@ -219,12 +218,13 @@ export function NewOrder() {
                 comments: ""
             }
         ).then((res) => {
-            orderData = {
+            setOrderData({
                 price: price,
                 distance: distance,
                 pricePerKm: tier.price,
                 order_id: res.data.order_id
-            }
+            })
+            const order_id = res.data.order_id
         }).catch((err) => {
             console.log(err);
         });
@@ -241,7 +241,7 @@ export function NewOrder() {
                 price: price,
                 tier: tier.tier_id,
                 user_id: sessionStorage.getItem('user_id'),
-                order_id: orderData.order_id
+                order_id: order_id
             }).then((res) => {
             setPaymentLink(res.data.url);
             setWait(false);
