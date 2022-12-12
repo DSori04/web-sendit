@@ -689,7 +689,7 @@ app.get('/orders/:order_id', (req, res) => {
                  ADDRESS AS A2
                  ON (O.destiny_address_id = A2.address_id)
 
-            WHERE order_id = ?`;
+            WHERE order_id = ? AND ISNULL(user_id)`;
         cnx.query(sql, req.params.order_id, (err, rows) => {
                 if (err) throw err;
                 if (rows) {

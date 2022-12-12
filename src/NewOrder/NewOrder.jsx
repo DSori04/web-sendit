@@ -238,7 +238,7 @@ export function NewOrder() {
         await axios.post(
             `${SERVER_URL}/pay`,
             {
-                price: orderData.price,
+                price: price,
                 tier: tier.tier_id,
                 user_id: sessionStorage.getItem('user_id'),
                 order_id: orderData.order_id
