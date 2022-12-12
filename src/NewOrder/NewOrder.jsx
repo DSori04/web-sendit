@@ -243,6 +243,7 @@ export function NewOrder() {
                 user_id: sessionStorage.getItem('user_id'),
                 order_id: order_id
             }).then((res) => {
+                console.log(res)
             setPaymentLink(res.data.url);
             setWait(false);
         }).catch((err) => {
