@@ -4,7 +4,6 @@ Geocode.setApiKey("AIzaSyBpL4s6zh0bnHbU1E6N4hsVpqyb2XA963Q")
 Geocode.setLanguage("es")
 Geocode.setRegion("es")
 Geocode.setLocationType("ROOFTOP")
-Geocode.enableDebug()
 
 /** @param address Address of the location that we want to get coords for
  * @return coords An object with the latitude and longitude of the address {lat, lng}

@@ -656,33 +656,49 @@ app.get('/orders/:user_id/:order_id', (req, res) => {
     }
 })
 
-/**
- * To get the info of an order
- *
- * Body format: {order_id: num | undefined, user_id: num | undefined}
- *
- * Response: De momento nada
- */
-app.get('/orders', (req, res) => {
+app.get('/orders/:order_id', (req, res) => {
     try {
-        const {order_id, user_id} = req.body;
-        const params = ['order_id', 'user_id'];
-        // const sql = 'SELECT * FROM ORDERS WHERE order_id = ? OR user_id = ?';
-        let sql = 'SELECT * FROM ORDERS WHERE ';
-        let i = 0;
-        let valid_params = []
-        params.forEach(param => {
-            if (req.body[param] !== undefined) {
-                valid_params.push(req.body[param]);
-                if (i === 0) {
-                    sql += param + ' = ?';
+        const sql = `
+            SELECT O.*,
+                   A1.city   AS origin_city,
+                   A1.CP     AS origin_cp,
+                   A1.street AS origin_addr1,
+                   A1.lat    AS origin_lat,
+                   A1.lng    AS origin_lng,
+                   I1.name   AS origin_name,
+                   I1.phone  AS origin_phone,
+
+                   A2.city   AS dest_city,
+                   A2.CP     AS dest_cp,
+                   A2.street AS dest_addr1,
+                   A2.lat    AS dest_lat,
+                   A2.lng    AS dest_lng,
+                   I2.name   AS dest_name,
+                   I2.phone  AS dest_phone
+            FROM ORDERS AS O
+                     INNER JOIN
+                 INFO AS I1
+                 ON (O.origin_info_id = I1.info_id)
+                     INNER JOIN
+                 INFO AS I2
+                 ON (O.destiny_info_id = I2.info_id)
+                     INNER JOIN
+                 ADDRESS AS A1
+                 ON (O.origin_address_id = A1.address_id)
+                     INNER JOIN
+                 ADDRESS AS A2
+                 ON (O.destiny_address_id = A2.address_id)
+
+            WHERE order_id = ?`;
+        cnx.query(sql, req.params.order_id, (err, rows) => {
+                if (err) throw err;
+                if (rows) {
+                    res.send(rows[0]);
                 } else {
-                    sql += ' AND ' + param + ' = ?';
+                    res.status(404).send({success: false, message: 'Order not found'});
                 }
-                // TODO Terminar esto carlos
-                i++;
             }
-        });
+        );
     } catch (error) {
         res.status(500).send({error: error.message});
     }

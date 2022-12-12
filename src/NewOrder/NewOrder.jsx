@@ -241,6 +241,7 @@ export function NewOrder() {
                 price: orderData.price,
                 tier: tier.tier_id,
                 user_id: sessionStorage.getItem('user_id'),
+                order_id: orderData.order_id
             }).then((res) => {
             setPaymentLink(res.data.url);
             setWait(false);
