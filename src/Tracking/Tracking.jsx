@@ -120,7 +120,7 @@ export function Tracking() {
                     {inputting && <><h1 className=" font-bold text-purple1 text-5xl mt-28 select-none">Tracking</h1><div className="flex flex-row w-full">
                         <TrackingForm setInput={setInput} setOrder={setOrder} setData={setData} setOrigin={setOrigin} setDestination={setDestination} />
                         <div className="text-right text-main sm:flex hidden flex-row justify-center">
-                            <img src={TrackIcon} alt="Imagen de About Us" className=" xl:max-h-96 lg:max-h-80 sm:max-h-80 xl:mt-0 lg:mt-10 mt-10 min-h-fit" />
+                            <img src={TrackIcon} alt="Imagen de Tracking" className=" xl:max-h-96 lg:max-h-80 sm:max-h-80 xl:mt-0 lg:mt-10 mt-10 min-h-fit" />
                         </div>
                     </div></>}
                     {!inputting &&
@@ -163,7 +163,7 @@ export function Tracking() {
                     }
                 </div>
             </div>
-            <Footer />
+            {inputting && <Footer />}
         </div>
     );
 }
