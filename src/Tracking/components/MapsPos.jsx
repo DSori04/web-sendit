@@ -24,7 +24,7 @@ function Directions({origin, destination}) {
         zoomControl: false,
     };
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: "AIzaSyBpL4s6zh0bnHbU1E6N4hsVpqyb2XA963Q",
+        googleMapsApiKey: "",
         libraries: libraries
     });
     
